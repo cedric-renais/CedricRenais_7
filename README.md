@@ -8,3 +8,7 @@ DATABASE :
 SERVER :
 
 1. Type npm start from the server folder in the terminal to start the server
+
+CLIENT :
+
+1. Type npm start from the client folder in the terminal to start the application

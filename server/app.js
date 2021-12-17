@@ -2,13 +2,12 @@
 // Importing the necessary dependencies //
 //--------------------------------------//
 const express = require('express');
-const path = require('path');
 const helmet = require('helmet');
 const cors = require('cors');
 //-------------------//
 // Importing routers //
 //-------------------//
-const postRouter = require('./routes/posts');
+const postRouter = require('./routes/Posts');
 //--------------------//
 // Importing database //
 //--------------------//
