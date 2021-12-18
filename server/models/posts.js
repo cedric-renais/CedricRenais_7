@@ -1,7 +1,6 @@
-//--------------------------//
-// Create and Exports model //
-//--------------------------//
-
+//--------------//
+// Create model //
+//--------------//
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define('Posts', {
     title: {
@@ -21,5 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  //---------------------//
+  // Define associations //
+  //---------------------//
+  Posts.associate = (models) => {
+    Posts.hasMany(models.Comments, {
+      onDelete: 'cascade',
+    });
+  };
+
   return Posts;
 };

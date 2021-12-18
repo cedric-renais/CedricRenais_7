@@ -8,6 +8,7 @@ const cors = require('cors');
 // Importing routers //
 //-------------------//
 const postRouter = require('./routes/Posts');
+const commentRouter = require('./routes/Comments');
 //--------------------//
 // Importing database //
 //--------------------//
@@ -26,6 +27,7 @@ app.use(express.json());
 // Calling routes //
 //----------------//
 app.use('/posts', postRouter);
+app.use('/comments', commentRouter);
 //------------------------------------------------------------------------------//
 // Check the connection to the database and send the result back to the console //
 //------------------------------------------------------------------------------//
