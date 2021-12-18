@@ -20,14 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-  //---------------------//
-  // Define associations //
-  //---------------------//
+  //--------------------//
+  // Define association //
+  //--------------------//
   Posts.associate = (models) => {
     Posts.hasMany(models.Comments, {
       onDelete: 'cascade',
     });
   };
-
   return Posts;
 };
