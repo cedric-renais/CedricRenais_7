@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
     res.json('User created.');
   });
 });
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   const { username, password } = req.body;
   const user = await Users.findOne({ where: { username: username } });
   if (!user) res.json({ error: "User doesn't exist." });
