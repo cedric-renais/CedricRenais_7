@@ -20,6 +20,15 @@ router.post('/', authentication, async (req, res) => {
   await Comments.create(comment);
   res.json(comment);
 });
+router.delete('/:commentId', authentication, async (req, res) => {
+  const commentId = req.params.commentId;
+  await Comments.destroy({
+    where: {
+      id: commentId,
+    },
+  });
+  res.json('Comment deleted.');
+});
 //-----------------//
 // Exports routers //
 //-----------------//

@@ -335,6 +335,21 @@ button {
   box-shadow: 0px 2px 4px 2px gray;
 }
 
+.commentUsernameDelete {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deleteComment {
+  width: 80px;
+  background-color: #fd2d01;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+}
+
 #individual {
   height: 400px;
   width: 500px;

@@ -2,13 +2,7 @@
 // Importing the necessary dependencies //
 //--------------------------------------//
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
@@ -25,7 +19,7 @@ function App() {
   //----------------------------------------------------------------------------------//
   // Change the appearance of links depending on whether the user is logged in or not //
   //----------------------------------------------------------------------------------//
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState();
   useEffect(() => {
     axios
       .get('http://localhost:3001/users/auth', {
@@ -45,7 +39,7 @@ function App() {
   const logout = () => {
     sessionStorage.removeItem('JWToken');
     setAuthState(false);
-    window.location.reload();
+    window.location.replace(`http://localhost:3000/`);
   };
   //---------------------------//
   // Return the HTML to inject //
