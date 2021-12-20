@@ -11,16 +11,22 @@ function Login() {
   let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  //---------------------------------------------------------------//
-  // Stock username and password in the data variable              //
-  // Make a POST request including the data variable               //
-  // Get the response and display the response data in the console //
-  //---------------------------------------------------------------//
+  //------------------------------------------------------------//
+  // Stock username and password in the data variable           //
+  // Make a POST request including the data variable            //
+  // Get the response then if error display it in alert message //
+  // Else store the JWToken in the session Storage              //
+  // Send to the posts page                                     //
+  //------------------------------------------------------------//
   const loginRequest = () => {
     const data = { username: username, password: password };
     axios.post('http://localhost:3001/users/login', data).then((response) => {
-      console.log(response.data);
-      navigate('/posts');
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        sessionStorage.setItem('JWToken', response.data);
+        navigate('/posts');
+      }
     });
   };
   //---------------------------//

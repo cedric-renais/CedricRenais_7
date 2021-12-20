@@ -11,13 +11,24 @@ import { useNavigate } from 'react-router-dom';
 function Posts() {
   const [listOfPosts, setListOfPosts] = useState([]);
   let navigate = useNavigate();
-  //-------------------------------------//
-  // Make a request to GET all the posts //
-  //-------------------------------------//
+  //----------------------------------------//
+  // Make a request to GET all the posts    //
+  // Checks if the user has a valid JWToken //
+  //----------------------------------------//
   useEffect(() => {
-    axios.get('http://localhost:3001/posts').then((response) => {
-      setListOfPosts(response.data);
-    });
+    axios
+      .get('http://localhost:3001/posts', {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setListOfPosts(response.data);
+        }
+      });
   }, []);
   //---------------------------//
   // Return the HTML to inject //

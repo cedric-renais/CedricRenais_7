@@ -30,12 +30,23 @@ function NewPost() {
   //------------------------------------------------------//
   // Create an onSubmit function containing the form data //
   // Make a POST request including the data variable      //
+  // Checks if the user has a valid JWToken               //
   // Send to Posts page                                   //
   //------------------------------------------------------//
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/posts', data).then((response) => {
-      navigate('/posts');
-    });
+    axios
+      .post('http://localhost:3001/posts', data, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          navigate('/posts');
+        }
+      });
   };
   //---------------------------//
   // Return the HTML to inject //

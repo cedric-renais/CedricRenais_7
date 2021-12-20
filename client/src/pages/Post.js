@@ -14,33 +14,68 @@ function Post() {
   const [newComment, setNewComment] = useState('');
   //----------------------------------------------//
   // Make a request to GET the post data by is ID //
+  // Checks if the user has a valid JWToken       //
   //----------------------------------------------//
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-      setPost(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/posts/byId/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setPost(response.data);
+        }
+      });
     //-----------------------------------------------------------------//
     // Make a request to GET all the comments associate to the post ID //
+    // Checks if the user has a valid JWToken                          //
     //-----------------------------------------------------------------//
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
-      setComments(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/comments/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setComments(response.data);
+        }
+      });
   }, []);
   //--------------------------------------------------//
   // Create a function to Add comment                 //
   // Make a POST request including the comment data   //
   // Get the response and display it as a new comment //
+  // Checks if the user has a valid JWToken           //
   //--------------------------------------------------//
   const addComment = () => {
     axios
-      .post('http://localhost:3001/comments', {
-        comment: newComment,
-        PostId: id,
-      })
+      .post(
+        'http://localhost:3001/comments',
+        {
+          comment: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        }
+      )
       .then((response) => {
-        const commentToAdd = { comment: newComment };
-        setComments([...comments, commentToAdd]);
-        setNewComment('');
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          const commentToAdd = { comment: newComment };
+          setComments([...comments, commentToAdd]);
+          setNewComment('');
+        }
       });
   };
   //---------------------------//
