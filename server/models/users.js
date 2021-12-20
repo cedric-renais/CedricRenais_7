@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   //--------------------//
   // Define association //
   //--------------------//
-  //Users.associate = (models) => {
-  //  Users.hasMany(models.Posts, {
-  //    onDelete: 'cascade',
-  //  });
-  //};
+  Users.associate = (models) => {
+    Users.hasMany(models.Posts, {
+      onDelete: 'cascade',
+    });
+  };
   return Users;
 };

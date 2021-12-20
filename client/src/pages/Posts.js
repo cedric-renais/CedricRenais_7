@@ -23,7 +23,7 @@ function Posts() {
   // Return the HTML to inject //
   //---------------------------//
   return (
-    <div>
+    <div className="listOfPosts">
       {listOfPosts.map((value, key) => {
         return (
           <div

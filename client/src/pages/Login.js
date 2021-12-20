@@ -3,10 +3,12 @@
 //--------------------------------------//
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 //-------------------------//
 // Create a Login function //
 //-------------------------//
 function Login() {
+  let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   //---------------------------------------------------------------//
@@ -16,8 +18,9 @@ function Login() {
   //---------------------------------------------------------------//
   const loginRequest = () => {
     const data = { username: username, password: password };
-    axios.post('http://localhost:3001/login', data).then((response) => {
+    axios.post('http://localhost:3001/users/login', data).then((response) => {
       console.log(response.data);
+      navigate('/posts');
     });
   };
   //---------------------------//
@@ -25,6 +28,7 @@ function Login() {
   //---------------------------//
   return (
     <div className="loginContainer">
+      <p>Se connecter</p>
       <input
         placeholder=" Nom d'utilisateur..."
         type="text"
@@ -42,6 +46,9 @@ function Login() {
       <button className="buttonLogin" onClick={loginRequest}>
         Connexion
       </button>
+      <a className="loginLink" href="/register">
+        Pas encore de compte ? Enregistrez vous.
+      </a>
     </div>
   );
 }

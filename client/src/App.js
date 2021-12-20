@@ -21,10 +21,10 @@ function App() {
       <Router>
         <div className="navbar">
           <img className="logo" src={Logo} alt="Logo" />
-          <Link to="/">Connexion</Link>
-          <Link to="/register">S'enregistrer</Link>
+          <Link to="/">Se connecter</Link>
+          <Link to="/register">Créer un compte</Link>
           <Link to="/newpost">Créer un message</Link>
-          <Link to="/posts">Messages</Link>
+          <Link to="/posts">Voir les messages</Link>
         </div>
         <Routes>
           <Route path="/" exact element={<Login />} />

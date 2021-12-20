@@ -29,7 +29,7 @@ app.use(express.json());
 //----------------//
 app.use('/posts', postRouter);
 app.use('/comments', commentRouter);
-app.use('/auth', usersRouter);
+app.use('/users', usersRouter);
 //------------------------------------------------------------------------------//
 // Check the connection to the database and send the result back to the console //
 //------------------------------------------------------------------------------//

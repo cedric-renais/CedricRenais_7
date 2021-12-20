@@ -17,6 +17,7 @@ function Register() {
   const initialValues = {
     username: '',
     password: '',
+    confirmation: '',
   };
   //-----------------------------------//
   // Define the form validation schema //
@@ -34,8 +35,8 @@ function Register() {
   // Send to Login page                                   //
   //------------------------------------------------------//
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/auth', data).then(() => {
-      console.log(data);
+    axios.post('http://localhost:3001/users/register', data).then(() => {
+      console.log('User created.');
       navigate('/');
     });
   };
@@ -50,6 +51,7 @@ function Register() {
         validationSchema={validationSchema}
       >
         <Form className="formContainer">
+          <p>Créer un compte</p>
           <ErrorMessage name="username" component="span" />
           <Field
             autoComplete="off"
