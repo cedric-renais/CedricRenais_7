@@ -92,6 +92,7 @@ p {
 
 .loginLink {
   margin-top: 15px;
+  color: #fd2d01;
 }
 
 /* REGISTER */
@@ -216,6 +217,7 @@ span {
   place-content: center;
   background-color: #ffd7d7;
   font-size: 18px;
+  text-align: center;
 }
 
 .post .username {

@@ -6,10 +6,14 @@ const router = express.Router();
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
+const { authentication } = require('../middlewares/authentication');
 require('dotenv').config();
-//----------------//
-// Create routers //
-//----------------//
+//----------------------//
+// Create routers       //
+// 1) Register route    //
+// 2) Login route       //
+// 3) Check token route //
+//----------------------//
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   bcrypt.hash(password, 10).then((hash) => {
@@ -32,6 +36,9 @@ router.post('/login', async (req, res) => {
     );
     res.json(JWToken);
   });
+});
+router.get('/auth', authentication, (req, res) => {
+  res.json(req.user);
 });
 //-----------------//
 // Exports routers //

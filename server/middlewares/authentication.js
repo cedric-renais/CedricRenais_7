@@ -8,12 +8,10 @@ require('dotenv').config();
 //----------------------------------------//
 const authentication = (req, res, next) => {
   const JWToken = req.header('JWToken');
-
   if (!JWToken) return res.json({ error: 'User not logged in!' });
-
   try {
     const isValid = verify(JWToken, process.env.SECRET_TOKEN);
-
+    req.user = isValid;
     if (isValid) {
       return next();
     }
