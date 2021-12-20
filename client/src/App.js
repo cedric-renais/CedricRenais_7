@@ -2,7 +2,13 @@
 // Importing the necessary dependencies //
 //--------------------------------------//
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  Navigate,
+} from 'react-router-dom';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
@@ -33,6 +39,14 @@ function App() {
         }
       });
   }, []);
+  //--//
+  //
+  //--//
+  const logout = () => {
+    sessionStorage.removeItem('JWToken');
+    setAuthState(false);
+    window.location.reload();
+  };
   //---------------------------//
   // Return the HTML to inject //
   //---------------------------//
@@ -42,17 +56,19 @@ function App() {
         <Router>
           <div className="navbar">
             <img className="logo" src={Logo} alt="Logo" />
-            {!authState && (
-              <>
-                <Link to="/">Se connecter</Link>
-                <Link to="/register">Créer un compte</Link>
-              </>
-            )}
             {authState && (
               <>
                 <Link to="/newpost">Créer un message</Link>
                 <Link to="/posts">Voir les messages</Link>
               </>
+            )}
+            {!authState ? (
+              <>
+                <Link to="/">Se connecter</Link>
+                <Link to="/register">Créer un compte</Link>
+              </>
+            ) : (
+              <button onClick={logout}>Se déconnecter</button>
             )}
           </div>
           <Routes>
