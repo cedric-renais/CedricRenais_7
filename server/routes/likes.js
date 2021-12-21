@@ -3,24 +3,27 @@
 //--------------------------------------//
 const express = require('express');
 const router = express.Router();
-const { Posts, Likes, Users } = require('../models');
+const { Likes } = require('../models');
 const { authentication } = require('../middlewares/authentication');
 //----------------//
 // Create routers //
 //----------------//
 router.post('/', authentication, async (req, res) => {
-  const post = req.body;
-  await Posts.create(post);
-  res.json(post);
-});
-router.get('/', authentication, async (req, res) => {
-  const listOfPosts = await Posts.findAll({ include: [Likes] });
-  res.json(listOfPosts);
-});
-router.get('/byId/:id', authentication, async (req, res) => {
-  const id = req.params.id;
-  const post = await Posts.findByPk(id);
-  res.json(post);
+  const { PostId } = req.body;
+  const UserId = req.user.id;
+
+  const exist = await Likes.findOne({
+    where: { PostId: PostId, UserId: UserId },
+  });
+  if (!exist) {
+    await Likes.create({ PostId: PostId, UserId: UserId });
+    res.json({ liked: true });
+  } else {
+    await Likes.destroy({
+      where: { PostId: PostId, UserId: UserId },
+    });
+    res.json({ liked: false });
+  }
 });
 //-----------------//
 // Exports routers //

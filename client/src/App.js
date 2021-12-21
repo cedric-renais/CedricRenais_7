@@ -2,7 +2,7 @@
 // Importing the necessary dependencies //
 //--------------------------------------//
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
@@ -33,13 +33,13 @@ function App() {
         }
       });
   }, []);
-  //--//
-  //
-  //--//
+  //--------------------------------------------------------------------------------------------------//
+  // The logout function delete the token stored in the sessionStorage and redirect to the login page //
+  //--------------------------------------------------------------------------------------------------//
   const logout = () => {
     sessionStorage.removeItem('JWToken');
     setAuthState(false);
-    window.location.replace(`http://localhost:3000/`);
+    window.location.replace(`/`);
   };
   //---------------------------//
   // Return the HTML to inject //
@@ -62,7 +62,9 @@ function App() {
                 <Link to="/register">Créer un compte</Link>
               </>
             ) : (
-              <button onClick={logout}>Se déconnecter</button>
+              <div className="loggedInContainer">
+                <button onClick={logout}>Se déconnecter</button>
+              </div>
             )}
           </div>
           <Routes>

@@ -75,9 +75,7 @@ function Register() {
             name="confirmation"
             placeholder=" Confirmer votre mot de passe..."
           />
-          <button className="buttonCreateUser" type="submit">
-            Valider
-          </button>
+          <button type="submit">Valider</button>
         </Form>
       </Formik>
     </div>

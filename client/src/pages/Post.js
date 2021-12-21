@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import DeleteIcon from '@mui/icons-material/Delete';
 //------------------------//
 // Create a Post function //
 //------------------------//
@@ -47,7 +48,7 @@ function Post() {
           setComments(response.data);
         }
       });
-  }, []);
+  }, [id]);
   //--------------------------------------------------//
   // Create a function to Add comment                 //
   // Make a POST request including the comment data   //
@@ -81,6 +82,22 @@ function Post() {
         }
       });
   };
+  //---------------------------------------//
+  // Create a function to delete a comment //
+  //---------------------------------------//
+  const deleteComment = (id) => {
+    axios
+      .delete(`http://localhost:3001/comments/${id}`, {
+        headers: { JWToken: sessionStorage.getItem('JWToken') },
+      })
+      .then(() => {
+        setComments(
+          comments.filter((value) => {
+            return value.id !== id;
+          })
+        );
+      });
+  };
   //---------------------------//
   // Return the HTML to inject //
   //---------------------------//
@@ -90,7 +107,7 @@ function Post() {
         <div className="post" id="individual">
           <div className="title"> {post.title} </div>
           <div className="message">{post.message}</div>
-          <div className="username">{post.username}</div>
+          <div className="footer">{post.username}</div>
         </div>
       </div>
       <div className="downSide">
@@ -111,7 +128,15 @@ function Post() {
             return (
               <div key={key} className="comment">
                 {comment.comment}
-                <div> de {comment.username}</div>
+                <div className="commentDelete">
+                  de {comment.username}
+                  <DeleteIcon
+                    className="deleteIcon"
+                    onClick={() => {
+                      deleteComment(comment.id);
+                    }}
+                  />
+                </div>
               </div>
             );
           })}

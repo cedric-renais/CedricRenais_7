@@ -53,7 +53,6 @@ p {
 .navbar button {
   width: 150px;
   height: 43px;
-  margin-bottom: 15px;
   margin-left: 20px;
   color: white;
   background-color: #fd2d01;
@@ -68,6 +67,15 @@ p {
   color: #fd2d01;
   transition: 300ms ease-in-out;
   cursor: pointer;
+}
+
+.navbar .loggedInContainer {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 15px;
 }
 
 /* LOGIN */
@@ -95,22 +103,24 @@ p {
   outline: none;
 }
 
-.buttonLogin {
-  width: 90%;
+.loginContainer button {
+  width: 91%;
   background-color: white;
   border: 2px solid #fd2d01;
+  height: 40px;
+  border-radius: 5px;
   transition: 300ms ease-in-out;
   font-size: 18px;
 }
 
-.buttonLogin:hover {
+.loginContainer button:hover {
   background-color: #fd2d01;
   color: white;
   cursor: pointer;
   transition: 300ms ease-in-out;
 }
 
-.loginLink {
+.loginContainer a {
   margin-top: 15px;
   color: #fd2d01;
 }
@@ -134,14 +144,16 @@ p {
   outline: none;
 }
 
-.buttonCreateUser {
+.formContainer button {
   width: 100%;
   background-color: white;
   border: 2px solid #fd2d01;
   font-size: 18px;
+  height: 40px;
+  border-radius: 5px;
 }
 
-.buttonCreateUser:hover {
+.formContainer button:hover {
   background-color: #fd2d01;
   color: white;
   cursor: pointer;
@@ -240,7 +252,7 @@ span {
   text-align: center;
 }
 
-.post .username {
+.post .footer {
   flex: 15%;
   display: flex;
   align-items: center;
@@ -248,6 +260,26 @@ span {
   background-color: #fd2d01;
   color: white;
   font-size: 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.likeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.likeContainer p {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+.like {
+  color: limegreen;
 }
 
 /* INDIVIDUAL POST */
@@ -288,8 +320,7 @@ span {
   box-shadow: 0px 2px 4px 2px gray;
 }
 
-.addCommentContainer input,
-button {
+.addCommentContainer input {
   width: 380px;
   height: 50px;
   border-radius: 8px;
@@ -298,8 +329,12 @@ button {
 }
 
 .addCommentContainer button {
+  width: 90%;
+  height: 40px;
+  margin-top: 10px;
   background-color: white;
   border: 2px solid #fd2d01;
+  border-radius: 5px;
   font-size: 18px;
 }
 
@@ -335,19 +370,30 @@ button {
   box-shadow: 0px 2px 4px 2px gray;
 }
 
-.commentUsernameDelete {
-  margin-top: 10px;
+.commentDelete {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
 }
 
-.deleteComment {
+.deleteIcon {
   width: 80px;
+  height: 40px;
   background-color: #fd2d01;
   font-size: 14px;
   color: white;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  border: 2px solid transparent;
+}
+
+.deleteIcon:hover {
+  background-color: white;
+  color: #fd2d01;
+  border: 2px solid #fd2d01;
+  transition: 300ms ease-in-out;
 }
 
 #individual {
@@ -356,7 +402,7 @@ button {
 }
 
 #individual .title,
-#individual .username {
+#individual .footer {
   font-size: 20px;
 }
 
