@@ -36,12 +36,14 @@ p {
 }
 
 .navbar a {
+  width: 150px;
   margin-left: 20px;
   text-decoration: none;
   border-radius: 5px;
   border: 2px solid white;
   padding: 10px;
   color: white;
+  text-align: center;
 }
 
 .navbar a:hover {
@@ -69,13 +71,20 @@ p {
   cursor: pointer;
 }
 
-.navbar .loggedInContainer {
+.navbar .loggedInOrOutContainer {
   flex: 50%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-right: 15px;
+}
+
+.loginUser {
+  color: white;
+  margin-right: 15px;
+  text-transform: uppercase;
+  border-bottom: 1px solid white;
 }
 
 /* LOGIN */
@@ -260,6 +269,7 @@ span {
   background-color: #fd2d01;
   color: white;
   font-size: 20px;
+  text-transform: uppercase;
 }
 
 .footer {
@@ -279,7 +289,11 @@ span {
 }
 
 .like {
-  color: limegreen;
+  color: dodgerblue;
+}
+
+.unlike {
+  color: white;
 }
 
 /* INDIVIDUAL POST */
@@ -375,6 +389,9 @@ span {
   justify-content: space-between;
   align-items: center;
   padding-top: 15px;
+  text-transform: uppercase;
+  color: #fd2d01;
+  font-weight: 500;
 }
 
 .deleteIcon {

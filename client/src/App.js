@@ -19,7 +19,11 @@ function App() {
   //----------------------------------------------------------------------------------//
   // Change the appearance of links depending on whether the user is logged in or not //
   //----------------------------------------------------------------------------------//
-  const [authState, setAuthState] = useState();
+  const [authState, setAuthState] = useState({
+    username: '',
+    id: 0,
+    status: false,
+  });
   useEffect(() => {
     axios
       .get('http://localhost:3001/users/auth', {
@@ -27,19 +31,23 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false }); // Destructuring syntax
         } else {
-          setAuthState(true);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
-  }, []);
+  }, [authState]);
   //--------------------------------------------------------------------------------------------------//
   // The logout function delete the token stored in the sessionStorage and redirect to the login page //
   //--------------------------------------------------------------------------------------------------//
   const logout = () => {
     sessionStorage.removeItem('JWToken');
-    setAuthState(false);
-    window.location.replace(`/`);
+    setAuthState({ username: '', id: 0, status: false });
+    window.location.replace('/');
   };
   //---------------------------//
   // Return the HTML to inject //
@@ -50,22 +58,23 @@ function App() {
         <Router>
           <div className="navbar">
             <img className="logo" src={Logo} alt="Logo" />
-            {authState && (
+            {authState.status && (
               <>
                 <Link to="/newpost">Créer un message</Link>
                 <Link to="/posts">Voir les messages</Link>
               </>
             )}
-            {!authState ? (
+            {!authState.status ? (
               <>
                 <Link to="/">Se connecter</Link>
                 <Link to="/register">Créer un compte</Link>
               </>
             ) : (
-              <div className="loggedInContainer">
+              <div className="loggedInOrOutContainer">
                 <button onClick={logout}>Se déconnecter</button>
               </div>
             )}
+            <p className="loginUser">{authState.username}</p>
           </div>
           <Routes>
             <Route path="/" exact element={<Login />} />

@@ -11,7 +11,6 @@ const { authentication } = require('../middlewares/authentication');
 router.post('/', authentication, async (req, res) => {
   const { PostId } = req.body;
   const UserId = req.user.id;
-
   const exist = await Likes.findOne({
     where: { PostId: PostId, UserId: UserId },
   });

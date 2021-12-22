@@ -27,8 +27,12 @@ function Login() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        sessionStorage.setItem('JWToken', response.data);
-        setAuthState(true);
+        sessionStorage.setItem('JWToken', response.data.token);
+        setAuthState({
+          username: response.data.username,
+          id: response.data.id,
+          status: true,
+        });
         navigate('/posts');
       }
     });

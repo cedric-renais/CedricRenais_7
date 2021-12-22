@@ -36,7 +36,6 @@ function Register() {
   //------------------------------------------------------//
   const onSubmit = (data) => {
     axios.post('http://localhost:3001/users/register', data).then(() => {
-      console.log('User created.');
       navigate('/');
     });
   };

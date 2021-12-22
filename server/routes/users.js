@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
       { username: user.username, id: user.id },
       process.env.SECRET_TOKEN
     );
-    res.json(JWToken);
+    res.json({ token: JWToken, username: username, id: user.id });
   });
 });
 router.get('/auth', authentication, (req, res) => {

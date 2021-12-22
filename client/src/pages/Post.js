@@ -1,10 +1,12 @@
 //--------------------------------------//
 // Importing the necessary dependencies //
 //--------------------------------------//
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { AuthContext } from '../helpers/authContext';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 //------------------------//
 // Create a Post function //
 //------------------------//
@@ -13,6 +15,7 @@ function Post() {
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const { authState } = useContext(AuthContext);
   //----------------------------------------------//
   // Make a request to GET the post data by is ID //
   // Checks if the user has a valid JWToken       //
@@ -52,8 +55,8 @@ function Post() {
   //--------------------------------------------------//
   // Create a function to Add comment                 //
   // Make a POST request including the comment data   //
-  // Get the response and display it as a new comment //
   // Checks if the user has a valid JWToken           //
+  // Get the response and display it as a new comment //
   //--------------------------------------------------//
   const addComment = () => {
     axios
@@ -82,10 +85,13 @@ function Post() {
         }
       });
   };
-  //---------------------------------------//
-  // Create a function to delete a comment //
-  //---------------------------------------//
-  const deleteComment = (id) => {
+  //-------------------------------------------//
+  // Create a function to delete a comment     //
+  // Make a DELETE request with the comment id //
+  // Checks if the user has a valid JWToken    //
+  // Remove the comment by filtering the id    //
+  //-------------------------------------------//
+  function deleteComment(id) {
     axios
       .delete(`http://localhost:3001/comments/${id}`, {
         headers: { JWToken: sessionStorage.getItem('JWToken') },
@@ -94,6 +100,37 @@ function Post() {
         setComments(
           comments.filter((value) => {
             return value.id !== id;
+          })
+        );
+      });
+  }
+  //-------------------------------------------------------------------------//
+  // Make a request to POST Like/Unlike toggle                               //
+  // Checks if the user has a valid JWToken                                  //
+  // If the user has not added a like, then add one                          //
+  // Else copy the array, remove the last item and return the modified array //
+  //-------------------------------------------------------------------------//
+  const likeOrNot = (postId) => {
+    axios
+      .post(
+        'http://localhost:3001/likes',
+        { PostId: postId },
+        { headers: { JWToken: sessionStorage.getItem('JWToken') } }
+      )
+      .then((response) => {
+        setPost(
+          post.map((post) => {
+            if (post.id === postId) {
+              if (response.data.liked) {
+                return { ...post, Likes: [...post.Likes, 0] }; // destructuring syntax
+              } else {
+                const likeArray = post.Likes;
+                likeArray.pop();
+                return { ...post, Likes: likeArray }; // destructuring syntax
+              }
+            } else {
+              return post;
+            }
           })
         );
       });
@@ -107,7 +144,18 @@ function Post() {
         <div className="post" id="individual">
           <div className="title"> {post.title} </div>
           <div className="message">{post.message}</div>
-          <div className="footer">{post.username}</div>
+          <div className="footer">
+            {post.username}
+            <div className="likeContainer">
+              <ThumbUpIcon
+                className="like"
+                onClick={() => {
+                  likeOrNot(post.id);
+                }}
+              />
+              <p>{post.Likes}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="downSide">
@@ -129,13 +177,15 @@ function Post() {
               <div key={key} className="comment">
                 {comment.comment}
                 <div className="commentDelete">
-                  de {comment.username}
-                  <DeleteIcon
-                    className="deleteIcon"
-                    onClick={() => {
-                      deleteComment(comment.id);
-                    }}
-                  />
+                  {comment.username}
+                  {authState.username === comment.username && (
+                    <DeleteIcon
+                      className="deleteIcon"
+                      onClick={() => {
+                        deleteComment(comment.id);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             );

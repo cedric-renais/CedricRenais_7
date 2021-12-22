@@ -11,12 +11,14 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 //-------------------------//
 function Posts() {
   const [listOfPosts, setListOfPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   let navigate = useNavigate();
   //------------------------------------------------------//
   // Make a request to GET all the posts                  //
   // Checks if the user has a valid JWToken               //
   // If an error occurs display this error in the console //
   // Else display the list of posts                       //
+  // Get each like and return the associate PostId        //
   //------------------------------------------------------//
   useEffect(() => {
     axios
@@ -29,7 +31,12 @@ function Posts() {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setListOfPosts(response.data);
+          setListOfPosts(response.data.listOfPosts);
+          setLikedPosts(
+            response.data.likedPosts.map((like) => {
+              return like.PostId;
+            })
+          );
         }
       });
   }, []);
@@ -62,6 +69,16 @@ function Posts() {
             }
           })
         );
+
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id != postId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, postId]); // destructuring syntax
+        }
       });
   };
   //---------------------------//
@@ -85,7 +102,7 @@ function Posts() {
               {value.username}
               <div className="likeContainer">
                 <ThumbUpIcon
-                  className="like"
+                  className={likedPosts.includes(value.id) ? 'like' : 'unlike'}
                   onClick={() => {
                     likeOrNot(value.id);
                   }}
