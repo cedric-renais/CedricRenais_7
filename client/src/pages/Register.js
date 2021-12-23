@@ -23,11 +23,20 @@ function Register() {
   // Define the form validation schema //
   //-----------------------------------//
   const validationSchema = Yup.object().shape({
-    username: Yup.string().min(3).max(15).required(),
-    password: Yup.string().min(6).max(18).required(),
+    username: Yup.string()
+      .min(3)
+      .max(15)
+      .required('Veuillez remplir ce champ.'),
+    password: Yup.string()
+      .min(6)
+      .max(18)
+      .required('Veuillez remplir ce champ, entre 6 et 18 caractères.'),
     confirmation: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'passwords must match')
-      .required(),
+      .oneOf(
+        [Yup.ref('password'), null],
+        'Le mot de passe doit être identique.'
+      )
+      .required('Veuillez confirmer votre mot de passe.'),
   });
   //------------------------------------------------------//
   // Create an onSubmit function containing the form data //

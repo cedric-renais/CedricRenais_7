@@ -201,6 +201,17 @@ p {
   font-size: 20px;
 }
 
+.inputNewPost_message {
+  height: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #fd2d01;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+  resize: none;
+}
+
 .formContainer button {
   width: 100%;
   background-color: white;

@@ -1,15 +1,15 @@
 //--------------------------------------//
 // Importing the necessary dependencies //
 //--------------------------------------//
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../helpers/authContext';
-//------------------------------------------------------//
-// Create a NewPost function                            //
-//------------------------------------------------------//
+//---------------------------//
+// Create a NewPost function //
+//---------------------------//
 function NewPost() {
   const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
@@ -19,42 +19,43 @@ function NewPost() {
   const initialValues = {
     title: '',
     message: '',
-    username: '',
   };
   //-----------------------------------//
   // Define the form validation schema //
   //-----------------------------------//
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(),
-    message: Yup.string().required(),
-    username: Yup.string().min(3).max(15).required(),
+    title: Yup.string().required('Veuillez remplir ce champ.'),
+    message: Yup.string().required('Veuillez remplir ce champ.'),
   });
-  //---------------------------------------------------------------------------------------//
-  // Create an onSubmit function containing the form data                                  //
-  // Check if the user is logged in or not                                                 //
-  // If the user are not logged in, redirects to the login page when try to post a message //
-  // Make a POST request including the data variable                                       //
-  // Checks if the user has a valid JWToken                                                //
-  // Send to Posts page                                                                    //
-  //---------------------------------------------------------------------------------------//
-  const onSubmit = (data) => {
+  //------------------------------------------------------------//
+  // Check if the user is logged in or not                      //
+  // If the user are not logged in, redirects to the login page //
+  //------------------------------------------------------------//
+  useEffect(() => {
     if (!authState.status) {
       navigate('/');
-    } else {
-      axios
-        .post('http://localhost:3001/posts', data, {
-          headers: {
-            JWToken: sessionStorage.getItem('JWToken'),
-          },
-        })
-        .then((response) => {
-          if (response.data.error) {
-            console.log(response.data.error);
-          } else {
-            navigate('/posts');
-          }
-        });
     }
+  }, []);
+  //------------------------------------------------------//
+  // Create an onSubmit function containing the form data //
+  // Make a POST request including the data variable      //
+  // Checks if the user has a valid JWToken               //
+  // Send to Posts page                                   //
+  //------------------------------------------------------//
+  const onSubmit = (data) => {
+    axios
+      .post('http://localhost:3001/posts', data, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          navigate('/posts');
+        }
+      });
   };
   //---------------------------//
   // Return the HTML to inject //
@@ -78,16 +79,10 @@ function NewPost() {
           <ErrorMessage name="message" component="span" />
           <Field
             autoComplete="off"
-            className="inputNewPost"
+            className="inputNewPost_message"
             name="message"
             placeholder=" Message..."
-          />
-          <ErrorMessage name="username" component="span" />
-          <Field
-            autoComplete="off"
-            className="inputNewPost"
-            name="username"
-            placeholder=" Nom d'utilisateur..."
+            as="textarea"
           />
           <button type="submit">Valider</button>
         </Form>

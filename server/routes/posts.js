@@ -10,6 +10,7 @@ const { authentication } = require('../middlewares/authentication');
 //----------------//
 router.post('/', authentication, async (req, res) => {
   const post = req.body;
+  post.username = req.user.username;
   await Posts.create(post);
   res.json(post);
 });
