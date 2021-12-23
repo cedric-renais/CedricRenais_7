@@ -2,7 +2,7 @@
 // Importing the necessary dependencies //
 //--------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AuthContext } from '../helpers/authContext';
@@ -16,41 +16,48 @@ function Post() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const { authState } = useContext(AuthContext);
-  //----------------------------------------------//
-  // Make a request to GET the post data by is ID //
-  // Checks if the user has a valid JWToken       //
-  //----------------------------------------------//
+  let navigate = useNavigate();
+  //-----------------------------------------------------------//
+  // Check if the user is logged in or not                     //
+  // If the user are not logged in redirects to the Login page //
+  // Else make a request to GET the post data by is ID         //
+  // Checks if the user has a valid JWToken                    //
+  //-----------------------------------------------------------//
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/posts/byId/${id}`, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setPost(response.data);
-        }
-      });
-    //-----------------------------------------------------------------//
-    // Make a request to GET all the comments associate to the post ID //
-    // Checks if the user has a valid JWToken                          //
-    //-----------------------------------------------------------------//
-    axios
-      .get(`http://localhost:3001/comments/${id}`, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setComments(response.data);
-        }
-      });
+    if (!authState.status) {
+      navigate('/');
+    } else {
+      axios
+        .get(`http://localhost:3001/posts/byId/${id}`, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            setPost(response.data);
+          }
+        });
+      //-----------------------------------------------------------------//
+      // Make a request to GET all the comments associate to the post ID //
+      // Checks if the user has a valid JWToken                          //
+      //-----------------------------------------------------------------//
+      axios
+        .get(`http://localhost:3001/comments/${id}`, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            setComments(response.data);
+          }
+        });
+    }
   }, [id]);
   //--------------------------------------------------//
   // Create a function to Add comment                 //

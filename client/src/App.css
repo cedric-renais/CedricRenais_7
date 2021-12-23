@@ -426,3 +426,18 @@ span {
 #individual .message {
   font-size: 18px;
 }
+
+/* 404 PAGE */
+.pageNotFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.pageNotFound_Img {
+  width: 60%;
+}
+
+.pageNotFound_Link {
+  color: #fd2d01;
+}

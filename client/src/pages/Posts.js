@@ -1,44 +1,52 @@
 //--------------------------------------//
 // Importing the necessary dependencies //
 //--------------------------------------//
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { AuthContext } from '../helpers/authContext';
 //-------------------------//
 // Create a Posts function //
 //-------------------------//
 function Posts() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
-  //------------------------------------------------------//
-  // Make a request to GET all the posts                  //
-  // Checks if the user has a valid JWToken               //
-  // If an error occurs display this error in the console //
-  // Else display the list of posts                       //
-  // Get each like and return the associate PostId        //
-  //------------------------------------------------------//
+  //-----------------------------------------------------------//
+  // Check if the user is logged in or not                     //
+  // If the user are not logged in redirects to the Login page //
+  // Else make a request to GET all the posts                  //
+  // Checks if the user has a valid JWToken                    //
+  // If an error occurs display this error in the console      //
+  // Else display the list of posts                            //
+  // Get each like and return the associate PostId             //
+  //-----------------------------------------------------------//
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/posts', {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setListOfPosts(response.data.listOfPosts);
-          setLikedPosts(
-            response.data.likedPosts.map((like) => {
-              return like.PostId;
-            })
-          );
-        }
-      });
+    if (!authState.status) {
+      navigate('/');
+    } else {
+      axios
+        .get('http://localhost:3001/posts', {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            setListOfPosts(response.data.listOfPosts);
+            setLikedPosts(
+              response.data.likedPosts.map((like) => {
+                return like.PostId;
+              })
+            );
+          }
+        });
+    }
   }, []);
   //-------------------------------------------------------------------------//
   // Make a request to POST Like/Unlike toggle                               //
@@ -73,7 +81,7 @@ function Posts() {
         if (likedPosts.includes(postId)) {
           setLikedPosts(
             likedPosts.filter((id) => {
-              return id != postId;
+              return id !== postId;
             })
           );
         } else {

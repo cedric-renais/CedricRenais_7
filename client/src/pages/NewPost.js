@@ -1,15 +1,17 @@
 //--------------------------------------//
 // Importing the necessary dependencies //
 //--------------------------------------//
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../helpers/authContext';
 //------------------------------------------------------//
 // Create a NewPost function                            //
 //------------------------------------------------------//
 function NewPost() {
+  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
   //-------------------------------------------//
   // Define the initial values ​​of the new post //
@@ -27,26 +29,32 @@ function NewPost() {
     message: Yup.string().required(),
     username: Yup.string().min(3).max(15).required(),
   });
-  //------------------------------------------------------//
-  // Create an onSubmit function containing the form data //
-  // Make a POST request including the data variable      //
-  // Checks if the user has a valid JWToken               //
-  // Send to Posts page                                   //
-  //------------------------------------------------------//
+  //---------------------------------------------------------------------------------------//
+  // Create an onSubmit function containing the form data                                  //
+  // Check if the user is logged in or not                                                 //
+  // If the user are not logged in, redirects to the login page when try to post a message //
+  // Make a POST request including the data variable                                       //
+  // Checks if the user has a valid JWToken                                                //
+  // Send to Posts page                                                                    //
+  //---------------------------------------------------------------------------------------//
   const onSubmit = (data) => {
-    axios
-      .post('http://localhost:3001/posts', data, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          navigate('/posts');
-        }
-      });
+    if (!authState.status) {
+      navigate('/');
+    } else {
+      axios
+        .post('http://localhost:3001/posts', data, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            navigate('/posts');
+          }
+        });
+    }
   };
   //---------------------------//
   // Return the HTML to inject //
@@ -59,6 +67,7 @@ function NewPost() {
         validationSchema={validationSchema}
       >
         <Form className="formContainer">
+          <p>Poster un nouveau message</p>
           <ErrorMessage name="title" component="span" />
           <Field
             autoComplete="off"
