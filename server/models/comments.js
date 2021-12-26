@@ -1,6 +1,6 @@
-//--------------------------//
-// Create and Exports model //
-//--------------------------//
+//----------------------------//
+// Creates the comments table //
+//----------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Comments = sequelize.define('Comments', {
     comment: {

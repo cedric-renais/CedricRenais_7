@@ -1,6 +1,6 @@
-//--------------//
-// Create model //
-//--------------//
+//-------------------------//
+// Creates the users table //
+//-------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     username: {
@@ -12,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  //--------------------------//
+  // Defines the associations //
+  //--------------------------//
   Users.associate = (models) => {
+    Users.hasMany(models.Comments, {
+      onDelete: 'cascade',
+    });
     Users.hasMany(models.Likes, {
       onDelete: 'cascade',
     });

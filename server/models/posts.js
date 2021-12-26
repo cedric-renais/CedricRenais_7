@@ -1,6 +1,6 @@
-//--------------//
-// Create model //
-//--------------//
+//-------------------------//
+// Creates the posts table //
+//-------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define('Posts', {
     title: {
@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  //--------------------------//
+  // Defines the associations //
+  //--------------------------//
   Posts.associate = (models) => {
     Posts.hasMany(models.Comments, {
       onDelete: 'cascade',

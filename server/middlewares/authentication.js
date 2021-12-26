@@ -1,25 +1,24 @@
-//--------------------------------------//
-// Importing the necessary dependencies //
-//--------------------------------------//
+//------------------------------------//
+// Imports the necessary dependencies //
+//------------------------------------//
 const { verify } = require('jsonwebtoken');
 require('dotenv').config();
-//----------------------------------------//
-// Checks if the user has a valid JWToken //
-//----------------------------------------//
+//----------------------------------------------------------------------------------------------------//
+// Creates authentication function to check if the user has a valid token or not                      //
+// If the token is valid returns the next function but if the token are not returns the error message //
+//----------------------------------------------------------------------------------------------------//
 const authentication = (req, res, next) => {
-  const JWToken = req.header('JWToken');
-  if (!JWToken) return res.json({ error: 'User not logged in!' });
+  const GROUPOMANIA_TOKEN = req.header('GROUPOMANIA_TOKEN');
+  if (!GROUPOMANIA_TOKEN) return res.json({ error: 'User not logged in.' });
   try {
-    const isValid = verify(JWToken, process.env.SECRET_TOKEN);
+    const isValid = verify(GROUPOMANIA_TOKEN, process.env.GROUPOMANIA_TOKEN);
     req.user = isValid;
-    if (isValid) {
-      return next();
-    }
+    if (isValid) return next();
   } catch (error) {
     return res.json({ error: error });
   }
 };
-//---------------------------------//
-// Exports authentication function //
-//---------------------------------//
+//-------------------------------------//
+// Exports the authentication function //
+//-------------------------------------//
 module.exports = { authentication };

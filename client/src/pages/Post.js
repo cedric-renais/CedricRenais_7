@@ -1,71 +1,47 @@
-//--------------------------------------//
-// Importing the necessary dependencies //
-//--------------------------------------//
+//------------------------------------//
+// Imports the necessary dependencies //
+//------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../helpers/AuthContext';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AuthContext } from '../helpers/authContext';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-//------------------------//
-// Create a Post function //
-//------------------------//
+//-----------------------//
+// Creates Post function //
+//-----------------------//
 function Post() {
+  //----------------------------------------------------------------//
+  // Declares useParams, useNavigate, useState and useContext hooks //
+  //----------------------------------------------------------------//
   let { id } = useParams();
+  let navigate = useNavigate();
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewcomment] = useState('');
   const { authState } = useContext(AuthContext);
-  let navigate = useNavigate();
-  //-----------------------------------------------------------//
-  // Check if the user is logged in or not                     //
-  // If the user are not logged in redirects to the Login page //
-  // Else make a request to GET the post data by is ID         //
-  // Checks if the user has a valid JWToken                    //
-  //-----------------------------------------------------------//
+  //---------------------------------------------------------------------//
+  // Executes this function immediately when the page the page is opened //
+  //---------------------------------------------------------------------//
   useEffect(() => {
-    if (!authState.status) {
-      navigate('/');
-    } else {
-      axios
-        .get(`http://localhost:3001/posts/byId/${id}`, {
-          headers: {
-            JWToken: sessionStorage.getItem('JWToken'),
-          },
-        })
-        .then((response) => {
-          if (response.data.error) {
-            console.log(response.data.error);
-          } else {
-            setPost(response.data);
-          }
-        });
-      //-----------------------------------------------------------------//
-      // Make a request to GET all the comments associate to the post ID //
-      // Checks if the user has a valid JWToken                          //
-      //-----------------------------------------------------------------//
-      axios
-        .get(`http://localhost:3001/comments/${id}`, {
-          headers: {
-            JWToken: sessionStorage.getItem('JWToken'),
-          },
-        })
-        .then((response) => {
-          if (response.data.error) {
-            console.log(response.data.error);
-          } else {
-            setComments(response.data);
-          }
-        });
-    }
-  }, [id]);
-  //--------------------------------------------------//
-  // Create a function to Add comment                 //
-  // Make a POST request including the comment data   //
-  // Checks if the user has a valid JWToken           //
-  // Get the response and display it as a new comment //
-  //--------------------------------------------------//
-  const addComment = () => {
+    //--------------------------------------------//
+    // Makes GET request to get the post by is id //
+    //--------------------------------------------//
+    axios.get(`http://localhost:3001/posts/post/${id}`).then((response) => {
+      setPost(response.data);
+    });
+    //-----------------------------------------------------------------//
+    // Makes GET request to get all the comments associate to the post //
+    //-----------------------------------------------------------------//
+    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+      setComments(response.data);
+    });
+  }, []);
+  //--------------------------------------------------------//
+  // Makes a POST request to add a new comment to this post //
+  // Checks if the user has a valid token                   //
+  // Returns the response as a new comment                  //
+  //--------------------------------------------------------//
+  const AddComment = () => {
     axios
       .post(
         'http://localhost:3001/comments',
@@ -75,7 +51,7 @@ function Post() {
         },
         {
           headers: {
-            JWToken: sessionStorage.getItem('JWToken'),
+            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
           },
         }
       )
@@ -83,25 +59,28 @@ function Post() {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          const commentToAdd = {
-            comment: newComment,
+          const CommentToAdd = {
+            comment: response.data.comment,
             username: response.data.username,
+            id: response.data.id,
           };
-          setComments([...comments, commentToAdd]);
-          setNewComment('');
+          setComments([...comments, CommentToAdd]);
+          setNewcomment('');
+          console.log('New comment added.');
         }
       });
   };
-  //-------------------------------------------//
-  // Create a function to delete a comment     //
-  // Make a DELETE request with the comment id //
-  // Checks if the user has a valid JWToken    //
-  // Remove the comment by filtering the id    //
-  //-------------------------------------------//
-  function deleteComment(id) {
+  //------------------------------------------------------------------//
+  // Makes a DELETE request to remove a specific comment to this post //
+  // Checks if the user has a valid token                             //
+  // Returns the response as a new comment                            //
+  //------------------------------------------------------------------//
+  const deleteComment = (id) => {
     axios
       .delete(`http://localhost:3001/comments/${id}`, {
-        headers: { JWToken: sessionStorage.getItem('JWToken') },
+        headers: {
+          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+        },
       })
       .then(() => {
         setComments(
@@ -110,90 +89,78 @@ function Post() {
           })
         );
       });
-  }
-  //-------------------------------------------------------------------------//
-  // Make a request to POST Like/Unlike toggle                               //
-  // Checks if the user has a valid JWToken                                  //
-  // If the user has not added a like, then add one                          //
-  // Else copy the array, remove the last item and return the modified array //
-  //-------------------------------------------------------------------------//
-  const likeOrNot = (postId) => {
+  };
+  //--//
+  // Makes a DELETE request to delete the post //
+  //--//
+  const deletePost = (id) => {
     axios
-      .post(
-        'http://localhost:3001/likes',
-        { PostId: postId },
-        { headers: { JWToken: sessionStorage.getItem('JWToken') } }
-      )
-      .then((response) => {
-        setPost(
-          post.map((post) => {
-            if (post.id === postId) {
-              if (response.data.liked) {
-                return { ...post, Likes: [...post.Likes, 0] }; // destructuring syntax
-              } else {
-                const likeArray = post.Likes;
-                likeArray.pop();
-                return { ...post, Likes: likeArray }; // destructuring syntax
-              }
-            } else {
-              return post;
-            }
-          })
-        );
+      .delete(`http://localhost:3001/posts/${id}`, {
+        headers: {
+          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+        },
+      })
+      .then(() => {
+        console.log('Post deleted.');
+        navigate('/');
       });
   };
-  //---------------------------//
-  // Return the HTML to inject //
-  //---------------------------//
+  //---------------------------------------------------//
+  // Returns the data and display it by injecting HTML //
+  //---------------------------------------------------//
   return (
     <div className="postPage">
-      <div className="upSide">
-        <div className="post" id="individual">
-          <div className="title"> {post.title} </div>
-          <div className="message">{post.message}</div>
-          <div className="footer">
+      <div className="postPage_top">
+        <div className="postPage_top_single">
+          <div className="postPage_top_single_header">{post.title}</div>
+          <div className="postPage_top_single_body">{post.message}</div>
+          <div className="postPage_top_single_footer">
             {post.username}
-            <div className="likeContainer">
-              <ThumbUpIcon
-                className="like"
+            {authState.username === post.username && (
+              <DeleteIcon
                 onClick={() => {
-                  likeOrNot(post.id);
+                  deletePost(post.id);
                 }}
               />
-              <p>{post.Likes}</p>
-            </div>
+            )}
           </div>
         </div>
       </div>
-      <div className="downSide">
-        <div className="addCommentContainer">
-          <input
-            type="text"
-            placeholder=" Commentaire..."
+      <div className="postPage_bottom">
+        <div className="postPage_bottom_AddComment">
+          <textarea
+            className="postPage_bottom_AddComment_input"
+            name="Addcomment"
+            placeholder="Votre commentaire..."
             autoComplete="off"
             value={newComment}
             onChange={(event) => {
-              setNewComment(event.target.value);
+              setNewcomment(event.target.value);
             }}
           />
-          <button onClick={addComment}>Valider</button>
+          <button
+            className="postPage_bottom_AddComment_button"
+            onClick={AddComment}
+          >
+            Valider
+          </button>
         </div>
-        <div className="listOfComments">
+        <div className="postPage_bottom_comments">
           {comments.map((comment, key) => {
             return (
-              <div key={key} className="comment">
+              <div className="postPage_bottom_comments_single" key={key}>
                 {comment.comment}
-                <div className="commentDelete">
+                <p>
                   {comment.username}
                   {authState.username === comment.username && (
                     <DeleteIcon
-                      className="deleteIcon"
+                      className="postPage_bottom_comments_single_delete"
                       onClick={() => {
                         deleteComment(comment.id);
                       }}
                     />
                   )}
-                </div>
+                </p>
               </div>
             );
           })}
@@ -202,7 +169,7 @@ function Post() {
     </div>
   );
 }
-//--------------------------//
-// Export the Post function //
-//--------------------------//
+//-----------------------//
+// Exports Post function //
+//-----------------------//
 export default Post;

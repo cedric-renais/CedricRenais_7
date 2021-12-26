@@ -7,10 +7,10 @@ const cors = require('cors');
 //-------------------//
 // Importing routers //
 //-------------------//
-const postRouter = require('./routes/Posts');
-const commentRouter = require('./routes/Comments');
-const usersRouter = require('./routes/Users');
-const likesRouter = require('./routes/Likes');
+const postsRouter = require('./routes/posts');
+const commentsRouter = require('./routes/comments');
+const usersRouter = require('./routes/users');
+const likesRouter = require('./routes/likes');
 //--------------------//
 // Importing database //
 //--------------------//
@@ -28,8 +28,8 @@ app.use(express.json());
 //----------------//
 // Calling routes //
 //----------------//
-app.use('/posts', postRouter);
-app.use('/comments', commentRouter);
+app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
 app.use('/likes', likesRouter);
 //------------------------------------------------------------------------------//

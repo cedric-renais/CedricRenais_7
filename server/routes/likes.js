@@ -1,16 +1,21 @@
-//--------------------------------------//
-// Importing the necessary dependencies //
-//--------------------------------------//
+//------------------------------------//
+// Imports the necessary dependencies //
+//------------------------------------//
 const express = require('express');
 const router = express.Router();
 const { Likes } = require('../models');
 const { authentication } = require('../middlewares/authentication');
-//----------------//
-// Create routers //
-//----------------//
+//---------------------------------------------------------------------------------------------------//
+// Adds a POST request to the post route                                                             //
+// Gets the PostId and the UserId                                                                    //
+// Checks if the data in the Likes table already exist by calling the sequelize function to find it  //
+// If data do not exist calls the sequelize function to adds it and returns the Liked status to true //
+// Else calls the sequelize function to remove it and returns the Liked status to false              //
+//---------------------------------------------------------------------------------------------------//
 router.post('/', authentication, async (req, res) => {
   const { PostId } = req.body;
   const UserId = req.user.id;
+
   const exist = await Likes.findOne({
     where: { PostId: PostId, UserId: UserId },
   });
@@ -24,7 +29,7 @@ router.post('/', authentication, async (req, res) => {
     res.json({ liked: false });
   }
 });
-//-----------------//
-// Exports routers //
-//-----------------//
+//--------------------//
+// Exports the router //
+//--------------------//
 module.exports = router;
