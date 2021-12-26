@@ -24,7 +24,7 @@ function Home() {
     //--//
     // Checks if
     //--//
-    if (!authState.status) {
+    if (!sessionStorage.getItem('GROUPOMANIA_TOKEN')) {
       navigate('/login');
     } else {
       //---------------------------------------------------------//
@@ -47,7 +47,7 @@ function Home() {
           );
         });
     }
-  }, []);
+  }, [authState.status, navigate]);
   //---------------------------------------------------------------------//
   // Create a function to like or unlike a post                          //
   // Makes a POST request that toggle the button on Like or unlike       //
