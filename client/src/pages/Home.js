@@ -21,9 +21,11 @@ function Home() {
   // Executes this function immediately when the page the page is opened //
   //---------------------------------------------------------------------//
   useEffect(() => {
-    //--//
-    // Checks if
-    //--//
+    //-----------------------------------------------------------------------//
+    // Checks if the user has a valid token before display the page          //
+    // If the user do not have a valid token redirects him to the login page //
+    // Else display the page                                                 //
+    //-----------------------------------------------------------------------//
     if (!sessionStorage.getItem('GROUPOMANIA_TOKEN')) {
       navigate('/login');
     } else {

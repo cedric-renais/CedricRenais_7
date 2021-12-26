@@ -443,6 +443,25 @@ span {
   text-transform: uppercase;
 }
 
+.postPage_top_single_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.postPage_top_single_footer_button {
+  margin-right: 5px;
+  border: white 2px solid;
+  border-radius: 5px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.postPage_top_single_footer_button:hover {
+  background-color: white;
+  color: #fd2d01;
+  transition: 300ms ease-in-out;
+}
+
 /* BOTTOM */
 
 .postPage_bottom {

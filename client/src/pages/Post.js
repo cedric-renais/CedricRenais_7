@@ -90,9 +90,11 @@ function Post() {
         );
       });
   };
-  //--//
-  // Makes a DELETE request to delete the post //
-  //--//
+  //--------------------------------------------------//
+  // Makes a DELETE request to delete the post        //
+  // Checks if the user has a valid token             //
+  // Redirects to the Home page after deleting a post //
+  //--------------------------------------------------//
   const deletePost = (id) => {
     axios
       .delete(`http://localhost:3001/posts/${id}`, {
@@ -115,14 +117,19 @@ function Post() {
           <div className="postPage_top_single_header">{post.title}</div>
           <div className="postPage_top_single_body">{post.message}</div>
           <div className="postPage_top_single_footer">
-            {post.username}
-            {authState.username === post.username && (
-              <DeleteIcon
-                onClick={() => {
-                  deletePost(post.id);
-                }}
-              />
-            )}
+            <div className="postPage_top_single_footer_username">
+              {post.username}
+            </div>
+            <div>
+              {authState.username === post.username && (
+                <DeleteIcon
+                  className="postPage_top_single_footer_button"
+                  onClick={() => {
+                    deletePost(post.id);
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
