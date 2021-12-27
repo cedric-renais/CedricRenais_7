@@ -49,7 +49,7 @@ function Home() {
           );
         });
     }
-  }, [authState.status, navigate]);
+  }, []);
   //---------------------------------------------------------------------//
   // Create a function to like or unlike a post                          //
   // Makes a POST request that toggle the button on Like or unlike       //

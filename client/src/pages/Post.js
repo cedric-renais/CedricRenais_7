@@ -35,7 +35,7 @@ function Post() {
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
-  }, [id]);
+  }, []);
   //--------------------------------------------------------//
   // Makes a POST request to add a new comment to this post //
   // Checks if the user has a valid token                   //

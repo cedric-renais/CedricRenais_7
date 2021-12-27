@@ -37,7 +37,7 @@ function CreatePost() {
     if (!sessionStorage.getItem('GROUPOMANIA_TOKEN')) {
       navigate('/login');
     }
-  }, [authState.status, navigate]);
+  }, []);
   //------------------------------------------------------//
   // Creates an onSubmit function containing the form data //
   // Makes a POST request including the data               //

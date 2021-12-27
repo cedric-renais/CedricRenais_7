@@ -48,7 +48,7 @@ function App() {
           });
         }
       });
-  }, [authState]);
+  }, []);
   //-----------------------------------------//
   // Creates a logout function               //
   // Removes the token in the sessionStorage //
