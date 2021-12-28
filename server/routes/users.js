@@ -52,6 +52,19 @@ router.post('/login', async (req, res) => {
     res.json({ token: GROUPOMANIA_TOKEN, username: username, id: user.id });
   });
 });
+//--------------------------------------------------------------------------------//
+// Adds a GET request to the users route to retrieve the user info                //
+// Gets the id from the params                                                    //
+// Calls the sequelize function to find user of the users table by is Primary Key //
+// Adds attributes at the sequelize function to exclude some info of the request  //
+//--------------------------------------------------------------------------------//
+router.get('/info/:id', async (req, res) => {
+  const id = req.params.id;
+  const info = await Users.findByPk(id, {
+    attributes: { exclude: ['password'] },
+  });
+  res.json(info);
+});
 //-------------------------------------------------------------------------------------//
 // Adds a GET request to the users route to Check if the user is authenticated or not  //
 //-------------------------------------------------------------------------------------//

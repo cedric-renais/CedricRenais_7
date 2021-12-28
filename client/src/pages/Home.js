@@ -1,22 +1,20 @@
 //------------------------------------//
 // Imports the necessary dependencies //
 //------------------------------------//
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { AuthContext } from '../helpers/AuthContext';
 //-----------------------//
 // Creates Home function //
 //-----------------------//
 function Home() {
-  //------------------------------------------------------//
-  // Declares useNavigate, useStates and useContext hooks //
-  //------------------------------------------------------//
+  //------------------------------------------//
+  // Declares useNavigate and useStates hooks //
+  //------------------------------------------//
   let navigate = useNavigate();
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
-  const { authState } = useContext(AuthContext);
   //---------------------------------------------------------------------//
   // Executes this function immediately when the page the page is opened //
   //---------------------------------------------------------------------//
@@ -120,7 +118,7 @@ function Home() {
             </div>
             <div className="posts_single_footer">
               <div className="posts_single_footer_username">
-                {value.username}
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
               </div>
               <div className="posts_single_footer_buttons">
                 <ThumbUpIcon

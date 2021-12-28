@@ -148,9 +148,11 @@ body {
 }
 
 .login_form_link {
-  margin-top: 15px;
   color: #fd2d01;
+  margin-top: 30px;
   text-align: center;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* REGISTER */
@@ -212,6 +214,14 @@ body {
   color: white;
   cursor: pointer;
   transition: 300ms ease-in-out;
+}
+
+.register_form_info {
+  color: #fd2d01;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* HOME CSS */
@@ -281,12 +291,41 @@ body {
   align-items: center;
 }
 
+.posts_single_footer_username a {
+  color: white;
+  text-decoration: none;
+  border: 2px solid transparent;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.posts_single_footer_username a:hover {
+  border: 2px solid white;
+  transition: 300ms ease-in-out;
+}
+
 .posts_single_footer_buttons_unlike {
   color: white;
+  border: 2px solid transparent;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.posts_single_footer_buttons_unlike:hover {
+  border: 2px solid white;
+  transition: 300ms ease-in-out;
 }
 
 .posts_single_footer_buttons_like {
   color: dodgerblue;
+  border: 2px solid transparent;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.posts_single_footer_buttons_like:hover {
+  border: 2px solid dodgerblue;
+  transition: 300ms ease-in-out;
 }
 
 .posts_single_footer_buttons p {
@@ -595,4 +634,8 @@ span {
 .NotFound_Link:hover {
   color: white;
   background-color: #fd2d01;
+}
+
+.profilePage {
+  margin-top: 150px;
 }

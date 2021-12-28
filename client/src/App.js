@@ -9,6 +9,7 @@ import CreatePost from './pages/CreatePost';
 import Post from './pages/Post';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
@@ -25,11 +26,11 @@ function App() {
     id: 0,
     status: false,
   });
-  //----------------------------------------------------------------------//
-  // Executes this function immediately when the page the page is opened  //
-  // If there are an error changes the authState to false                 //
-  // Else changes the authState to true                                   //
-  //----------------------------------------------------------------------//
+  //------------------------------------------------- ----------//
+  // Executes this function immediately when the page is opened //
+  // If there are an error changes the authState to false       //
+  // Else changes the authState to true                         //
+  //------------------------------------------------------------//
   useEffect(() => {
     axios
       .get('http://localhost:3001/users/auth', {
@@ -112,6 +113,7 @@ function App() {
             <Route path="/post/:id" exact element={<Post />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
+            <Route path="/profile/:id" exact element={<Profile />} />
             <Route path="*" exact element={<NotFound />} />
           </Routes>
         </Router>

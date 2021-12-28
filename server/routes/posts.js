@@ -11,13 +11,14 @@ const { authentication } = require('../middlewares/authentication');
 //--------------------------------------------------------------//
 // Adds a POST request to the post route                        //
 // Gets the post data from the body                             //
-// Adds the username element to the post object                 //
+// Adds the username and userId elements to the post object                 //
 // Calls the sequelize function to adds data to the posts table //
 // Returns the post data                                        //
 //--------------------------------------------------------------//
 router.post('/', authentication, async (req, res) => {
   const post = req.body;
   post.username = req.user.username;
+  post.UserId = req.user.id;
   await Posts.create(post);
   res.json(post);
 });
@@ -33,6 +34,7 @@ router.get('/', authentication, async (req, res) => {
 });
 //--------------------------------------------------------------------------------//
 // Adds a GET request to the post route                                           //
+// Gets the id from the params                                                    //
 // Calls the sequelize function to find data of the posts table by is Primary Key //
 // Returns the post data                                                          //
 //--------------------------------------------------------------------------------//
@@ -40,6 +42,21 @@ router.get('/post/:id', async (req, res) => {
   const id = req.params.id;
   const post = await Posts.findByPk(id);
   res.json(post);
+});
+//-------------------------------------------------------------------------//
+// Adds a GET request to the post route                                    //
+// Gets the id from the params                                             //
+// Calls the sequelize function to find all the data related to the UserId //
+// Including the Likes table                                               //
+// Returns the posts data                                                  //
+//-------------------------------------------------------------------------//
+router.get('/user/:id', async (req, res) => {
+  const id = req.params.id;
+  const posts = await Posts.findAll({
+    where: { UserId: id },
+    include: [Likes],
+  });
+  res.json(posts);
 });
 //-------------------------------------------------------------------------------//
 // Adds a DELETE request to the posts route                                      //
