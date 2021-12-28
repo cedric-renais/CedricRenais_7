@@ -10,6 +10,7 @@ import Post from './pages/Post';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Password from './pages/Password';
 import NotFound from './pages/NotFound';
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
@@ -114,6 +115,7 @@ function App() {
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
             <Route path="/profile/:id" exact element={<Profile />} />
+            <Route path="/password" exact element={<Password />} />
             <Route path="*" exact element={<NotFound />} />
           </Routes>
         </Router>

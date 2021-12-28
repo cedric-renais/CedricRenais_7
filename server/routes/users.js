@@ -19,11 +19,8 @@ require('dotenv').config();
 //--------------------------------------------------------------//
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  bcrypt.hash(password, 10).then((hash) => {
-    Users.create({
-      username: username,
-      password: hash,
-    });
+  await bcrypt.hash(password, 10).then((hash) => {
+    Users.create({ username: username, password: hash });
     res.json('Data added to the users table.');
   });
 });
@@ -39,12 +36,10 @@ router.post('/register', async (req, res) => {
 //--------------------------------------------------------------------------------------//
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  const user = await Users.findOne({
-    where: { username: username },
-  });
-  if (!user) res.json({ error: "User doesn't exist." });
+  const user = await Users.findOne({ where: { username: username } });
+  if (!user) res.json({ error: 'User do not exist.' });
   bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: "User and password don't match." });
+    if (!match) res.json({ error: 'User and password do not match.' });
     const GROUPOMANIA_TOKEN = sign(
       { username: user.username, id: user.id },
       process.env.GROUPOMANIA_TOKEN
@@ -66,10 +61,30 @@ router.get('/info/:id', async (req, res) => {
   res.json(info);
 });
 //-------------------------------------------------------------------------------------//
-// Adds a GET request to the users route to Check if the user is authenticated or not  //
+// Adds a GET request to the users route to check if the user is authenticated or not  //
 //-------------------------------------------------------------------------------------//
 router.get('/auth', authentication, (req, res) => {
   res.json(req.user);
+});
+//-------------------------------------------------------------------------------//
+// Adds a PUT request to the users route to update password form the users table //
+// Gets the password and the newPassword from the body                           //
+// Find the correct user in the database                                         //
+//
+//-------------------------------------------------------------------------------//
+router.put('/password', authentication, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user = await Users.findOne({ where: { username: req.user.username } });
+  bcrypt.compare(oldPassword, user.password).then((match) => {
+    if (!match) res.json({ error: 'Password do not match.' });
+    bcrypt.hash(newPassword, 10).then((hash) => {
+      Users.update(
+        { password: hash },
+        { where: { username: req.user.username } }
+      );
+      res.json('Password updated.');
+    });
+  });
 });
 //--------------------//
 // Exports the router //

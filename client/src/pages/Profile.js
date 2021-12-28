@@ -1,21 +1,23 @@
 //------------------------------------//
 // Imports the necessary dependencies //
 //------------------------------------//
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { AuthContext } from '../helpers/AuthContext';
 //--------------------------//
 // Creates Profile function //
 //--------------------------//
 function Profile() {
-  //----------------------------------------//
-  // Declares useParams and use State hooks //
-  //----------------------------------------//
+  //---------------------------------------------------//
+  // Declares useParams, useState and useContext hooks //
+  //---------------------------------------------------//
   let { id } = useParams();
   let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [listOfPosts, setListOfPosts] = useState([]);
+  const { authState } = useContext(AuthContext);
   //------------------------------------------------------------//
   // Executes this function immediately when the page is opened //
   //------------------------------------------------------------//
@@ -30,9 +32,23 @@ function Profile() {
   return (
     <div className="profilePage">
       <div className="profilePage_info">
-        <h1>Utilisateur: {username}</h1>
+        <div className="profilePage_info_username">
+          <h1>{username}</h1>
+        </div>
+        <div className="profilePage_info_button">
+          {authState.username === username && (
+            <button
+              onClick={() => {
+                navigate('/password');
+              }}
+            >
+              Modifier mon mot de passe
+            </button>
+          )}
+        </div>
       </div>
-      <div className="posts">
+      <div className="profilePage_posts">
+        <p>Les publications de {username}</p>
         {listOfPosts.map((value, key) => {
           return (
             <div key={key} className="posts_single">

@@ -14,17 +14,17 @@ function Register() {
   // Declares useNavigate hook //
   //---------------------------//
   let navigate = useNavigate();
-  //--------------------------------------------//
-  // Defines the initial values ​​of the new post //
-  //--------------------------------------------//
+  //-------------------------------------------------//
+  // Defines the initial values ​​of the new post form //
+  //-------------------------------------------------//
   const initialValues = {
     username: '',
     password: '',
     confirmation: '',
   };
-  //-----------------------------------//
+  //------------------------------------//
   // Defines the form validation schema //
-  //-----------------------------------//
+  //------------------------------------//
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .min(3)
