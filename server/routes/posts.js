@@ -11,7 +11,7 @@ const { authentication } = require('../middlewares/authentication');
 //--------------------------------------------------------------//
 // Adds a POST request to the post route                        //
 // Gets the post data from the body                             //
-// Adds the username and userId elements to the post object                 //
+// Adds the username and userId elements to the post object     //
 // Calls the sequelize function to adds data to the posts table //
 // Returns the post data                                        //
 //--------------------------------------------------------------//
@@ -57,6 +57,26 @@ router.get('/user/:id', async (req, res) => {
     include: [Likes],
   });
   res.json(posts);
+});
+//----------------------------------------------------------------------------//
+// Adds a PUT request to the posts route                                      //
+// Gets the editTitle and the id from the body                                //
+// Calls the sequelize function to update a specific field of a specific post //
+//----------------------------------------------------------------------------//
+router.put('/title', authentication, async (req, res) => {
+  const { editTitle, id } = req.body;
+  await Posts.update({ title: editTitle }, { where: { id: id } });
+  res.json(editTitle);
+});
+//----------------------------------------------------------------------------//
+// Adds a PUT request to the posts route                                      //
+// Gets the editMessage and the id from the body                              //
+// Calls the sequelize function to update a specific field of a specific post //
+//----------------------------------------------------------------------------//
+router.put('/message', authentication, async (req, res) => {
+  const { editMessage, id } = req.body;
+  await Posts.update({ message: editMessage }, { where: { id: id } });
+  res.json(editMessage);
 });
 //-------------------------------------------------------------------------------//
 // Adds a DELETE request to the posts route                                      //

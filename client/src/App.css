@@ -460,6 +460,18 @@ span {
   font-size: 18px;
 }
 
+.postPage_top_single_header_edit {
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.postPage_top_single_header_edit:hover {
+  border: 2px solid white;
+  transition: 300ms ease-in-out;
+}
+
 .postPage_top_single .postPage_top_single_body {
   flex: 70%;
   display: grid;
@@ -469,6 +481,13 @@ span {
   text-align: justify;
   padding-left: 5px;
   padding-right: 5px;
+  border: 3px solid transparent;
+}
+
+.postPage_top_single_body:hover {
+  border: 3px solid black;
+  transition: 300ms ease-in-out;
+  cursor: pointer;
 }
 
 .postPage_top_single .postPage_top_single_footer {

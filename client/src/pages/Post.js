@@ -107,6 +107,41 @@ function Post() {
         navigate('/');
       });
   };
+  //------------------------------------------------------------------------------------------//
+  // If the user click on the title field then makes a PUT request to edit the title          //
+  // Checks if the user has a valid token                                                     //
+  // Changes the title of the post                                                            //
+  // Else if the user click on the message field then makes a PUT request to edit the message //
+  // Checks if the user has a valid token                                                     //
+  // Changes the message of the post                                                          //
+  //------------------------------------------------------------------------------------------//
+  const editPost = (option) => {
+    if (option === 'title') {
+      let editTitle = prompt('Modifier votre titre:');
+      axios.put(
+        'http://localhost:3001/posts/title',
+        { editTitle: editTitle, id: id },
+        {
+          headers: {
+            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          },
+        }
+      );
+      setPost({ ...post, title: editTitle });
+    } else {
+      let editMessage = prompt('Modifier votre message:');
+      axios.put(
+        'http://localhost:3001/posts/message',
+        { editMessage: editMessage, id: id },
+        {
+          headers: {
+            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          },
+        }
+      );
+      setPost({ ...post, message: editMessage });
+    }
+  };
   //---------------------------------------------------//
   // Returns the data and display it by injecting HTML //
   //---------------------------------------------------//
@@ -114,8 +149,28 @@ function Post() {
     <div className="postPage">
       <div className="postPage_top">
         <div className="postPage_top_single">
-          <div className="postPage_top_single_header">{post.title}</div>
-          <div className="postPage_top_single_body">{post.message}</div>
+          <div className="postPage_top_single_header">
+            <div
+              className="postPage_top_single_header_edit"
+              onClick={() => {
+                if (authState.username === post.username) {
+                  editPost('title');
+                }
+              }}
+            >
+              {post.title}
+            </div>
+          </div>
+          <div
+            className="postPage_top_single_body"
+            onClick={() => {
+              if (authState.username === post.username) {
+                editPost('message');
+              }
+            }}
+          >
+            {post.message}
+          </div>
           <div className="postPage_top_single_footer">
             <div className="postPage_top_single_footer_username">
               {post.username}
