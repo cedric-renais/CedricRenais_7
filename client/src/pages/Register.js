@@ -49,6 +49,9 @@ function Register() {
     axios
       .post('http://localhost:3001/users/register', data)
       .then((response) => {
+        alert(
+          'Votre compte a bien été crée, veuillez à présent vous connecter'
+        );
         navigate('/');
       });
   };
@@ -90,10 +93,6 @@ function Register() {
           <button className="register_form_button" type="submit">
             Valider
           </button>
-          <p className="register_form_info">
-            Après votre enregistrement, vous serez redirigé vers la page de
-            connexion.
-          </p>
         </Form>
       </Formik>
     </div>

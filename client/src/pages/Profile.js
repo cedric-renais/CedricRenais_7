@@ -22,13 +22,38 @@ function Profile() {
   // Executes this function immediately when the page is opened //
   //------------------------------------------------------------//
   useEffect(() => {
+    //-----------------------------------//
+    // Makes GET request to get username //
+    //-----------------------------------//
     axios.get(`http://localhost:3001/users/info/${id}`).then((response) => {
       setUsername(response.data.username);
     });
+    //--------------------------------------------//
+    // Makes GET request to get the list of posts //
+    //--------------------------------------------//
     axios.get(`http://localhost:3001/posts/user/${id}`).then((response) => {
       setListOfPosts(response.data);
     });
   }, []);
+  //-----------------------------------------//
+  // Makes DELETE request to delete the user //
+  //-----------------------------------------//
+  const deleteProfile = (id) => {
+    //-----------------------------------------//
+    // Makes DELETE request to delete the user //
+    //-----------------------------------------//
+    axios
+      .delete(`http://localhost:3001/users/profile/${id}`, {
+        headers: {
+          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+        },
+      })
+      .then(() => {
+        sessionStorage.removeItem('GROUPOMANIA_TOKEN');
+        alert('Votre compte a bien été supprimé.');
+        window.location.replace('/');
+      });
+  };
   return (
     <div className="profilePage">
       <div className="profilePage_info">
@@ -43,6 +68,15 @@ function Profile() {
               }}
             >
               Modifier mon mot de passe
+            </button>
+          )}
+          {authState.username === username && (
+            <button
+              onClick={() => {
+                deleteProfile(id);
+              }}
+            >
+              Supprimer mon compte
             </button>
           )}
         </div>
