@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
   const { username, password } = req.body;
   await bcrypt.hash(password, 10).then((hash) => {
     Users.create({ username: username, password: hash });
-    res.status(201).json('Data added to the users table.');
+    res.json('Data added to the users table.');
   });
 };
 //--------------------------------------------------------------------------------------//
@@ -33,16 +33,14 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   const user = await Users.findOne({ where: { username: username } });
-  if (!user) res.status(400).json({ error: 'User do not exist.' });
+  if (!user) res.json({ error: 'User do not exist.' });
   bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.status(400)({ error: 'User and password do not match.' });
+    if (!match) res.json({ error: 'User and password do not match.' });
     const GROUPOMANIA_TOKEN = sign(
       { username: user.username, id: user.id },
       process.env.GROUPOMANIA_TOKEN
     );
-    res
-      .status(200)
-      .json({ token: GROUPOMANIA_TOKEN, username: username, id: user.id });
+    res.json({ token: GROUPOMANIA_TOKEN, username: username, id: user.id });
   });
 };
 //--------------------------------------------------------------------------------//
@@ -55,13 +53,13 @@ exports.info = async (req, res) => {
   const info = await Users.findByPk(id, {
     attributes: { exclude: ['password'] },
   });
-  res.status(200).json(info);
+  res.json(info);
 };
 //----------------------------------------------//
 // To check if the user is authenticated or not //
 //----------------------------------------------//
 exports.auth = (req, res) => {
-  res.status(200).json(req.user);
+  res.json(req.user);
 };
 //---------------------------------------------------------------------------//
 // Gets the password and the newPassword from the body                       //
@@ -76,13 +74,13 @@ exports.password = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const user = await Users.findOne({ where: { username: req.user.username } });
   bcrypt.compare(oldPassword, user.password).then((match) => {
-    if (!match) res.status(400).json({ error: 'Password do not match.' });
+    if (!match) res.json({ error: 'Password do not match.' });
     bcrypt.hash(newPassword, 10).then((hash) => {
       Users.update(
         { password: hash },
         { where: { username: req.user.username } }
       );
-      res.status(200).json('Password updated.');
+      res.json('Password updated.');
     });
   });
 };
@@ -100,5 +98,5 @@ exports.profileDelete = async (req, res) => {
       id: user.id,
     },
   });
-  res.status(200).json('User removed from the database.');
+  res.json('User removed from the database.');
 };
