@@ -14,7 +14,9 @@ function Password() {
   let navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
+  //--------------------------------------------//
+  // Makes a PUT request to update the password //
+  //--------------------------------------------//
   const changePassword = () => {
     axios
       .put(
@@ -37,7 +39,9 @@ function Password() {
     alert('Mot de passe mis à jour.');
     navigate('/');
   };
-
+  //--------------//
+  // Injects HTML //
+  //--------------//
   return (
     <div className="passwordPage">
       <h1>Modifier votre mot de passe</h1>

@@ -675,6 +675,7 @@ span {
   background-color: #ffd7d7;
   margin-bottom: 15px;
   text-transform: uppercase;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .profilePage_info_button button {
@@ -685,6 +686,7 @@ span {
   border: 2px solid #fd2d01;
   font-size: 18px;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .profilePage_info_button :hover {
