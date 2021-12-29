@@ -93,10 +93,6 @@ exports.password = async (req, res) => {
 exports.profileDelete = async (req, res) => {
   const id = req.params.id;
   const user = await Users.findByPk(id);
-  Users.destroy({
-    where: {
-      id: user.id,
-    },
-  });
+  Users.destroy({ where: { id: user.id } });
   res.json('User removed from the database.');
 };
