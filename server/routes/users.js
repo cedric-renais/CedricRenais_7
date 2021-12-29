@@ -12,11 +12,11 @@ const { authentication } = require('../middlewares/authentication');
 // POST requests to the users route //
 //----------------------------------//
 router.post('/register', usersCtrl.register);
-router.post('/login'), usersCtrl.login;
+router.post('/login', usersCtrl.login);
 //---------------------------------//
 // GET requests to the users route //
 //---------------------------------//
-router.get('/profile/:id', usersCtrl.profile);
+router.get('/info/:id', usersCtrl.info);
 router.get('/auth', authentication, usersCtrl.auth);
 //--------------------------------//
 // PUT request to the users route //

@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
 // Calls the sequelize function to find user in the users table by is Primary Key //
 // Adds attributes at the sequelize function to exclude some info of the request  //
 //--------------------------------------------------------------------------------//
-exports.profile = async (req, res) => {
+exports.info = async (req, res) => {
   const id = req.params.id;
   const info = await Users.findByPk(id, {
     attributes: { exclude: ['password'] },
