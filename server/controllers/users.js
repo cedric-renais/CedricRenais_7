@@ -4,7 +4,7 @@
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
-require('dotenv').config();
+require('dotenv').config({ path: './config/.env' });
 //-------------------------------------------------------//
 // Controllers (arranged in order following the C.R.U.D) //
 //-------------------------------------------------------//
@@ -110,16 +110,27 @@ exports.login = async (req, res) => {
     });
 };
 //--------------------------------------------------------------------------------//
-// Gets the id from the params                                                    //
-// Calls the sequelize function to find user in the users table by is Primary Key //
-// Adds attributes at the sequelize function to exclude some info of the request  //
+// Get the id from the params of the request                                      //
+// Find user in the users table by is Primary Key by indicating attributes wanted //
+// If the user exist return status 201 with the user info asked                   //
+// Else return status 404 with the error message                                  //
+// If an error occurs, catch it and return status 500 with a basic error message  //
 //--------------------------------------------------------------------------------//
-exports.info = async (req, res) => {
+exports.profile = async (req, res) => {
   const id = req.params.id;
-  const info = await Users.findByPk(id, {
-    attributes: { exclude: ['password'] },
-  });
-  res.json(info);
+  await Users.findByPk(id, { attributes: ['username', 'biography'] })
+    .then((user) => {
+      if (user) {
+        return res.status(201).json(user);
+      } else {
+        return res
+          .status(404)
+          .json({ error: 'User ID: ' + id + ' not found.' });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
+    });
 };
 //----------------------------------------------//
 // To check if the user is authenticated or not //

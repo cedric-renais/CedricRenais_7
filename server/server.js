@@ -4,7 +4,7 @@
 const http = require('http');
 const app = require('./app');
 const db = require('./models');
-require('dotenv').config();
+require('dotenv').config({ path: './config/.env' });
 //-------------------------------------------//
 // Returns a valid port (number or a string) //
 //-------------------------------------------//

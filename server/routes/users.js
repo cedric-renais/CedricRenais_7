@@ -16,12 +16,12 @@ router.post('/login', usersCtrl.login);
 //---------------------------------//
 // GET requests to the users route //
 //---------------------------------//
-router.get('/info/:id', usersCtrl.info);
+router.get('/profile/:id', usersCtrl.profile);
 router.get('/auth', authentication, usersCtrl.auth);
 //--------------------------------//
 // PUT request to the users route //
 //--------------------------------//
-router.put('/password', authentication, usersCtrl.password);
+router.put('/profile/:id', authentication, usersCtrl.password);
 //-----------------------------------//
 // DELETE request to the users route //
 //-----------------------------------//

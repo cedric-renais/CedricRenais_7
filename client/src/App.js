@@ -12,7 +12,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Password from './pages/Password';
 import NotFound from './pages/NotFound';
-import { AuthContext } from './helpers/AuthContext';
+import { AuthContext } from './helpers/authContext';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 //-------------------------//

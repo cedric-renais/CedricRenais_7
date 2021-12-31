@@ -5,7 +5,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { AuthContext } from '../helpers/AuthContext';
+import { AuthContext } from '../helpers/authContext';
 //--------------------------//
 // Creates Profile function //
 //--------------------------//

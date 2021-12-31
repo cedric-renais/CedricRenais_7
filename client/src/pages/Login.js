@@ -4,7 +4,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../helpers/AuthContext';
+import { AuthContext } from '../helpers/authContext';
 //------------------------//
 // Creates Login function //
 //------------------------//

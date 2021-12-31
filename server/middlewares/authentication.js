@@ -2,7 +2,7 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 const { verify } = require('jsonwebtoken');
-require('dotenv').config();
+require('dotenv').config({ path: './config/.env' });
 //----------------------------------------------------------------------------------------------------//
 // Creates authentication function to check if the user has a valid token or not                      //
 // If the token is valid returns the next function but if the token are not returns the error message //
