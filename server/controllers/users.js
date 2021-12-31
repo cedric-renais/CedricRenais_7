@@ -136,15 +136,15 @@ exports.profile = async (req, res) => {
 exports.auth = (req, res) => {
   res.status(200).json(req.user);
 };
-//---------------------------------------------------------------------------//
-// Gets the password and the newPassword from the body                       //
-// Find the correct user in the database                                     //
-// Checks if the oldPassword word is the same as the user's current password //
-// If the passwords do not match returns the error message                   //
-// Otherwise hash the new password                                           //
-// Calls the sequelize function to update the password                       //
-// Returns the response                                                      //
-//---------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------//
+// Get the id from the body of the request                                       //
+// Find user in the users table by is Primary Key                                //
+// If the user exist update the user in the users table                          //
+// Return status 201 with the confirmation message                               //
+// If an error occurs, catch it and return status 500 with a basic error message //
+// Else return status 404 with the error message                                 //
+// If an error occurs, catch it and return status 500 with a basic error message //
+//-------------------------------------------------------------------------------//
 exports.profileUpdate = async (req, res) => {
   const id = req.params.id;
   await Users.findByPk(id)
@@ -165,12 +165,15 @@ exports.profileUpdate = async (req, res) => {
       return res.status(500).json({ error: 'An error has occurred.' });
     });
 };
-//--------------------------------------------------------------------------------//
-// Gets the id from the params                                                    //
-// Calls the sequelize function to find user in the users table by is Primary Key //
-// Calls the sequelize function to delete the user from the users table           //
-// Returns the response                                                           //
-//--------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------//
+// Get the id from the body of the request                                       //
+// Find user in the users table by is Primary Key                                //
+// If the user exist delete the user in the users table                          //
+// Return status 201 with the confirmation message                               //
+// If an error occurs, catch it and return status 500 with a basic error message //
+// Else return status 404 with the error message                                 //
+// If an error occurs, catch it and return status 500 with a basic error message //
+//-------------------------------------------------------------------------------//
 exports.profileDelete = async (req, res) => {
   const id = req.params.id;
   await Users.findByPk(id)
