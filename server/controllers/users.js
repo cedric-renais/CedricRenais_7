@@ -8,22 +8,36 @@ require('dotenv').config();
 //-------------------------------------------------------//
 // Controllers (arranged in order following the C.R.U.D) //
 //-------------------------------------------------------//
-//-------------------------------------------------------------------------------//
-// Get the username and the password from the body of the request                //
-// Check if the username or the password are not missing in the request          //
-// Check if the username already exists in the Users tables                      //
-// If the username is not in the Users table                                     //
-// Hash password with bcrypt algorithm                                           //
-// Add the user in the Users table by indicating by default that it is not admin //
-// Then return status 201 with a message indicating the ID of the user           //
-// If an error occurs, catch it and return status 500 with a basic error message //
-// Else if the usersame is already exist return status 409 and the error message //
-// If an error occurs, catch it and return status 500 with a basic error message //
-//-------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------------------------------//
+// Get the username and the password from the body of the request                                                                       //
+// Check if the username or the password are not missing in the request                                                                 //
+// Check if the length of the username is between 3 and 15 characters                                                                   //
+// Check if the password has at least one uppercase letter, one lowercase letter and one number and is between 6 and 18 characters long //
+// Check if the username already exists in the Users tables                                                                             //
+// If the username is not in the Users table                                                                                            //
+// Hash password with bcrypt algorithm                                                                                                  //
+// Add the user in the Users table by indicating by default that it is not admin                                                        //
+// Then return status 201 with a message indicating the ID of the user                                                                  //
+// If an error occurs, catch it and return status 500 with a basic error message                                                        //
+// Else if the usersame is already exist return status 409 and the error message                                                        //
+// If an error occurs, catch it and return status 500 with a basic error message                                                        //
+//--------------------------------------------------------------------------------------------------------------------------------------//
 exports.register = async (req, res) => {
   const { username, password } = req.body;
   if (username == null || password == null) {
     return res.status(400).json({ error: 'Missing parameters.' });
+  }
+  if (username.length >= 16 || username.length <= 2) {
+    return res
+      .status(400)
+      .json({ error: 'Username must be 3 - 15 characters long.' });
+  }
+  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,18}$/;
+  if (!regex.test(password)) {
+    return res.status(400).json({
+      error:
+        'Password must be 6 - 18 characters long, must include at least one uppercase letter, one lowercase letter and one number.',
+    });
   }
   await Users.findOne({ where: { username: username } })
     .then((exist) => {
