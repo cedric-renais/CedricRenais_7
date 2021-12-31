@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
             .then((user) => {
               return res
                 .status(201)
-                .json({ message: 'User created with the ID: ' + user.id });
+                .json({ message: 'User created with the ID ' + user.id });
             })
             .catch(() => {
               return res.status(500).json({ error: 'An error has occurred.' });
@@ -123,9 +123,7 @@ exports.profile = async (req, res) => {
       if (user) {
         return res.status(201).json(user);
       } else {
-        return res
-          .status(404)
-          .json({ error: 'User ID: ' + id + ' not found.' });
+        return res.status(404).json({ error: 'User ID ' + id + ' not found.' });
       }
     })
     .catch(() => {
@@ -136,7 +134,7 @@ exports.profile = async (req, res) => {
 // To check if the user is authenticated or not //
 //----------------------------------------------//
 exports.auth = (req, res) => {
-  res.json(req.user);
+  res.status(200).json(req.user);
 };
 //---------------------------------------------------------------------------//
 // Gets the password and the newPassword from the body                       //
@@ -147,19 +145,25 @@ exports.auth = (req, res) => {
 // Calls the sequelize function to update the password                       //
 // Returns the response                                                      //
 //---------------------------------------------------------------------------//
-exports.password = async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-  const user = await Users.findOne({ where: { username: req.user.username } });
-  bcrypt.compare(oldPassword, user.password).then((match) => {
-    if (!match) res.json({ error: 'Password do not match.' });
-    bcrypt.hash(newPassword, 10).then((hash) => {
-      Users.update(
-        { password: hash },
-        { where: { username: req.user.username } }
-      );
-      res.json('Password updated.');
+exports.profileUpdate = async (req, res) => {
+  const id = req.params.id;
+  await Users.findByPk(id)
+    .then((exist) => {
+      if (exist) {
+        Users.update(req.body, { where: { id: id } })
+          .then(() => {
+            res.status(201).json({ message: 'Profile has been updated.' });
+          })
+          .catch(() => {
+            return res.status(500).json({ error: 'An error has occurred.' });
+          });
+      } else {
+        return res.status(404).json({ error: 'User ID ' + id + ' not found.' });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
     });
-  });
 };
 //--------------------------------------------------------------------------------//
 // Gets the id from the params                                                    //
@@ -169,7 +173,21 @@ exports.password = async (req, res) => {
 //--------------------------------------------------------------------------------//
 exports.profileDelete = async (req, res) => {
   const id = req.params.id;
-  const user = await Users.findByPk(id);
-  Users.destroy({ where: { id: user.id } });
-  res.json('User removed from the database.');
+  await Users.findByPk(id)
+    .then((exist) => {
+      if (exist) {
+        Users.destroy({ where: { id: id } })
+          .then(() => {
+            res.status(201).json({ message: 'Profile has been deleted.' });
+          })
+          .catch(() => {
+            return res.status(500).json({ error: 'An error has occurred.' });
+          });
+      } else {
+        return res.status(404).json({ error: 'User ID ' + id + ' not found.' });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
+    });
 };

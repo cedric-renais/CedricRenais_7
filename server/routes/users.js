@@ -21,7 +21,7 @@ router.get('/auth', authentication, usersCtrl.auth);
 //--------------------------------//
 // PUT request to the users route //
 //--------------------------------//
-router.put('/profile/:id', authentication, usersCtrl.password);
+router.put('/profile/:id', authentication, usersCtrl.profileUpdate);
 //-----------------------------------//
 // DELETE request to the users route //
 //-----------------------------------//
