@@ -235,7 +235,7 @@ body {
 
 .posts_single {
   width: 500px;
-  height: 400px;
+  min-height: 400px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -257,6 +257,7 @@ body {
   place-content: center;
   color: white;
   font-size: 18px;
+  padding-bottom: 10px;
 }
 
 .posts_single .posts_single_body {
@@ -266,8 +267,7 @@ body {
   background-color: #ffd7d7;
   font-size: 18px;
   text-align: justify;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 10px;
 }
 
 .posts_single .posts_single_footer {
@@ -441,7 +441,7 @@ span {
 
 .postPage_top_single {
   width: 500px;
-  height: 400px;
+  min-height: 400px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -479,8 +479,7 @@ span {
   background-color: #ffd7d7;
   font-size: 18px;
   text-align: justify;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 10px;
   border: 3px solid transparent;
 }
 
@@ -504,6 +503,7 @@ span {
 .postPage_top_single_footer {
   display: flex;
   justify-content: space-between;
+  padding-top: 10px;
 }
 
 .postPage_top_single_footer_button {

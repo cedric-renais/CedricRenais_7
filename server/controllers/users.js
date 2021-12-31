@@ -5,43 +5,95 @@ const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 require('dotenv').config();
-//-----------------------------------------------------------//
-// Controllers (arranged in the order following the C.R.U.D) //
-//-----------------------------------------------------------//
-//--------------------------------------------------------------//
-// Gets the username and the password from the body             //
-// Hashs the password                                           //
-// Calls the sequelize function to adds data to the users table //
-// Returns the response                                         //
-//--------------------------------------------------------------//
+//-------------------------------------------------------//
+// Controllers (arranged in order following the C.R.U.D) //
+//-------------------------------------------------------//
+//-------------------------------------------------------------------------------//
+// Get the username and the password from the body of the request                //
+// Check if the username or the password are not missing in the request          //
+// Check if the username already exists in the Users tables                      //
+// If the username is not in the Users table                                     //
+// Hash password with bcrypt algorithm                                           //
+// Add the user in the Users table by indicating by default that it is not admin //
+// Then return status 201 with a message indicating the ID of the user           //
+// If an error occurs, catch it and return status 500 with a basic error message //
+// Else if the usersame is already exist return status 409 and the error message //
+// If an error occurs, catch it and return status 500 with a basic error message //
+//-------------------------------------------------------------------------------//
 exports.register = async (req, res) => {
   const { username, password } = req.body;
-  await bcrypt.hash(password, 10).then((hash) => {
-    Users.create({ username: username, password: hash });
-    res.json('Data added to the users table.');
-  });
+  if (username == null || password == null) {
+    return res.status(400).json({ error: 'Missing parameters.' });
+  }
+  await Users.findOne({ where: { username: username } })
+    .then((exist) => {
+      if (!exist) {
+        bcrypt.hash(password, 10).then((hash) => {
+          Users.create({
+            username: username,
+            password: hash,
+            admin: 0,
+          })
+            .then((user) => {
+              return res
+                .status(201)
+                .json({ message: 'User created with the ID: ' + user.id });
+            })
+            .catch(() => {
+              return res.status(500).json({ error: 'An error has occurred.' });
+            });
+        });
+      } else {
+        return res
+          .status(409)
+          .json({ error: 'Username ' + username + ' is already in use.' });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
+    });
 };
-//--------------------------------------------------------------------------------------//
-// Gets the username and the password from the body                                     //
-// Calls the sequelize function to find the data in the users table                     //
-// Checks if the username in the users table is the same of the username in the request //
-// If the user are not in the users table, returns the error message                    //
-// Or else if the user in the request exist, checks if the username and password match  //
-// If the username and the password don't match, returns the error message              //
-// Or else returns the token, the username and the user id                              //
-//--------------------------------------------------------------------------------------//
+//------------------------------------------------------------------------------------------------------------//
+// Get the username and the password from the body of the request                                             //
+// Check if the username or the password are not missing in the request                                       //
+// Check if the username exist in the Users tables                                                            //
+// If the user exist compare the password of the request with the user password                               //
+// If the password match create JWTtoken containing the id, the admin status, the username and the secret key //
+// Return status 200 with the token, the username and the user id                                             //
+// Else if the password do not match, return status 403 with the error message                                //
+// And Else return satus 404 with the error message                                                           //
+// If an error occurs, catch it and return status 500 with a basic error message                              //
+//------------------------------------------------------------------------------------------------------------//
 exports.login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await Users.findOne({ where: { username: username } });
-  if (!user) res.json({ error: 'User do not exist.' });
-  bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: 'User and password do not match.' });
-    const GROUPOMANIA_TOKEN = sign(
-      { username: user.username, id: user.id },
-      process.env.GROUPOMANIA_TOKEN
-    );
-    res.json({ token: GROUPOMANIA_TOKEN, username: username, id: user.id });
-  });
+  if (username == null || password == null) {
+    return res.status(400).json({ error: 'Missing parameters.' });
+  }
+  await Users.findOne({ where: { username: username } })
+    .then((user) => {
+      if (user) {
+        bcrypt.compare(password, user.password).then((match) => {
+          if (match) {
+            const JWToken = sign(
+              { id: user.id, admin: user.admin, username: username },
+              process.env.JWToken
+            );
+            return res
+              .status(200)
+              .json({ token: JWToken, username: username, id: user.id });
+          } else {
+            return res.status(403).json({ error: 'Invalid password.' });
+          }
+        });
+      } else {
+        return res
+          .status(404)
+          .json({ error: 'User ' + username + ' do not exist.' });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
+    });
 };
 //--------------------------------------------------------------------------------//
 // Gets the id from the params                                                    //

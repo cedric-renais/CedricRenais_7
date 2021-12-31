@@ -1,12 +1,11 @@
 //------------------------------------//
 // Imports the necessary dependencies //
 //------------------------------------//
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../helpers/AuthContext';
 //-----------------------------//
 // Creates CreatePost function //
 //-----------------------------//
@@ -15,7 +14,6 @@ function CreatePost() {
   // Declares useNavigate and useContext hooks //
   //-------------------------------------------//
   let navigate = useNavigate();
-  const { authState } = useContext(AuthContext);
   //--------------------------------------------//
   // Defines the initial values ​​of the new post //
   //--------------------------------------------//
@@ -34,7 +32,7 @@ function CreatePost() {
   // Executes this function immediately when the page the page is opened //
   //---------------------------------------------------------------------//
   useEffect(() => {
-    if (!sessionStorage.getItem('GROUPOMANIA_TOKEN')) {
+    if (!sessionStorage.getItem('JWToken')) {
       navigate('/login');
     }
   }, []);
@@ -44,12 +42,12 @@ function CreatePost() {
   //------------------------------------------------------//
   const onSubmit = (data) => {
     axios
-      .post('http://localhost:3001/posts', data, {
+      .post('http://localhost:3001/api/posts', data, {
         headers: {
-          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          JWToken: sessionStorage.getItem('JWToken'),
         },
       })
-      .then((response) => {
+      .then(() => {
         console.log('New post created.');
         navigate('/');
       });

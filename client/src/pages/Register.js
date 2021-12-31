@@ -47,7 +47,7 @@ function Register() {
   //-------------------------------------------------------//
   const onSubmit = (data) => {
     axios
-      .post('http://localhost:3001/users/register', data)
+      .post('http://localhost:3001/api/users/register', data)
       .then((response) => {
         alert(
           'Votre compte a bien été crée, veuillez à présent vous connecter'

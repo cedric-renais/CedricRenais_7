@@ -20,14 +20,14 @@ function Password() {
   const changePassword = () => {
     axios
       .put(
-        'http://localhost:3001/users/password',
+        'http://localhost:3001/api/users/password',
         {
           oldPassword: oldPassword,
           newPassword: newPassword,
         },
         {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         }
       )

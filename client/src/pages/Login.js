@@ -26,19 +26,21 @@ function Login() {
   //------------------------------------------------------//
   const onClick = () => {
     const data = { username: username, password: password };
-    axios.post('http://localhost:3001/users/login', data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        sessionStorage.setItem('GROUPOMANIA_TOKEN', response.data.token);
-        setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          status: true,
-        });
-        navigate('/');
-      }
-    });
+    axios
+      .post('http://localhost:3001/api/users/login', data)
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          sessionStorage.setItem('JWToken', response.data.token);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
+          navigate('/');
+        }
+      });
   };
   //--------------//
   // Injects HTML //

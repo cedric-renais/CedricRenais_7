@@ -8,10 +8,10 @@ require('dotenv').config();
 // If the token is valid returns the next function but if the token are not returns the error message //
 //----------------------------------------------------------------------------------------------------//
 const authentication = (req, res, next) => {
-  const GROUPOMANIA_TOKEN = req.header('GROUPOMANIA_TOKEN');
-  if (!GROUPOMANIA_TOKEN) return res.json({ error: 'User not logged in.' });
+  const JWToken = req.header('JWToken');
+  if (!JWToken) return res.json({ error: 'User not logged in.' });
   try {
-    const isValid = verify(GROUPOMANIA_TOKEN, process.env.GROUPOMANIA_TOKEN);
+    const isValid = verify(JWToken, process.env.JWToken);
     req.user = isValid;
     if (isValid) return next();
   } catch (error) {

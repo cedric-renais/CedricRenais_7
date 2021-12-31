@@ -34,9 +34,9 @@ function App() {
   //------------------------------------------------------------//
   useEffect(() => {
     axios
-      .get('http://localhost:3001/users/auth', {
+      .get('http://localhost:3001/api/users/auth', {
         headers: {
-          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          JWToken: sessionStorage.getItem('JWToken'),
         },
       })
       .then((response) => {
@@ -57,7 +57,7 @@ function App() {
   // Changes the authState to false          //
   //-----------------------------------------//
   const logout = () => {
-    sessionStorage.removeItem('GROUPOMANIA_TOKEN');
+    sessionStorage.removeItem('JWToken');
     setAuthState({
       username: '',
       id: 0,

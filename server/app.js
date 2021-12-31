@@ -25,13 +25,14 @@ app.use(helmet());
 // Parse the JSON request //
 //------------------------//
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 //----------------//
 // Calling routes //
 //----------------//
-app.use('/posts', postsRouter);
-app.use('/comments', commentsRouter);
-app.use('/users', usersRouter);
-app.use('/likes', likesRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/comments', commentsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/likes', likesRouter);
 //------------------------------------------------------------------------------//
 // Check the connection to the database and send the result back to the console //
 //------------------------------------------------------------------------------//

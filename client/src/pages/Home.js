@@ -24,7 +24,7 @@ function Home() {
     // If the user do not have a valid token redirects him to the login page //
     // Else display the page                                                 //
     //-----------------------------------------------------------------------//
-    if (!sessionStorage.getItem('GROUPOMANIA_TOKEN')) {
+    if (!sessionStorage.getItem('JWToken')) {
       navigate('/login');
     } else {
       //---------------------------------------------------------//
@@ -33,9 +33,9 @@ function Home() {
       // Then returns the lists receveid from the API            //
       //---------------------------------------------------------//
       axios
-        .get('http://localhost:3001/posts', {
+        .get('http://localhost:3001/api/posts', {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         })
         .then((response) => {
@@ -63,11 +63,11 @@ function Home() {
   const likeOrNot = (postId) => {
     axios
       .post(
-        'http://localhost:3001/likes',
+        'http://localhost:3001/api/likes',
         { PostId: postId },
         {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         }
       )

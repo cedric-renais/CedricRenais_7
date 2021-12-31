@@ -26,13 +26,13 @@ function Post() {
     //--------------------------------------------//
     // Makes GET request to get the post by is id //
     //--------------------------------------------//
-    axios.get(`http://localhost:3001/posts/post/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/api/posts/post/${id}`).then((response) => {
       setPost(response.data);
     });
     //-----------------------------------------------------------------//
     // Makes GET request to get all the comments associate to the post //
     //-----------------------------------------------------------------//
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/api/comments/${id}`).then((response) => {
       setComments(response.data);
     });
   }, []);
@@ -44,14 +44,14 @@ function Post() {
   const AddComment = () => {
     axios
       .post(
-        'http://localhost:3001/comments',
+        'http://localhost:3001/api/comments',
         {
           comment: newComment,
           PostId: id,
         },
         {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         }
       )
@@ -77,9 +77,9 @@ function Post() {
   //------------------------------------------------------------------//
   const deleteComment = (id) => {
     axios
-      .delete(`http://localhost:3001/comments/${id}`, {
+      .delete(`http://localhost:3001/api/comments/${id}`, {
         headers: {
-          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          JWToken: sessionStorage.getItem('JWToken'),
         },
       })
       .then(() => {
@@ -97,9 +97,9 @@ function Post() {
   //--------------------------------------------------//
   const deletePost = (id) => {
     axios
-      .delete(`http://localhost:3001/posts/${id}`, {
+      .delete(`http://localhost:3001/api/posts/${id}`, {
         headers: {
-          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          JWToken: sessionStorage.getItem('JWToken'),
         },
       })
       .then(() => {
@@ -119,11 +119,11 @@ function Post() {
     if (option === 'title') {
       let editTitle = prompt('Modifier votre titre:');
       axios.put(
-        'http://localhost:3001/posts/title',
+        'http://localhost:3001/api/posts/title',
         { editTitle: editTitle, id: id },
         {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         }
       );
@@ -131,11 +131,11 @@ function Post() {
     } else {
       let editMessage = prompt('Modifier votre message:');
       axios.put(
-        'http://localhost:3001/posts/message',
+        'http://localhost:3001/api/posts/message',
         { editMessage: editMessage, id: id },
         {
           headers: {
-            GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+            JWToken: sessionStorage.getItem('JWToken'),
           },
         }
       );

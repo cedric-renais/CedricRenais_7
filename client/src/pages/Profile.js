@@ -25,13 +25,13 @@ function Profile() {
     //-----------------------------------//
     // Makes GET request to get username //
     //-----------------------------------//
-    axios.get(`http://localhost:3001/users/info/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/api/users/info/${id}`).then((response) => {
       setUsername(response.data.username);
     });
     //--------------------------------------------//
     // Makes GET request to get the list of posts //
     //--------------------------------------------//
-    axios.get(`http://localhost:3001/posts/user/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/api/posts/user/${id}`).then((response) => {
       setListOfPosts(response.data);
     });
   }, []);
@@ -43,13 +43,13 @@ function Profile() {
     // Makes DELETE request to delete the user //
     //-----------------------------------------//
     axios
-      .delete(`http://localhost:3001/users/profile/${id}`, {
+      .delete(`http://localhost:3001/api/users/profile/${id}`, {
         headers: {
-          GROUPOMANIA_TOKEN: sessionStorage.getItem('GROUPOMANIA_TOKEN'),
+          JWToken: sessionStorage.getItem('JWToken'),
         },
       })
       .then(() => {
-        sessionStorage.removeItem('GROUPOMANIA_TOKEN');
+        sessionStorage.removeItem('JWToken');
         alert('Votre compte a bien été supprimé.');
         window.location.replace('/');
       });
