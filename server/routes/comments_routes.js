@@ -3,7 +3,7 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const commentsCtrl = require('../controllers/comments');
+const commentsCtrl = require('../controllers/comments_Ctrl');
 const { authentication } = require('../middlewares/authentication');
 //-------------------------------------------------------//
 // Routers (arranged in the order following the C.R.U.D) //

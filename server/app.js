@@ -7,10 +7,10 @@ const cors = require('cors');
 //-------------------//
 // Importing routers //
 //-------------------//
-const postsRouter = require('./routes/posts');
-const commentsRouter = require('./routes/comments');
-const usersRouter = require('./routes/users');
-const likesRouter = require('./routes/likes');
+const postsRouter = require('./routes/posts_routes');
+const commentsRouter = require('./routes/comments_routes');
+const usersRouter = require('./routes/users_routes');
+const likesRouter = require('./routes/likes_routes');
 //--------------------//
 // Importing database //
 //--------------------//
