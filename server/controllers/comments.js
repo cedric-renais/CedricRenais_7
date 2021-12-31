@@ -1,7 +1,7 @@
 //----------------------------------//
 // Imports the necessary dependency //
 //----------------------------------//
-const { Comments } = require('../models/comments_model');
+const { Comments } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//

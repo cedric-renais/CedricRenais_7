@@ -3,7 +3,7 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const likesCtrl = require('../controllers/likes_Ctrl');
+const likesCtrl = require('../controllers/likes');
 const { authentication } = require('../middlewares/authentication');
 //--------------------------------//
 // POST request to the post route //

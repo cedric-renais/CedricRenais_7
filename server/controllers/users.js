@@ -1,7 +1,7 @@
 //------------------------------------//
 // Imports the necessary dependencies //
 //------------------------------------//
-const { Users } = require('../models/users_model');
+const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 require('dotenv').config();

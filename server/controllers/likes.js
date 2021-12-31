@@ -1,7 +1,7 @@
 //----------------------------------//
 // Imports the necessary dependency //
 //----------------------------------//
-const { Likes } = require('../models/likes_model');
+const { Likes } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//
