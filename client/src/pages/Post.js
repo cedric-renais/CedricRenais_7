@@ -2,7 +2,7 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../helpers/authContext';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -26,15 +26,27 @@ function Post() {
     //--------------------------------------------//
     // Makes GET request to get the post by is id //
     //--------------------------------------------//
-    axios.get(`http://localhost:3001/api/posts/post/${id}`).then((response) => {
-      setPost(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/api/posts/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        setPost(response.data);
+      });
     //-----------------------------------------------------------------//
     // Makes GET request to get all the comments associate to the post //
     //-----------------------------------------------------------------//
-    axios.get(`http://localhost:3001/api/comments/${id}`).then((response) => {
-      setComments(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/api/comments/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        setComments(response.data);
+      });
   }, []);
   //--------------------------------------------------------//
   // Makes a POST request to add a new comment to this post //
@@ -173,7 +185,7 @@ function Post() {
           </div>
           <div className="postPage_top_single_footer">
             <div className="postPage_top_single_footer_username">
-              {post.username}
+              <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
             </div>
             <div>
               {authState.username === post.username && (
@@ -191,6 +203,7 @@ function Post() {
       <div className="postPage_bottom">
         <div className="postPage_bottom_AddComment">
           <textarea
+            aria-label="Votre commentaire"
             className="postPage_bottom_AddComment_input"
             name="Addcomment"
             placeholder="Votre commentaire..."

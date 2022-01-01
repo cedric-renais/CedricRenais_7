@@ -50,6 +50,7 @@ function Login() {
       <h1>Se connecter</h1>
       <div className="login_form">
         <input
+          aria-label="Votre nom d'utilisateur"
           className="login_form_input"
           placeholder="Votre nom d'utilisateur..."
           type="text"
@@ -58,6 +59,7 @@ function Login() {
           }}
         />
         <input
+          aria-label="Votre mot de passe"
           className="login_form_input"
           placeholder="Votre mot de passe..."
           type="password"

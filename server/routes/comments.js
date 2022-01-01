@@ -15,7 +15,7 @@ router.post('/', authentication, commentsCtrl.newComment);
 //-----------------------------------//
 // GET request to the comments route //
 //-----------------------------------//
-router.get('/:postId', commentsCtrl.comments);
+router.get('/:postId', authentication, commentsCtrl.comments);
 //--------------------------------------//
 // DELETE request to the comments route //
 //--------------------------------------//

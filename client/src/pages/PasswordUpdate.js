@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //---------------------------//
 // Creates Password function //
 //---------------------------//
-function Password() {
+function PasswordUpdate() {
   //-----------------------------------------//
   // Declares useNavigate and useState hooks //
   //-----------------------------------------//
@@ -20,7 +20,7 @@ function Password() {
   const changePassword = () => {
     axios
       .put(
-        'http://localhost:3001/api/users/password',
+        'http://localhost:3001/api/users/profile/update',
         {
           oldPassword: oldPassword,
           newPassword: newPassword,
@@ -72,4 +72,4 @@ function Password() {
 //---------------------------//
 // Exports Password function //
 //---------------------------//
-export default Password;
+export default PasswordUpdate;

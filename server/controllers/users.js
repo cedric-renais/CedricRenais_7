@@ -134,7 +134,39 @@ exports.profile = async (req, res) => {
 // To check if the user is authenticated or not //
 //----------------------------------------------//
 exports.auth = (req, res) => {
-  res.status(200).json(req.user);
+  return res.status(200).json(req.user);
+};
+//--------------------------------------------------------------------------------//
+// Get the old password and the new password from the body of the request         //
+// Find the  user by his username in the users table                              //
+// Check if the oldPassword is the same as the user's current password            //
+// If the passwords do not match return status 401 error message                  //
+// Else hash the new password                                                     //
+// Then update the user's password in the users table                             //
+// And return status 201 with the confirmation message                            //
+// If an error occurs, catch it and return status 500 with a basic error message  //
+//--------------------------------------------------------------------------------//
+exports.updatePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user = await Users.findOne({ where: { username: req.user.username } });
+  bcrypt
+    .compare(oldPassword, user.password)
+    .then((match) => {
+      if (!match) {
+        return res.status(401).json({ error: 'Password do not match.' });
+      } else {
+        bcrypt.hash(newPassword, 10).then((hash) => {
+          Users.update(
+            { password: hash },
+            { where: { username: req.user.username } }
+          );
+          return res.status(201).json('Password updated.');
+        });
+      }
+    })
+    .catch(() => {
+      return res.status(500).json({ error: 'An error has occurred.' });
+    });
 };
 //-------------------------------------------------------------------------------//
 // Get the id from the body of the request                                       //

@@ -11,7 +11,7 @@ const { Posts, Likes } = require('../models');
 // Calls the sequelize function to adds the new post to the posts table //
 // Returns the response                                                 //
 //----------------------------------------------------------------------//
-exports.newPost = async (req, res) => {
+exports.createPost = async (req, res) => {
   const post = req.body;
   post.username = req.user.username;
   post.UserId = req.user.id;
@@ -23,7 +23,7 @@ exports.newPost = async (req, res) => {
 // Calls the sequelize function to find all the data related to the UserId                          //
 // Returns the responses                                                                            //
 //--------------------------------------------------------------------------------------------------//
-exports.posts = async (req, res) => {
+exports.readAllPosts = async (req, res) => {
   const listOfPosts = await Posts.findAll({ include: [Likes] });
   const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
   res.json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
@@ -33,7 +33,7 @@ exports.posts = async (req, res) => {
 // Calls the sequelize function to find the post of the posts table by is Primary Key //
 // Returns the response                                                               //
 //------------------------------------------------------------------------------------//
-exports.post = async (req, res) => {
+exports.readOnePost = async (req, res) => {
   const id = req.params.id;
   const post = await Posts.findByPk(id);
   res.json(post);
@@ -43,7 +43,7 @@ exports.post = async (req, res) => {
 // Calls the sequelize function to find all the data related to the UserId including the Likes tables //
 // Returns the response                                                                               //
 //----------------------------------------------------------------------------------------------------//
-exports.userPosts = async (req, res) => {
+exports.readUsersPosts = async (req, res) => {
   const id = req.params.id;
   const posts = await Posts.findAll({
     where: { UserId: id },

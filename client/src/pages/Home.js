@@ -57,8 +57,6 @@ function Home() {
   // If the id of the post is equal to the PostId                        //
   // If the post do not have a Like, returns it with only the like added //
   // Else if the post has a like, returns it with only the like removed  //
-  // And else returns just the unmodified post                           //
-  // If
   //---------------------------------------------------------------------//
   const likeOrNot = (postId) => {
     axios

@@ -4,6 +4,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const path = require('path');
 //-------------------//
 // Importing routers //
 //-------------------//
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 // Calling routes //
 //----------------//
 app.use('/api/posts', postsRouter);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/comments', commentsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/likes', likesRouter);

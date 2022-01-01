@@ -25,15 +25,27 @@ function Profile() {
     //-----------------------------------//
     // Makes GET request to get username //
     //-----------------------------------//
-    axios.get(`http://localhost:3001/api/users/info/${id}`).then((response) => {
-      setUsername(response.data.username);
-    });
+    axios
+      .get(`http://localhost:3001/api/users/profile/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        setUsername(response.data.username);
+      });
     //--------------------------------------------//
     // Makes GET request to get the list of posts //
     //--------------------------------------------//
-    axios.get(`http://localhost:3001/api/posts/user/${id}`).then((response) => {
-      setListOfPosts(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/api/posts/users/${id}`, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
+      .then((response) => {
+        setListOfPosts(response.data);
+      });
   }, []);
   //-----------------------------------------//
   // Makes DELETE request to delete the user //
@@ -43,7 +55,7 @@ function Profile() {
     // Makes DELETE request to delete the user //
     //-----------------------------------------//
     axios
-      .delete(`http://localhost:3001/api/users/profile/${id}`, {
+      .delete(`http://localhost:3001/api/users/profile/delete/${id}`, {
         headers: {
           JWToken: sessionStorage.getItem('JWToken'),
         },
@@ -58,26 +70,30 @@ function Profile() {
     <div className="profilePage">
       <div className="profilePage_info">
         <div className="profilePage_info_username">
-          <h1>{username}</h1>
+          <h1>Le profil de {username}</h1>
         </div>
         <div className="profilePage_info_button">
           {authState.username === username && (
-            <button
-              onClick={() => {
-                navigate('/password');
-              }}
-            >
-              Modifier mon mot de passe
-            </button>
+            <div>
+              <button
+                onClick={() => {
+                  navigate('/PasswordUpdate');
+                }}
+              >
+                Modifier mon mot de passe
+              </button>
+            </div>
           )}
           {authState.username === username && (
-            <button
-              onClick={() => {
-                deleteProfile(id);
-              }}
-            >
-              Supprimer mon compte
-            </button>
+            <div>
+              <button
+                onClick={() => {
+                  deleteProfile(id);
+                }}
+              >
+                Supprimer mon compte
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -85,22 +101,22 @@ function Profile() {
         <p>Les publications de {username}</p>
         {listOfPosts.map((value, key) => {
           return (
-            <div key={key} className="posts_single">
-              <div className="posts_single_header"> {value.title} </div>
+            <div key={key} className="profilePage_posts_single">
+              <div className="profilePage_posts_header">{value.title}</div>
               <div
-                className="posts_single_body"
+                className="profilePage_posts_body"
                 onClick={() => {
                   navigate(`/post/${value.id}`);
                 }}
               >
                 {value.message}
               </div>
-              <div className="posts_single_footer">
-                <div className="posts_single_footer_username">
+              <div className="profilePage_posts_footer">
+                <div className="profilePage_posts_footer_username">
                   {value.username}
                 </div>
-                <div className="posts_single_footer_buttons">
-                  <ThumbUpIcon className="posts_single_footer_buttons_like" />
+                <div className="profilePage_posts_footer_buttons">
+                  <ThumbUpIcon className="profilePage_posts_footer_buttons_like" />
                   <label>{value.Likes.length}</label>
                 </div>
               </div>

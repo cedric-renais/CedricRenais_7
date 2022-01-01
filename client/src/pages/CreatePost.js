@@ -66,6 +66,7 @@ function CreatePost() {
         <Form className="createPost_form">
           <ErrorMessage name="title" component="span" />
           <Field
+            aria-label="Votre titre"
             className="createPost_form_input"
             name="title"
             placeholder="Votre titre..."
@@ -73,6 +74,7 @@ function CreatePost() {
           />
           <ErrorMessage name="message" component="span" />
           <Field
+            aria-label="Votre message"
             className="createPost_form_input_message"
             name="message"
             placeholder="Votre message..."

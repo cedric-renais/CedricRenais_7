@@ -16,16 +16,16 @@ router.post('/login', usersCtrl.login);
 //---------------------------------//
 // GET requests to the users route //
 //---------------------------------//
-router.get('/profile/:id', usersCtrl.profile);
+router.get('/profile/:id', authentication, usersCtrl.profile);
 router.get('/auth', authentication, usersCtrl.auth);
 //--------------------------------//
 // PUT request to the users route //
 //--------------------------------//
-router.put('/profile/:id', authentication, usersCtrl.profileUpdate);
+router.put('/profile/update', authentication, usersCtrl.updatePassword);
 //-----------------------------------//
 // DELETE request to the users route //
 //-----------------------------------//
-router.delete('/profile/:id', authentication, usersCtrl.profileDelete);
+router.delete('/profile/delete/:id', authentication, usersCtrl.profileDelete);
 //--------------------//
 // Exports the router //
 //--------------------//

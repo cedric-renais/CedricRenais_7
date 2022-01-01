@@ -10,7 +10,7 @@ import Post from './pages/Post';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Password from './pages/Password';
+import PasswordUpdate from './pages/PasswordUpdate';
 import NotFound from './pages/NotFound';
 import { AuthContext } from './helpers/authContext';
 import { useState, useEffect } from 'react';
@@ -73,11 +73,13 @@ function App() {
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
           <div className="App_navbar">
-            <img
-              src={Logo}
-              alt="Logo de Groupomania"
-              className="App_navbar_img"
-            />
+            <h1>
+              <img
+                src={Logo}
+                alt="Logo de Groupomania"
+                className="App_navbar_img"
+              />
+            </h1>
             <div className="App_navbar_links">
               {!authState.status ? (
                 <>
@@ -100,7 +102,9 @@ function App() {
               )}
             </div>
             <div className="App_navbar_username_logout_container">
-              <p className="App_navbar_username">{authState.username}</p>
+              <p className="App_navbar_username">
+                Utilisateur connecté: {authState.username}
+              </p>
               {authState.status && (
                 <button className="App_navbar_logout" onClick={logout}>
                   Déconnexion
@@ -115,7 +119,7 @@ function App() {
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
             <Route path="/profile/:id" exact element={<Profile />} />
-            <Route path="/password" exact element={<Password />} />
+            <Route path="/PasswordUpdate" exact element={<PasswordUpdate />} />
             <Route path="*" exact element={<NotFound />} />
           </Routes>
         </Router>

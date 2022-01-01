@@ -69,6 +69,7 @@ function Register() {
         <Form className="register_form">
           <ErrorMessage name="username" component="span" />
           <Field
+            aria-label="Votre nom d'utilisateur"
             className="register_form_input"
             name="username"
             placeholder="Votre nom d'utilisateur..."
@@ -76,6 +77,7 @@ function Register() {
           />
           <ErrorMessage name="password" component="span" />
           <Field
+            aria-label="Votre mot de passe"
             className="register_form_input"
             type="password"
             name="password"
@@ -84,6 +86,7 @@ function Register() {
           />
           <ErrorMessage name="confirmation" component="span" />
           <Field
+            aria-label="Confirmez votre mot de passe"
             className="register_form_input"
             type="password"
             name="confirmation"
