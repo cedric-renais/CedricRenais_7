@@ -1,83 +1,115 @@
 //------------------------------------//
 // Imports the necessary dependencies //
 //------------------------------------//
-const { Posts, Likes } = require('../models');
+const { Posts, Likes, Comments } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//
-//----------------------------------------------------------------------//
-// Gets the post from the body                                          //
-// Adds the username and userId to the post                             //
-// Calls the sequelize function to adds the new post to the posts table //
-// Returns the response                                                 //
-//----------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+// If title is equal to null or if there is no title in the resquest          //
+// Return status 400 and error message                                        //
+// If content is equal to null or if there is no content in the resquest      //
+// Return status 400 and error message                                        //
+// Else get post from body of the request                                     //
+// Then return status 201 and confirmation message                            //
+// If an error occurs, catch it and return status 400 and error message       //
+//----------------------------------------------------------------------------//
 exports.createPost = async (req, res) => {
-  const post = req.body;
-  post.username = req.user.username;
-  post.UserId = req.user.id;
-  await Posts.create(post);
-  res.json(post);
+  if (req.body.title === null || !req.body.title) {
+    res.status(400).json({ error: 'Title is required.' });
+  }
+  if (req.body.content === null || !req.body.content) {
+    res.status(400).json({ message: 'Content is required.' });
+  } else {
+    const post = req.body;
+    post.username = req.user.username;
+    post.UserId = req.user.id;
+    await Posts.create(post)
+      .then((post) => {
+        res
+          .status(201)
+          .json({ message: 'Post created with the ID ' + post.id });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: 'An error has occurred. ' + error });
+      });
+  }
 };
-//--------------------------------------------------------------------------------------------------//
-// Calls the sequelize function to find all the post in the posts tables including the Likes tables //
-// Calls the sequelize function to find all the data related to the UserId                          //
-// Returns the responses                                                                            //
-//--------------------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------//
+// Find all the post in the posts tables including the Likes and Comments tables //
+// Then return status 200 with all the data asked                                //
+// If an error occurs, catch it and return status 400 and the error message      //
+// Find all the like in the likes tables related to the users                    //
+// Then return status 200 with all the data asked                                //
+// If an error occurs, catch it and return status 400 and the error message      //
+//-------------------------------------------------------------------------------//
 exports.readAllPosts = async (req, res) => {
-  const listOfPosts = await Posts.findAll({ include: [Likes] });
-  const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
-  res.json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
+  await Posts.findAll({ include: [Likes, Comments] })
+    .then((allPosts) => {
+      res.status(200).json(allPosts);
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
+  await Likes.findAll({ where: { UserId: req.user.id } })
+    .then((allLikes) => {
+      res.status(200).json(allLikes);
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };
-//------------------------------------------------------------------------------------//
-// Gets the id from the params                                                        //
-// Calls the sequelize function to find the post of the posts table by is Primary Key //
-// Returns the response                                                               //
-//------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+// Get the id from the params of the request                                //
+// Find one post of posts tables in the database                            //
+// Then return status 200 and the post                                      //
+// If an error occurs, catch it and return status 400 and the error message //
+//--------------------------------------------------------------------------//
 exports.readOnePost = async (req, res) => {
-  const id = req.params.id;
-  const post = await Posts.findByPk(id);
-  res.json(post);
+  id = req.params.id;
+  await Posts.findOne({ where: { id: id }, include: Comments })
+    .then((post) => {
+      res.status(200).json(post);
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };
-//----------------------------------------------------------------------------------------------------//
-// Gets the id from the params                                                                        //
-// Calls the sequelize function to find all the data related to the UserId including the Likes tables //
-// Returns the response                                                                               //
-//----------------------------------------------------------------------------------------------------//
-exports.readUsersPosts = async (req, res) => {
-  const id = req.params.id;
-  const posts = await Posts.findAll({
-    where: { UserId: id },
-    include: [Likes],
-  });
-  res.json(posts);
+//--------------------------------------------------------------------------//
+// Get the id from the params of the request                                //
+// Look for the post in the database by his id                              //
+// Update post with the body of the request indicating which by his id      //
+// Return status 200 and the confirmation message                           //
+// If an error occurs, catch it and return status 400 and the error message //
+//-----------------------------------------------------------    -----------//
+exports.updatePost = async (req, res) => {
+  id = req.params.id;
+  await Posts.findOne({ where: { id: id } })
+    .then(() => {
+      Posts.update({ ...req.body }, { where: { id: id } });
+      res.status(200).json({ message: 'Post ID ' + id + ' has been updated.' });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };
-//--------------------------------------------------------------//
-// Gets the title to edit and the id from the body              //
-// Calls the sequelize function to update the title of the post //
-// Returns the response                                         //
-//--------------------------------------------------------------//
-exports.titleUpdate = async (req, res) => {
-  const { editTitle, id } = req.body;
-  await Posts.update({ title: editTitle }, { where: { id: id } });
-  res.json(editTitle);
-};
-//----------------------------------------------------------------//
-// Gets the message to edit and the id from the body              //
-// Calls the sequelize function to update the message of the post //
-// Returns the response                                           //
-//----------------------------------------------------------------//
-exports.messageUpdate = async (req, res) => {
-  const { editMessage, id } = req.body;
-  await Posts.update({ message: editMessage }, { where: { id: id } });
-  res.json(editMessage);
-};
-//----------------------------------------------------------------------//
-// Gets the postId from the body                                        //
-// Calls the sequelize function to delete the post from the posts table //
-// Returns the response                                                 //
-//----------------------------------------------------------------------//
-exports.deletePost = async (req, res) => {
-  const postId = req.params.postId;
-  await Posts.destroy({ where: { id: postId } });
-  res.json('Data deleted from the posts table.');
+//--------------------------------------------------------------------------//
+// Get  the id from the params of the request                               //
+// Look for the post in the database by his id                              //
+// Delete the post indicating which by his id                               //
+// Return status 200 and the confirmation message                           //
+// If an error occurs, catch it and return status 400 and the error message //
+//--------------------------------------------------------------------------//
+exports.deletePost = (req, res) => {
+  id = req.params.id;
+  Posts.findOne({ where: { id: id } })
+    .then(() => {
+      Posts.destroy({ where: { id: id } });
+    })
+    .then(() =>
+      res.status(200).json({ message: 'Post ID ' + id + ' has been deleted.' })
+    )
+    .catch((error) =>
+      res.status(400).json({ error: 'An error has occurred. ' + error })
+    );
 };

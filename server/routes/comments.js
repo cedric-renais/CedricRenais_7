@@ -3,23 +3,23 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const commentsCtrl = require('../controllers/comments');
-const { authentication } = require('../middlewares/authentication');
+const Ctrl = require('../controllers/comments');
+const JWT = require('../middlewares/authentication');
 //-------------------------------------------------------//
 // Routers (arranged in the order following the C.R.U.D) //
 //-------------------------------------------------------//
 //------------------------------------//
 // POST request to the comments route //
 //------------------------------------//
-router.post('/', authentication, commentsCtrl.newComment);
+router.post('/', [JWT.auth], Ctrl.createComment);
 //-----------------------------------//
-// GET request to the comments route //
+// PUT request to the comments route //
 //-----------------------------------//
-router.get('/:postId', authentication, commentsCtrl.comments);
+router.post('/update/:id', [JWT.auth], Ctrl.updateComment);
 //--------------------------------------//
 // DELETE request to the comments route //
 //--------------------------------------//
-router.delete('/:commentId', authentication, commentsCtrl.deleteComment);
+router.delete('/delete/:id', [JWT.auth], Ctrl.deleteComment);
 //--------------------//
 // Exports the router //
 //--------------------//

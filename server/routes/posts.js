@@ -3,31 +3,29 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const postsCtrl = require('../controllers/posts');
-const { authentication } = require('../middlewares/authentication');
-const multer = require('../middlewares/multer');
+const Ctrl = require('../controllers/posts');
+const JWT = require('../middlewares/authentication');
+const upload = require('../middlewares/multer');
 //-------------------------------------------------------//
 // Routers (arranged in the order following the C.R.U.D) //
 //-------------------------------------------------------//
 //--------------------------------//
 // POST request to the post route //
 //--------------------------------//
-router.post('/', authentication, multer, postsCtrl.createPost);
+router.post('/', [JWT.auth], upload.single('image'), Ctrl.createPost);
 //--------------------------------//
 // GET requests to the post route //
 //--------------------------------//
-router.get('/', authentication, postsCtrl.readAllPosts);
-router.get('/:id', authentication, postsCtrl.readOnePost);
-router.get('/users/:id', authentication, postsCtrl.readUsersPosts);
+router.get('/', [JWT.auth], Ctrl.readAllPosts);
+router.get('/:id', [JWT.auth], Ctrl.readOnePost);
 //--------------------------------//
 // PUT request to the posts route //
 //--------------------------------//
-router.put('/title', authentication, postsCtrl.titleUpdate);
-router.put('/message', authentication, postsCtrl.messageUpdate);
+router.put('/update/:id', [JWT.auth], Ctrl.updatePost);
 //-----------------------------------//
 // DELETE request to the posts route //
 //-----------------------------------//
-router.delete('/:postId', authentication, postsCtrl.deletePost);
+router.delete('/delete/:id', [JWT.auth], Ctrl.deletePost);
 //--------------------//
 // Exports the router //
 //--------------------//

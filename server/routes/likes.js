@@ -3,12 +3,12 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const likesCtrl = require('../controllers/likes');
-const { authentication } = require('../middlewares/authentication');
-//--------------------------------//
-// POST request to the post route //
-//--------------------------------//
-router.post('/', authentication, likesCtrl.likeOrNot);
+const Ctrl = require('../controllers/likes');
+const JWT = require('../middlewares/authentication');
+//---------------------------------//
+// POST request to the likes route //
+//---------------------------------//
+router.post('/', [JWT.auth], Ctrl.likeOrNot);
 //--------------------//
 // Exports the router //
 //--------------------//

@@ -102,9 +102,7 @@ function App() {
               )}
             </div>
             <div className="App_navbar_username_logout_container">
-              <p className="App_navbar_username">
-                Utilisateur connecté: {authState.username}
-              </p>
+              <p className="App_navbar_username">{authState.username}</p>
               {authState.status && (
                 <button className="App_navbar_logout" onClick={logout}>
                   Déconnexion

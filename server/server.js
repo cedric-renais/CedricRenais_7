@@ -4,6 +4,8 @@
 const http = require('http');
 const app = require('./app');
 const db = require('./models');
+const { Users } = require('./models');
+const bcrypt = require('bcrypt');
 require('dotenv').config({ path: './config/.env' });
 //-------------------------------------------//
 // Returns a valid port (number or a string) //
@@ -34,27 +36,37 @@ const errorHandler = (error) => {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges.');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use.');
       process.exit(1);
-      break;
     default:
       throw error;
   }
 };
+//----------------------------------------------------------------------------//
+// Automatic creation of an administrator account in the database users table //
+//----------------------------------------------------------------------------//
+function createAdmin() {
+  Users.create({
+    username: process.env.ADMIN_USERNAME,
+    email: process.env.ADMIN_EMAIL,
+    password: bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10),
+    isAdmin: 1,
+  });
+}
 //---------------------------------------------------------------------------------------------//
 // Creation of the server with database synchronization                                        //
 // An event listener indicating the port or named pipe the server is running on in the console //
 //---------------------------------------------------------------------------------------------//
 const server = http.createServer(app);
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   server.on('error', errorHandler);
   server.on('listening', () => {
     const address = server.address();
     const bind =
       typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
     console.log('Listening on ' + bind);
+    createAdmin();
   });
   server.listen(port);
 });

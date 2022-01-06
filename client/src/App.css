@@ -84,13 +84,9 @@ body {
 
 .App_navbar_username {
   margin-left: 20px;
-  color: #25416f;
   text-transform: uppercase;
-  border: 2px solid #25416f;
   font-size: 20px;
   border-radius: 5px;
-  padding: 10px;
-  background-color: white;
 }
 
 /* LOGIN */

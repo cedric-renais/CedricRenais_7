@@ -5,37 +5,70 @@ const { Comments } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//
-//-------------------------------------------------------------------------//
-// Gets the comment from the body                                          //
-// Gets the username from the user                                         //
-// Adds the username to the comment object                                 //
-// Calls the sequelize function adds the new comment to the comments table //
-// Returns the response                                                    //
-//-------------------------------------------------------------------------//
-exports.newComment = async (req, res) => {
-  const comment = req.body;
-  const username = req.user.username;
-  comment.username = username;
-  const newComment = await Comments.create(comment);
-  res.json(newComment);
+//--------------------------------------------------------------------------//
+// If comment is equal to null or if there is no content in the resquest    //
+// Return status 400 and the error message                                  //
+// Else get the comment from the body of the request                        //
+// Then return status 201 and the confirmation message                      //
+// If an error occurs, catch it and return status 400 and the error message //
+//--------------------------------------------------------------------------//
+exports.createComment = async (req, res) => {
+  if (req.body.comment === null || !req.body.comment) {
+    res.status(400).json({ message: 'Content is required.' });
+  } else {
+    const comment = req.body;
+    comment.username = req.user.username;
+    comment.postId = req.params.id;
+    await Comments.create(comment)
+      .then((comment) => {
+        res
+          .status(201)
+          .json({ message: 'Comment created with the ID ' + comment.id });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: 'An error has occurred. ' + error });
+      });
+  }
 };
-//-----------------------------------------------------------------------------------------------//
-// Gets the postId from the params                                                               //
-// Calls the sequelize function to find all comments of the comments table related to the postId //
-// Returns the response                                                                          //
-//-----------------------------------------------------------------------------------------------//
-exports.comments = async (req, res) => {
-  const postId = req.params.postId;
-  const comments = await Comments.findAll({ where: { PostId: postId } });
-  res.json(comments);
+//--------------------------------------------------------------------------//
+// Get the id from the params of the request                                //
+// Look for the comment in the database by his id                           //
+// Update comment with the body of the request indicating which by his id   //
+// Return status 200 and the confirmation message                           //
+// If an error occurs, catch it and return status 400 and the error message //
+//--------------------------------------------------------------------------//
+exports.updateComment = async (req, res) => {
+  id = req.params.id;
+  await Comment.findOne({ where: { id: id } })
+    .then(() => {
+      Comment.update({ ...req.body }, { where: { id: id } });
+      res
+        .status(200)
+        .json({ message: 'Comment ID ' + id + ' has been updated.' });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };
-//----------------------------------------------------------------------------//
-// Gets the commentId from the params                                         //
-// Calls the sequelize function to delete the comment from the comments table //
-// Returns the response                                                       //
-//----------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+// Get the id from the params of the request                                //
+// Look for the comment in the database by his id                           //
+// Delete the comment indicating which by his id                            //
+// Return status 200 and the confirmation message                           //
+// If an error occurs, catch it and return status 400 and the error message //
+//--------------------------------------------------------------------------//
 exports.deleteComment = async (req, res) => {
-  const commentId = req.params.commentId;
-  await Comments.destroy({ where: { id: commentId } });
-  res.json('Comment deleted from the comments table.');
+  id = req.params.id;
+  await Comment.findOne({ where: { id: id } })
+    .then(() => {
+      Comment.destroy({ where: { id: id } });
+    })
+    .then(() =>
+      res
+        .status(200)
+        .json({ message: 'Comment ID ' + id + ' has been deleted.' })
+    )
+    .catch((error) =>
+      res.status(400).json({ error: 'An error has occurred. ' + error })
+    );
 };

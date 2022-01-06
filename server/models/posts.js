@@ -1,6 +1,6 @@
-//-------------------------//
-// Creates the posts table //
-//-------------------------//
+//--------------------------------------------//
+// Indicating the format of Posts model table //
+//--------------------------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define('Posts', {
     title: {

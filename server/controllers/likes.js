@@ -5,15 +5,14 @@ const { Likes } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//
-//--------------------------------------------------------------------------------------------//
-// Gets the PostId from the body                                                              //
-// Gets the UserId form ther user                                                             //
-// Calls the sequelize function to find the like related to the PostId and the UserId         //
-// If the like do not exist calls the sequelize function to adds the like to the Likes tables //
-// Returns the response true                                                                  //
-// Else calls the sequelize function to removes the like to the Likes tables                  //
-// Returns the response false                                                                 //
-//--------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------//
+// Get the PostId from the body of the request and the UserId from the user              //
+// Find the like related to the PostId and the UserId                                    //
+// If the like do not exist add it to the Likes tables, return status 201 and liked true //
+// If an error occurs, catch it and return status 400 and the error message              //
+// Else remove the like to the Likes tables and return status 201 and liked false        //
+// If an error occurs, catch it and return status 400 and the error message              //
+//---------------------------------------------------------------------------------------//
 exports.likeOrNot = async (req, res) => {
   const { PostId } = req.body;
   const UserId = req.user.id;
@@ -21,12 +20,22 @@ exports.likeOrNot = async (req, res) => {
     where: { PostId: PostId, UserId: UserId },
   });
   if (!exist) {
-    await Likes.create({ PostId: PostId, UserId: UserId });
-    res.json({ liked: true });
+    await Likes.create({ PostId: PostId, UserId: UserId })
+      .then(() => {
+        res.status(201).json({ liked: true });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: 'An error has occurred. ' + error });
+      });
   } else {
     await Likes.destroy({
       where: { PostId: PostId, UserId: UserId },
-    });
-    res.json({ liked: false });
+    })
+      .then(() => {
+        res.status(201).json({ liked: false });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: 'An error has occurred. ' + error });
+      });
   }
 };

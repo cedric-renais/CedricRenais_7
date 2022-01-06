@@ -3,29 +3,23 @@
 //------------------------------------//
 const express = require('express');
 const router = express.Router();
-const usersCtrl = require('../controllers/users');
-const { authentication } = require('../middlewares/authentication');
+const Ctrl = require('../controllers/users');
+const JWT = require('../middlewares/authentication');
 //-------------------------------------------------------//
 // Routers (arranged in the order following the C.R.U.D) //
 //-------------------------------------------------------//
-//----------------------------------//
-// POST requests to the users route //
-//----------------------------------//
-router.post('/register', usersCtrl.register);
-router.post('/login', usersCtrl.login);
 //---------------------------------//
 // GET requests to the users route //
 //---------------------------------//
-router.get('/profile/:id', authentication, usersCtrl.profile);
-router.get('/auth', authentication, usersCtrl.auth);
+router.get('/profile/:id', [JWT.auth], Ctrl.readUser);
 //--------------------------------//
 // PUT request to the users route //
 //--------------------------------//
-router.put('/profile/update', authentication, usersCtrl.updatePassword);
+router.put('/profile/update/:id', [JWT.auth], Ctrl.updateUser);
 //-----------------------------------//
 // DELETE request to the users route //
 //-----------------------------------//
-router.delete('/profile/delete/:id', authentication, usersCtrl.profileDelete);
+router.delete('/profile/delete/:id', [JWT.auth], Ctrl.deleteUser);
 //--------------------//
 // Exports the router //
 //--------------------//

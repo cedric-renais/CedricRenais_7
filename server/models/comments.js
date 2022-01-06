@@ -1,6 +1,6 @@
-//----------------------------//
-// Creates the comments table //
-//----------------------------//
+//-----------------------------------------------//
+// Indicating the format of Comments model table //
+//-----------------------------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Comments = sequelize.define('Comments', {
     comment: {
