@@ -1,0 +1,34 @@
+//--------------//
+// Color pallet //
+//--------------//
+$color-1: #fd2d01;
+$color-2: #163972;
+$color-3: #ffd7d7;
+$color-4: #ff828e;
+//------------//
+// Box shadow //
+//------------//
+$shadow: 0px 2px 4px 2px gray;
+//------------------//
+// General settings //
+//------------------//
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  list-style-type: none;
+  outline: none;
+}
+
+h1 {
+  color: $color-2;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

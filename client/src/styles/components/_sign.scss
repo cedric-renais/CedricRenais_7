@@ -1,0 +1,97 @@
+.sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  border: 5px solid $color-1;
+  background: $color-3;
+  max-width: 550px;
+  box-shadow: $shadow;
+  width: 100%;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.sign_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+  ul {
+    display: flex;
+    margin-bottom: 25px;
+    li {
+      cursor: pointer;
+      width: 250px;
+      border-radius: 35px;
+      padding: 10px;
+      transition: 300ms;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: 2px solid transparent;
+      &:hover {
+        border: 2px solid $color-1;
+      }
+      @media screen and(max-width: 768px) {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.sign_active {
+  transform: scale(1);
+  background-color: $color-2;
+  border-radius: 10px;
+  color: white;
+}
+
+#signin {
+  @media screen and(max-width: 768px) {
+    margin-bottom: 30px;
+  }
+}
+
+.sign_form {
+  display: flex;
+  flex-direction: column;
+  width: 375px;
+  & input {
+    width: 100%;
+    border: 2px solid $color-1;
+    border-radius: 10px;
+    height: 40px;
+    font-size: 1rem;
+    padding-left: 10px;
+  }
+  & button {
+    cursor: pointer;
+    width: 100%;
+    background: $color-2;
+    color: white;
+    border-radius: 35px;
+    font-size: 1.1rem;
+    padding: 10px 40px;
+    border: 2px solid transparent;
+    transition: 300ms ease-out;
+    &:hover {
+      border: 2px solid $color-1;
+      background: $color-1;
+      transition: 300ms ease-in;
+    }
+  }
+  @media screen and(max-width: 768px) {
+    width: 100%;
+    margin-left: 0px;
+  }
+}
+
+span {
+  color: red;
+  font-weight: bold;
+}
+
+.sign_valid {
+  color: green;
+  font-weight: bold;
+}

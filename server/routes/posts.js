@@ -21,7 +21,7 @@ router.get('/:id', [JWT.auth], Ctrl.readOnePost);
 //--------------------------------//
 // PUT request to the posts route //
 //--------------------------------//
-router.put('/update/:id', [JWT.auth], Ctrl.updatePost);
+router.put('/update/:id', [JWT.auth], upload.single('image'), Ctrl.updatePost);
 //-----------------------------------//
 // DELETE request to the posts route //
 //-----------------------------------//

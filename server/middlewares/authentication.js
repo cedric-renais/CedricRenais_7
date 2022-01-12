@@ -11,16 +11,17 @@ require('dotenv').config({ path: './config/.env' });
 // Otherwise go to next function                                //
 //--------------------------------------------------------------//
 auth = (req, res, next) => {
-  const JWToken = req.header('JWToken');
-  if (!JWToken) {
-    return res.status(403).json({ error: 'User not logged in.' });
-  } else {
-    const isValid = verify(JWToken, process.env.JWToken);
-    if (error) {
-      return res.status(401).json({ error: 'Unauthorized. ' + error });
+  try {
+    const JWToken = req.header('JWToken');
+    if (!JWToken) {
+      return res.status(403).json({ error: 'User not logged in.' });
+    } else {
+      const user = verify(JWToken, process.env.SECRET_KEY);
+      req.user = user;
+      next();
     }
-    req.user = isValid;
-    next();
+  } catch (error) {
+    return res.status(500).json({ error: 'An error has occurred. ' + error });
   }
 };
 //--------------------------------------------------------//

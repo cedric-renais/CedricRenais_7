@@ -15,7 +15,7 @@ router.post('/', [JWT.auth], Ctrl.createComment);
 //-----------------------------------//
 // PUT request to the comments route //
 //-----------------------------------//
-router.post('/update/:id', [JWT.auth], Ctrl.updateComment);
+router.put('/update/:id', [JWT.auth], Ctrl.updateComment);
 //--------------------------------------//
 // DELETE request to the comments route //
 //--------------------------------------//

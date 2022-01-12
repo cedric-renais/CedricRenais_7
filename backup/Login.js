@@ -13,7 +13,7 @@ function Login() {
   // Declares useNavigate, useState and useContext hooks //
   //-----------------------------------------------------//
   let navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setAuthState } = useContext(AuthContext);
   //------------------------------------------------------//
@@ -25,16 +25,16 @@ function Login() {
   // Redirects to the main page                           //
   //------------------------------------------------------//
   const onClick = () => {
-    const data = { username: username, password: password };
+    const data = { email: email, password: password };
     axios
-      .post('http://localhost:3001/api/users/login', data)
+      .post(`${process.env.REACT_APP_API_URL}api/sign/signin`, data)
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
           sessionStorage.setItem('JWToken', response.data.token);
           setAuthState({
-            username: response.data.username,
+            email: response.data.email,
             id: response.data.id,
             status: true,
           });
@@ -50,12 +50,12 @@ function Login() {
       <h1>Se connecter</h1>
       <div className="login_form">
         <input
-          aria-label="Votre nom d'utilisateur"
+          aria-label="votre adresse email"
           className="login_form_input"
-          placeholder="Votre nom d'utilisateur..."
+          placeholder="Votre adresse email..."
           type="text"
           onChange={(event) => {
-            setUsername(event.target.value);
+            setEmail(event.target.value);
           }}
         />
         <input

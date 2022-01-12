@@ -13,12 +13,13 @@ const { Comments } = require('../models');
 // If an error occurs, catch it and return status 400 and the error message //
 //--------------------------------------------------------------------------//
 exports.createComment = async (req, res) => {
-  if (req.body.comment === null || !req.body.comment) {
+  if (req.body.content === null || !req.body.content) {
     res.status(400).json({ message: 'Content is required.' });
   } else {
     const comment = req.body;
     comment.username = req.user.username;
-    comment.postId = req.params.id;
+    comment.PostId = req.params.id;
+    comment.UserId = req.user.id;
     await Comments.create(comment)
       .then((comment) => {
         res
@@ -39,9 +40,9 @@ exports.createComment = async (req, res) => {
 //--------------------------------------------------------------------------//
 exports.updateComment = async (req, res) => {
   id = req.params.id;
-  await Comment.findOne({ where: { id: id } })
+  await Comments.findOne({ where: { id: id } })
     .then(() => {
-      Comment.update({ ...req.body }, { where: { id: id } });
+      Comments.update({ ...req.body }, { where: { id: id } });
       res
         .status(200)
         .json({ message: 'Comment ID ' + id + ' has been updated.' });
@@ -59,9 +60,9 @@ exports.updateComment = async (req, res) => {
 //--------------------------------------------------------------------------//
 exports.deleteComment = async (req, res) => {
   id = req.params.id;
-  await Comment.findOne({ where: { id: id } })
+  await Comments.findOne({ where: { id: id } })
     .then(() => {
-      Comment.destroy({ where: { id: id } });
+      Comments.destroy({ where: { id: id } });
     })
     .then(() =>
       res

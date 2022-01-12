@@ -2,10 +2,12 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+//-----------------------//
+// Creates Home function //
+//-----------------------//
 function Home() {
   //------------------------------------------//
   // Declares useNavigate and useStates hooks //
@@ -23,7 +25,7 @@ function Home() {
     // Else display the page                                                 //
     //-----------------------------------------------------------------------//
     if (!sessionStorage.getItem('JWToken')) {
-      navigate('/');
+      navigate('/login');
     } else {
       //---------------------------------------------------------//
       // Makes a GET request to grab all data in the posts table //
@@ -31,16 +33,15 @@ function Home() {
       // Then returns the lists receveid from the API            //
       //---------------------------------------------------------//
       axios
-        .get(`${process.env.REACT_APP_API_URL}api/posts`, {
+        .get('http://localhost:3001/api/posts', {
           headers: {
             JWToken: sessionStorage.getItem('JWToken'),
           },
         })
-        .then((res) => {
-          setListOfPosts(res.data.listOfPosts);
-          console.log(res.data.listOfPosts);
+        .then((response) => {
+          setListOfPosts(response.data.listOfPosts);
           setLikedPosts(
-            res.data.likedPosts.map((like) => {
+            response.data.likedPosts.map((like) => {
               return like.PostId;
             })
           );
@@ -68,11 +69,11 @@ function Home() {
           },
         }
       )
-      .then((res) => {
+      .then((response) => {
         setListOfPosts(
           listOfPosts.map((post) => {
             if (post.id === postId) {
-              if (res.data.liked) {
+              if (response.data.liked) {
                 return { ...post, Likes: [...post.Likes, 0] };
               } else {
                 const likesArray = post.Likes;
@@ -95,52 +96,49 @@ function Home() {
         }
       });
   };
+
   //---------------------------------------------------//
   // Returns the data and display it by injecting HTML //
   //---------------------------------------------------//
   return (
-    <div>
-      <Navbar />
-      <div className="home">
-        <h1>Publications</h1>
-        <div className="home_posts">
-          {listOfPosts.map((value, key) => {
-            return (
-              <div className="home_single" key={key}>
-                <div className="home_single_header">{value.title}</div>
-                <div
-                  className="home_single_body"
-                  onClick={() => {
-                    navigate(`/publication/${value.id}`);
-                  }}
-                >
-                  {value.message}
-                </div>
-                <div className="home_single_footer">
-                  <div className="home_single_footer_username">
-                    <Link to={`/user/${value.UserId}`}>{value.username}</Link>
-                  </div>
-                  <div className="home_single_footer_buttons">
-                    <ThumbUpIcon
-                      className={
-                        likedPosts.includes(value.id)
-                          ? 'home_single_footer_buttons_like'
-                          : 'home_single_footer_buttons_unlike'
-                      }
-                      onClick={() => {
-                        likeOrNot(value.id);
-                      }}
-                    />
-                    <p>{value.Likes.length}</p>
-                  </div>
-                </div>
+    <div className="posts">
+      {listOfPosts.map((value, key) => {
+        return (
+          <div className="posts_single" key={key}>
+            <div className="posts_single_header">{value.title}</div>
+            <div
+              className="posts_single_body"
+              onClick={() => {
+                navigate(`/post/${value.id}`);
+              }}
+            >
+              {value.message}
+            </div>
+            <div className="posts_single_footer">
+              <div className="posts_single_footer_username">
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
               </div>
-            );
-          })}
-        </div>
-      </div>
+              <div className="posts_single_footer_buttons">
+                <ThumbUpIcon
+                  className={
+                    likedPosts.includes(value.id)
+                      ? 'posts_single_footer_buttons_like'
+                      : 'posts_single_footer_buttons_unlike'
+                  }
+                  onClick={() => {
+                    likeOrNot(value.id);
+                  }}
+                />
+                <p>{value.Likes.length}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
-
+//-----------------------//
+// Exports Home function //
+//-----------------------//
 export default Home;

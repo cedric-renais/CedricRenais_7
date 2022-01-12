@@ -2,6 +2,7 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 const { Posts, Likes, Comments } = require('../models');
+const fs = require('fs');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
 //-----------------------------------------------------------//
@@ -15,15 +16,17 @@ const { Posts, Likes, Comments } = require('../models');
 // If an error occurs, catch it and return status 400 and error message       //
 //----------------------------------------------------------------------------//
 exports.createPost = async (req, res) => {
-  if (req.body.title === null || !req.body.title) {
-    res.status(400).json({ error: 'Title is required.' });
-  }
+  let image;
   if (req.body.content === null || !req.body.content) {
     res.status(400).json({ message: 'Content is required.' });
   } else {
+    if (req.file) {
+      image = `${req.protocol}://${req.get('host')}/image/${req.file.filename}`;
+    }
     const post = req.body;
     post.username = req.user.username;
     post.UserId = req.user.id;
+    post.image = image;
     await Posts.create(post)
       .then((post) => {
         res
@@ -44,20 +47,13 @@ exports.createPost = async (req, res) => {
 // If an error occurs, catch it and return status 400 and the error message      //
 //-------------------------------------------------------------------------------//
 exports.readAllPosts = async (req, res) => {
-  await Posts.findAll({ include: [Likes, Comments] })
-    .then((allPosts) => {
-      res.status(200).json(allPosts);
-    })
-    .catch((error) => {
-      res.status(400).json({ error: 'An error has occurred. ' + error });
-    });
-  await Likes.findAll({ where: { UserId: req.user.id } })
-    .then((allLikes) => {
-      res.status(200).json(allLikes);
-    })
-    .catch((error) => {
-      res.status(400).json({ error: 'An error has occurred. ' + error });
-    });
+  try {
+    const listOfPosts = await Posts.findAll({ include: [Likes, Comments] });
+    const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
+    res.status(200).json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
+  } catch (error) {
+    res.status(400).json({ error: 'An error has occurred. ' + error });
+  }
 };
 //--------------------------------------------------------------------------//
 // Get the id from the params of the request                                //
@@ -84,9 +80,14 @@ exports.readOnePost = async (req, res) => {
 //-----------------------------------------------------------    -----------//
 exports.updatePost = async (req, res) => {
   id = req.params.id;
+  let image;
+  if (req.file) {
+    Posts.findOne({ where: { id: id } });
+    image = `${req.protocol}://${req.get('host')}/image/${req.file.filename}`;
+  }
   await Posts.findOne({ where: { id: id } })
     .then(() => {
-      Posts.update({ ...req.body }, { where: { id: id } });
+      Posts.update({ ...req.body, image: image }, { where: { id: id } });
       res.status(200).json({ message: 'Post ID ' + id + ' has been updated.' });
     })
     .catch((error) => {
@@ -103,13 +104,13 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = (req, res) => {
   id = req.params.id;
   Posts.findOne({ where: { id: id } })
-    .then(() => {
-      Posts.destroy({ where: { id: id } });
+    .then((posts) => {
+      const filename = posts.image.split('/image/')[1];
+      fs.unlink(`image/${filename}`, () => {
+        Posts.destroy({ where: { id: id } })
+          .then(() => res.status(200).json({ message: 'Post deleted.' }))
+          .catch((error) => res.status(400).json({ error }));
+      });
     })
-    .then(() =>
-      res.status(200).json({ message: 'Post ID ' + id + ' has been deleted.' })
-    )
-    .catch((error) =>
-      res.status(400).json({ error: 'An error has occurred. ' + error })
-    );
+    .catch((error) => res.status(500).json({ error }));
 };

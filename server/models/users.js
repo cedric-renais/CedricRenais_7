@@ -22,11 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 'Aucune biographie disponible pour le moment.',
     },
-    avatar: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue:
-        'https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_960_720.png',
+      defaultValue: 'http://localhost:3001/image/default_user.png',
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
