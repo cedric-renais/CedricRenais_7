@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
   margin-top: 50px;
   border: 5px solid $color-1;
   background: $color-3;
-  max-width: 550px;
   box-shadow: $shadow;
-  width: 100%;
   text-align: center;
   border-radius: 20px;
 }
@@ -20,14 +19,16 @@
   ul {
     display: flex;
     margin-bottom: 25px;
+    @media screen and(max-width: 768px) {
+      flex-direction: column;
+    }
     li {
       cursor: pointer;
-      width: 250px;
+      width: clamp(150px, 20vw, 250px);
       border-radius: 35px;
       padding: 10px;
       transition: 300ms;
       font-weight: bold;
-      font-size: 1.2rem;
       border: 2px solid transparent;
       &:hover {
         border: 2px solid $color-1;
@@ -40,22 +41,20 @@
 }
 
 .sign_active {
-  transform: scale(1);
   background-color: $color-2;
   border-radius: 10px;
   color: white;
 }
 
-#signin {
-  @media screen and(max-width: 768px) {
-    margin-bottom: 30px;
-  }
-}
-
 .sign_form {
   display: flex;
   flex-direction: column;
-  width: 375px;
+  align-items: center;
+  width: 100%;
+  min-width: 240px;
+  & h1 {
+    font-size: clamp(24px, 5vw, 30px);
+  }
   & input {
     width: 100%;
     border: 2px solid $color-1;
@@ -66,11 +65,10 @@
   }
   & button {
     cursor: pointer;
-    width: 100%;
     background: $color-2;
     color: white;
     border-radius: 35px;
-    font-size: 1.1rem;
+    font-size: clamp(16px, 5vw, 20px);
     padding: 10px 40px;
     border: 2px solid transparent;
     transition: 300ms ease-out;
@@ -81,7 +79,6 @@
     }
   }
   @media screen and(max-width: 768px) {
-    width: 100%;
     margin-left: 0px;
   }
 }

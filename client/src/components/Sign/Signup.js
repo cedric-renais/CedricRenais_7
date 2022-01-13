@@ -13,7 +13,7 @@ function Signup() {
   //----------------------------------//
   // Declaration of the useState hook //
   //----------------------------------//
-  const [formSubmit, SetFOrmSubmit] = useState(false);
+  const [formSubmit, setFormSubmit] = useState(false);
   //-----------------------------------------------//
   // Declaration of the initial values ​​of the form //
   //-----------------------------------------------//
@@ -55,12 +55,12 @@ function Signup() {
   const onSubmit = (data) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}api/sign/signup`, data)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.error) {
-          console.log(response.data.error);
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.error) {
+          console.log(res.data.error);
         } else {
-          SetFOrmSubmit(true);
+          setFormSubmit(true);
         }
       })
       .catch((error) => {
@@ -97,7 +97,7 @@ function Signup() {
               aria-label="votre nom d'utilisateur"
               className="sign_form_input"
               name="username"
-              placeholder="Votre nom d'utilisateur..."
+              placeholder="Votre nom d'utilisateur"
               autoComplete="off"
             />
             <br />
@@ -107,7 +107,7 @@ function Signup() {
               aria-label="votre adresse email"
               className="sign_form_input"
               name="email"
-              placeholder="Votre adresse email..."
+              placeholder="Votre adresse email"
               autoComplete="off"
             />
             <br />
@@ -118,7 +118,7 @@ function Signup() {
               className="register_form_input"
               type="password"
               name="password"
-              placeholder="Votre mot de passe..."
+              placeholder="Votre mot de passe"
               autoComplete="off"
             />
             <br />
@@ -129,7 +129,7 @@ function Signup() {
               className="sign_form_input"
               type="password"
               name="confirmation"
-              placeholder="Confirmez votre mot de passe..."
+              placeholder="Confirmez votre mot de passe"
               autoComplete="off"
             />
             <br />

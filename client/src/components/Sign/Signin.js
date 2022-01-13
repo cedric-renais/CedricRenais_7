@@ -45,7 +45,7 @@ function Signin() {
       <br />
       <input
         aria-label="votre adresse email"
-        placeholder="Votre adresse email..."
+        placeholder="Votre adresse email"
         type="text"
         name="email"
         id="email"
@@ -58,7 +58,7 @@ function Signin() {
       <br />
       <input
         aria-label="votre mot de passe"
-        placeholder="Votre mot de passe..."
+        placeholder="Votre mot de passe"
         type="password"
         name="password"
         id="password"
