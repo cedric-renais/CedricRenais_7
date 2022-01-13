@@ -32,3 +32,10 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+
+.page_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1000px;
+}

@@ -25,7 +25,7 @@ function Upload() {
           console.log(res.data.error);
         } else {
           setImage({ ...image, image: data });
-          window.location.replace('/user');
+          window.location.replace(`/user/${authState.id}`);
         }
       });
   };

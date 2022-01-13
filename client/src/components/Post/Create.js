@@ -2,14 +2,15 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 import React, { useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DoneIcon from '@mui/icons-material/Done';
 //-----------------------------//
 // Creates CreatePost function //
 //-----------------------------//
-function CreatePost() {
+function Create() {
   //-------------------------------------------//
   // Declares useNavigate and useContext hooks //
   //-------------------------------------------//
@@ -31,7 +32,7 @@ function CreatePost() {
   //---------------------------------------------------------------------//
   useEffect(() => {
     if (!sessionStorage.getItem('JWToken')) {
-      navigate('/login');
+      navigate('/');
     }
   }, []);
   //------------------------------------------------------//
@@ -46,32 +47,30 @@ function CreatePost() {
         },
       })
       .then(() => {
-        console.log('New post created.');
-        navigate('/home');
+        window.location.replace('/home');
       });
   };
   //--------------//
   // Injects HTML //
   //--------------//
   return (
-    <div className="createPost">
+    <div className="create">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        <Form className="createPost_form">
-          <ErrorMessage name="content" component="span" />
+        <Form className="create_form">
           <Field
-            aria-label="Votre message"
-            className="createPost_form_input_message"
+            aria-label="votre message"
+            className="create_input"
             name="content"
-            placeholder="Votre message..."
+            placeholder="Quoi de neuf ?"
             autoComplete="off"
             as="textarea"
           />
-          <button className="createPost_form_button" type="submit">
-            Valider
+          <button className="create_button" type="submit" aria-label="valider">
+            <DoneIcon />
           </button>
         </Form>
       </Formik>
@@ -81,4 +80,4 @@ function CreatePost() {
 //-----------------------------//
 // Exports CreatePost function //
 //-----------------------------//
-export default CreatePost;
+export default Create;

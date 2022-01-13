@@ -4,8 +4,9 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import Create from '../components/Post/Create';
 function Home() {
   //------------------------------------------//
   // Declares useNavigate and useStates hooks //
@@ -38,7 +39,6 @@ function Home() {
         })
         .then((res) => {
           setListOfPosts(res.data.listOfPosts);
-          console.log(res.data.listOfPosts);
           setLikedPosts(
             res.data.likedPosts.map((like) => {
               return like.PostId;
@@ -99,33 +99,32 @@ function Home() {
   // Returns the data and display it by injecting HTML //
   //---------------------------------------------------//
   return (
-    <div>
+    <div className="page_container">
       <Navbar />
       <div className="home">
-        <h1>Publications</h1>
+        <Create />
         <div className="home_posts">
           {listOfPosts.map((value, key) => {
             return (
-              <div className="home_single" key={key}>
-                <div className="home_single_header">{value.title}</div>
+              <div className="home_post" key={key}>
                 <div
-                  className="home_single_body"
+                  className="home_post_content"
                   onClick={() => {
-                    navigate(`/publication/${value.id}`);
+                    navigate(`/posts/${value.id}`);
                   }}
                 >
-                  {value.message}
+                  {value.content}
                 </div>
-                <div className="home_single_footer">
-                  <div className="home_single_footer_username">
-                    <Link to={`/user/${value.UserId}`}>{value.username}</Link>
+                <div className="home_post_footer">
+                  <div className="home_post_username">
+                    <p>{value.username}</p>
                   </div>
-                  <div className="home_single_footer_buttons">
+                  <div className="home_post_buttons">
                     <ThumbUpIcon
                       className={
                         likedPosts.includes(value.id)
-                          ? 'home_single_footer_buttons_like'
-                          : 'home_single_footer_buttons_unlike'
+                          ? 'home_post_buttons_like'
+                          : 'home_post_buttons_unlike'
                       }
                       onClick={() => {
                         likeOrNot(value.id);

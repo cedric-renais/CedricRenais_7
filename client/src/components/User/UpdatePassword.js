@@ -27,7 +27,7 @@ function UpdatePassword() {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          window.location.replace('/user');
+          window.location.replace(`/user/${authState.id}`);
         }
       });
   };

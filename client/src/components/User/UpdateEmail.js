@@ -36,7 +36,7 @@ function UpdateEmail() {
           console.log(res.data.error);
         } else {
           setEmail({ ...email, email: email });
-          window.location.replace('/user');
+          window.location.replace(`/user/${authState.id}`);
         }
       });
   };

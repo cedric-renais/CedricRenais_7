@@ -12,7 +12,7 @@ function index() {
       <Routes>
         <Route path="/" exact element={<Sign />} />
         <Route path="/home" exact element={<Home />} />
-        <Route path="/user" exact element={<User />} />
+        <Route path="/user/:id" exact element={<User />} />
       </Routes>
     </Router>
   );

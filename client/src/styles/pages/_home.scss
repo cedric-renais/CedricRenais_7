@@ -1,6 +1,113 @@
 .home {
   margin-top: 25px;
   text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.create {
+  display: flex;
+  border: 3px solid $color-1;
+  border-radius: 15px;
+  background-color: $color-3;
+  padding: 5px;
+}
+
+.create_header {
+  display: flex;
+  align-items: center;
+  & p {
+    margin-left: 5px;
+    color: $color-2;
+    font-weight: bold;
+  }
+  & img {
+    border: 3px solid $color-1;
+    background-color: white;
+    border-radius: 50%;
+    padding-top: 2px;
+    height: 65px;
+  }
+}
+
+.create_form {
+  display: flex;
+  margin: 10px;
+  width: 100%;
+  .create_input {
+    max-height: 80px;
+    width: 100%;
+    resize: none;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .create_button {
+    cursor: pointer;
+    background: $color-2;
+    color: white;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 1.1rem;
+    padding: 5px 20px;
+    border: 2px solid transparent;
+    transition: 300ms ease-out;
+    &:hover {
+      background: rgb(72, 204, 72);
+      transition: 300ms ease-in;
+    }
+  }
+}
+
+.home_posts {
   display: flex;
   flex-direction: column-reverse;
+  margin-top: 25px;
+}
+
+.home_post {
+  border: 3px solid $color-1;
+  background-color: $color-3;
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.home_post_content {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid $color-1;
+  border-radius: 5px;
+  background-color: white;
+  text-align: left;
+  padding: 5px;
+}
+
+.home_post_footer {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  & p {
+    font-weight: bold;
+    color: $color-2;
+  }
+}
+
+.home_post_buttons {
+  display: flex;
+  align-items: center;
+  & p {
+    margin-left: 10px;
+  }
+}
+
+.home_post_buttons_like {
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+.home_post_buttons_unlike {
+  color: white;
 }

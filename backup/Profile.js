@@ -26,7 +26,7 @@ function Profile() {
     // Makes GET request to get username //
     //-----------------------------------//
     axios
-      .get(`http://localhost:3001/api/users/profile/${id}`, {
+      .get(`http://localhost:3001/api/users/${id}`, {
         headers: {
           JWToken: sessionStorage.getItem('JWToken'),
         },

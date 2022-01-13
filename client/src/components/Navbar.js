@@ -22,7 +22,7 @@ function Navbar() {
         <NavLink to={'/home'}>
           <HomeIcon aria-label="bouton accueil" className="navbar_icon" />
         </NavLink>
-        <NavLink to={'/user'}>
+        <NavLink to={`/user/${authState.id}`}>
           <PersonIcon aria-label="bouton profil" className="navbar_icon" />
         </NavLink>
         <Signout />
