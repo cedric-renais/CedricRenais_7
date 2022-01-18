@@ -4,11 +4,7 @@
   justify-content: center;
   background-color: $color-1;
   box-shadow: $shadow;
-  border-radius: 50px;
   width: 100vw;
-  @media screen and(max-width: 400px) {
-    border-radius: 0px;
-  }
   img {
     width: 300px;
     padding: 10px;

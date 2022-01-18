@@ -7,11 +7,10 @@
 
 .user_profile {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 950px;
-  margin-top: 100px;
+  margin-top: 50px;
   @media screen and(max-width: 980px) {
     flex-direction: column;
     width: 100vw;
@@ -26,6 +25,7 @@
   @media screen and(max-width: 400px) {
     margin: 0;
   }
+
   .user_image {
     height: 415px;
     display: flex;
@@ -38,7 +38,7 @@
     background-color: $color-3;
     box-shadow: $shadow;
     @media screen and(max-width: 980px) {
-      margin-bottom: 25px;
+      margin-bottom: 10px;
     }
     & img {
       background-color: white;
@@ -83,6 +83,7 @@
 .user_rightside {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 625px;
   @media screen and(max-width: 768px) {
     width: 300px;
@@ -99,10 +100,9 @@
   border: 3px solid $color-1;
   border-radius: 10px;
   background-color: $color-3;
-  padding: 25px;
   box-shadow: $shadow;
-  margin-bottom: 20px;
-  margin-top: 25px;
+  padding: 5px;
+  height: 100%;
   @media screen and(max-width: 768px) {
     flex-direction: column;
   }
@@ -110,23 +110,25 @@
     margin: 0;
   }
   & p {
+    border: 2px solid $color-1;
+    border-radius: 10px;
+    background-color: white;
     text-align: left;
-    padding: 25px;
     min-width: 400px;
-    min-height: 100px;
+    padding: 15px;
     @media screen and(max-width: 768px) {
-      min-width: 300px;
+      min-width: 280px;
+      margin-bottom: 10px;
     }
   }
   & button {
     cursor: pointer;
-    margin-top: 10px;
     border: none;
-    margin-left: 25px;
     border-radius: 5px;
     background-color: $color-2;
     color: white;
-    padding: 5px;
+    padding: 10px;
+    margin-left: 10px;
     transition: 300ms ease-out;
     @media screen and(max-width: 768px) {
       margin: 0;
@@ -136,14 +138,18 @@
       transition: 300ms ease-in;
     }
   }
-  & textarea {
-    resize: none;
-    min-width: 400px;
-    min-height: 100px;
-    border: 2px solid $color-1;
-    padding: 10px;
-    box-shadow: $shadow;
-    font-size: 1rem;
+  & form {
+    display: flex;
+    & textarea {
+      resize: none;
+      border: 2px solid $color-2;
+      border-radius: 10px;
+      background-color: white;
+      text-align: left;
+      min-width: 400px;
+      padding-top: 15px;
+      padding-left: 10px;
+    }
   }
 }
 
@@ -164,15 +170,27 @@
   border: 3px solid $color-1;
   border-radius: 10px;
   background-color: $color-3;
-  padding: 25px;
   box-shadow: $shadow;
   width: 45%;
   @media screen and(max-width: 768px) {
-    margin-bottom: 20px;
+    width: 100%;
   }
   @media screen and(max-width: 400px) {
     margin-top: 5px;
     margin-bottom: 0px;
+  }
+  & form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & input {
+      width: 100%;
+      resize: none;
+      border: 2px solid $color-1;
+      padding: 10px;
+      box-shadow: $shadow;
+      font-size: 0.9rem;
+    }
   }
   & button {
     cursor: pointer;
@@ -189,14 +207,6 @@
       transition: 300ms ease-in;
     }
   }
-  & input {
-    width: 100%;
-    resize: none;
-    border: 2px solid $color-1;
-    padding: 10px;
-    box-shadow: $shadow;
-    font-size: 1rem;
-  }
 }
 
 .user_password {
@@ -211,6 +221,10 @@
   padding: 25px;
   box-shadow: $shadow;
   width: 50%;
+  @media screen and(max-width: 768px) {
+    margin-bottom: 20px;
+    width: 100%;
+  }
   @media screen and(max-width: 400px) {
     margin-top: 5px;
   }
@@ -237,5 +251,33 @@
     box-shadow: $shadow;
     font-size: 1rem;
     margin-bottom: 10px;
+  }
+}
+
+.user_delete {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid $color-1;
+  border-radius: 10px;
+  background-color: $color-3;
+  padding: 25px;
+  box-shadow: $shadow;
+  .user_delete_button {
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: $color-1;
+    color: white;
+    transition: 300ms ease-out;
+    &:hover {
+      transform: scale(1.1);
+      transition: 300ms ease-in;
+    }
   }
 }

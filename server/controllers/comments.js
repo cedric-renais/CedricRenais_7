@@ -31,6 +31,16 @@ exports.createComment = async (req, res) => {
       });
   }
 };
+//-----------------------------------------------------------------------------------------------//
+// Gets the postId from the params                                                               //
+// Calls the sequelize function to find all comments of the comments table related to the postId //
+// Returns the response                                                                          //
+//-----------------------------------------------------------------------------------------------//
+exports.readComment = async (req, res) => {
+  const postId = req.params.postId;
+  const comments = await Comments.findAll({ where: { PostId: postId } });
+  res.json(comments);
+};
 //--------------------------------------------------------------------------//
 // Get the id from the params of the request                                //
 // Look for the comment in the database by his id                           //

@@ -13,6 +13,10 @@ const JWT = require('../middlewares/authentication');
 //------------------------------------//
 router.post('/', [JWT.auth], Ctrl.createComment);
 //-----------------------------------//
+// GET request to the comments route //
+//-----------------------------------//
+router.get('/:id', [JWT.auth], Ctrl.readComment);
+//-----------------------------------//
 // PUT request to the comments route //
 //-----------------------------------//
 router.put('/update/:id', [JWT.auth], Ctrl.updateComment);

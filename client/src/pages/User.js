@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import Upload from '../components/User/Upload';
 import UpdateBio from '../components/User/UpdateBio';
 import UpdateEmail from '../components/User/UpdateEmail';
+import Delete from '../components/User/Delete';
 import UpdatePassword from '../components/User/UpdatePassword';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -44,6 +45,9 @@ function User() {
           <div className="user_email_password">
             <UpdateEmail />
             <UpdatePassword />
+          </div>
+          <div>
+            <Delete />
           </div>
         </div>
       </div>

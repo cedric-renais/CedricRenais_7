@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik';
 import { useParams } from 'react-router-dom';
 
 function UpdateBio() {
+  const [username, setUsername] = useState('');
   const [biography, setBiography] = useState('');
   const [biographyForm, setBiographyForm] = useState(false);
   const { authState } = useContext(AuthContext);
@@ -16,9 +17,6 @@ function UpdateBio() {
   };
 
   useEffect(() => {
-    //-----------------------------------//
-    // Makes GET request to get username //
-    //-----------------------------------//
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
         headers: {
@@ -27,6 +25,7 @@ function UpdateBio() {
       })
       .then((res) => {
         setBiography(res.data.biography);
+        setUsername(res.data.username);
       });
   }, []);
 
@@ -45,7 +44,7 @@ function UpdateBio() {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          setBiography(res.data.image);
+          setBiography(res.data.biography);
           window.location.replace(`/user/${authState.id}`);
         }
       });
@@ -54,20 +53,23 @@ function UpdateBio() {
     <div className="user_biography">
       {biographyForm === false && (
         <>
-          <p onClick={() => setBiographyForm(!biographyForm)}>{biography}</p>
-          <button
-            onClick={() => setBiographyForm(!biographyForm)}
-            aria-label="modifier"
-          >
-            <EditIcon />
-          </button>
+          <p>{biography}</p>
+          {authState.username === username && (
+            <>
+              <button
+                onClick={() => setBiographyForm(!biographyForm)}
+                aria-label="modifier"
+              >
+                <EditIcon />
+              </button>
+            </>
+          )}
         </>
       )}
       {biographyForm && (
         <>
           <Formik initialValues={initialValues} onSubmit={handleUpdateBio}>
             <Form>
-              <br />
               <Field
                 as="textarea"
                 aria-label="biographie"

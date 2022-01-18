@@ -119,7 +119,7 @@ exports.signin = async (req, res) => {
                 email: user.email,
                 biography: user.biography,
                 image: user.image,
-                admin: user.IsAdmin,
+                IsAdmin: user.IsAdmin,
               },
               process.env.SECRET_KEY
             );

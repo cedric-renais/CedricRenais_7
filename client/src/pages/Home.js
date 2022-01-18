@@ -60,7 +60,7 @@ function Home() {
   const likeOrNot = (postId) => {
     axios
       .post(
-        'http://localhost:3001/api/likes',
+        `${process.env.REACT_APP_API_URL}api/likes`,
         { PostId: postId },
         {
           headers: {
@@ -110,10 +110,22 @@ function Home() {
                 <div
                   className="home_post_content"
                   onClick={() => {
-                    navigate(`/posts/${value.id}`);
+                    navigate(`/home/${value.id}`);
                   }}
                 >
                   {value.content}
+                </div>
+                <div
+                  className="home_post_image"
+                  onClick={() => {
+                    navigate(`/home/${value.id}`);
+                  }}
+                >
+                  {value.image && (
+                    <>
+                      <img src={value.image} alt="illustration du post" />
+                    </>
+                  )}
                 </div>
                 <div className="home_post_footer">
                   <div className="home_post_username">

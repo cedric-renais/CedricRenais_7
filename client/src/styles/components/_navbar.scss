@@ -27,6 +27,9 @@
   cursor: pointer;
   transform: scale(1.7);
   color: white;
+  &:hover {
+    color: $color-2;
+  }
   @media screen and(max-width: 500px) {
     transform: scale(1.3);
   }

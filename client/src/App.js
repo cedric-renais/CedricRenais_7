@@ -44,6 +44,7 @@ function App() {
             email: res.data.email,
             biography: res.data.biography,
             image: res.data.image,
+            isAdmin: res.data.isAdmin,
             status: true,
           });
         }
