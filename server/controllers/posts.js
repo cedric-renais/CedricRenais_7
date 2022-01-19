@@ -103,14 +103,9 @@ exports.updatePost = async (req, res) => {
 //--------------------------------------------------------------------------//
 exports.deletePost = (req, res) => {
   id = req.params.id;
-  Posts.findOne({ where: { id: id } })
-    .then((posts) => {
-      const filename = posts.image.split('/image/')[1];
-      fs.unlink(`image/${filename}`, () => {
-        Posts.destroy({ where: { id: id } })
-          .then(() => res.status(200).json({ message: 'Post deleted.' }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+  Posts.destroy({ where: { id: id } })
+    .then(() => {
+      res.status(200).json({ message: 'Post ID ' + id + ' has been deleted.' });
     })
     .catch((error) => res.status(500).json({ error }));
 };

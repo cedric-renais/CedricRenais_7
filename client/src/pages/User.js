@@ -13,6 +13,7 @@ import axios from 'axios';
 
 function User() {
   const [image, setImage] = useState('');
+  const [isAdmin, setIsAdmin] = useState('');
   let { id } = useParams();
 
   useEffect(() => {
@@ -26,7 +27,9 @@ function User() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setImage(res.data.image);
+        setIsAdmin(res.data.isAdmin);
       });
   }, []);
 
@@ -49,6 +52,11 @@ function User() {
           <div>
             <Delete />
           </div>
+          {isAdmin === true && (
+            <>
+              <div>Outil d'administration à venir</div>
+            </>
+          )}
         </div>
       </div>
     </div>

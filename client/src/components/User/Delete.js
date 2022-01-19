@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../helpers/authContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 function Delete() {
   let navigate = useNavigate();

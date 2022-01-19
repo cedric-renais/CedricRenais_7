@@ -15,15 +15,15 @@ router.post('/', [JWT.auth], Ctrl.createComment);
 //-----------------------------------//
 // GET request to the comments route //
 //-----------------------------------//
-router.get('/:id', [JWT.auth], Ctrl.readComment);
+router.get('/:postId', [JWT.auth], Ctrl.readComment);
 //-----------------------------------//
 // PUT request to the comments route //
 //-----------------------------------//
-router.put('/update/:id', [JWT.auth], Ctrl.updateComment);
+router.put('/update/:commentId', [JWT.auth], Ctrl.updateComment);
 //--------------------------------------//
 // DELETE request to the comments route //
 //--------------------------------------//
-router.delete('/delete/:id', [JWT.auth], Ctrl.deleteComment);
+router.delete('/delete/:commentId', [JWT.auth], Ctrl.deleteComment);
 //--------------------//
 // Exports the router //
 //--------------------//

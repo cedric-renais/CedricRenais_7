@@ -13,13 +13,12 @@ const { Comments } = require('../models');
 // If an error occurs, catch it and return status 400 and the error message //
 //--------------------------------------------------------------------------//
 exports.createComment = async (req, res) => {
-  if (req.body.content === null || !req.body.content) {
-    res.status(400).json({ message: 'Content is required.' });
+  if (req.body.comment === null || !req.body.comment) {
+    res.status(400).json({ message: 'Comment is required.' });
   } else {
     const comment = req.body;
-    comment.username = req.user.username;
-    comment.PostId = req.params.id;
-    comment.UserId = req.user.id;
+    const username = req.user.username;
+    comment.username = username;
     await Comments.create(comment)
       .then((comment) => {
         res
@@ -49,10 +48,10 @@ exports.readComment = async (req, res) => {
 // If an error occurs, catch it and return status 400 and the error message //
 //--------------------------------------------------------------------------//
 exports.updateComment = async (req, res) => {
-  id = req.params.id;
-  await Comments.findOne({ where: { id: id } })
+  const commentId = req.params.commentId;
+  await Comments.findOne({ where: { id: commentId } })
     .then(() => {
-      Comments.update({ ...req.body }, { where: { id: id } });
+      Comments.update({ ...req.body }, { where: { id: commentId } });
       res
         .status(200)
         .json({ message: 'Comment ID ' + id + ' has been updated.' });
@@ -69,17 +68,14 @@ exports.updateComment = async (req, res) => {
 // If an error occurs, catch it and return status 400 and the error message //
 //--------------------------------------------------------------------------//
 exports.deleteComment = async (req, res) => {
-  id = req.params.id;
-  await Comments.findOne({ where: { id: id } })
+  const commentId = req.params.commentId;
+  await Comments.destroy({ where: { id: commentId } })
     .then(() => {
-      Comments.destroy({ where: { id: id } });
-    })
-    .then(() =>
       res
         .status(200)
-        .json({ message: 'Comment ID ' + id + ' has been deleted.' })
-    )
-    .catch((error) =>
-      res.status(400).json({ error: 'An error has occurred. ' + error })
-    );
+        .json({ message: 'Comment ID ' + commentId + ' has been deleted.' });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };

@@ -3,7 +3,7 @@
 //-----------------------------------------------//
 module.exports = (sequelize, DataTypes) => {
   const Comments = sequelize.define('Comments', {
-    content: {
+    comment: {
       type: DataTypes.TEXT,
       allowNull: false,
     },

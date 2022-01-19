@@ -20,6 +20,7 @@ function App() {
     email: '',
     biography: '',
     image: '',
+    isAdmin: '',
     status: false,
   });
   //------------------------------------------------- ----------//
