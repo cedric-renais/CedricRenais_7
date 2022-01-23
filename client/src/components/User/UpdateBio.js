@@ -54,7 +54,7 @@ function UpdateBio() {
       {biographyForm === false && (
         <>
           <p>{biography}</p>
-          {authState.username === username && (
+          {(authState.username === username && (
             <>
               <button
                 onClick={() => setBiographyForm(!biographyForm)}
@@ -63,7 +63,17 @@ function UpdateBio() {
                 <EditIcon />
               </button>
             </>
-          )}
+          )) ||
+            (authState.isAdmin === true && (
+              <>
+                <button
+                  onClick={() => setBiographyForm(!biographyForm)}
+                  aria-label="modifier"
+                >
+                  <EditIcon />
+                </button>
+              </>
+            ))}
         </>
       )}
       {biographyForm && (

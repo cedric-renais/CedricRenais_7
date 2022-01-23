@@ -8,10 +8,12 @@
   padding: 5px;
   margin-top: 25px;
   margin-bottom: 10px;
+  width: 800px;
 }
 
 .post_content {
   min-height: 50px;
+  width: 100%;
   border: 1px solid $color-1;
   border-radius: 5px;
   background-color: white;
@@ -50,6 +52,13 @@
     font-weight: bold;
     color: $color-2;
     font-size: 1.1rem;
+    text-decoration: none;
+    text-transform: capitalize;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+      transition: 300ms ease-in;
+    }
   }
 }
 
@@ -109,13 +118,19 @@
   }
 }
 
+.comment_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .comment_container {
   border: 3px solid $color-1;
   border-radius: 10px;
   background-color: $color-3;
   padding: 5px;
   margin-bottom: 5px;
-
+  width: 90%;
   .comment_content {
     min-height: 50px;
     border: 1px solid $color-1;
@@ -138,6 +153,7 @@
     color: $color-2;
     font-weight: bold;
     font-size: 1.1rem;
+    text-transform: capitalize;
   }
 }
 

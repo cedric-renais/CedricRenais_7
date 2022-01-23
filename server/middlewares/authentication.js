@@ -24,27 +24,11 @@ auth = (req, res, next) => {
     return res.status(500).json({ error: 'An error has occurred. ' + error });
   }
 };
-//--------------------------------------------------------//
-// Look for the user in the database by his primary key   //
-// If the user isAdmin is set to true go to next function //
-// Otherwise return status 403 and the error message      //
-//--------------------------------------------------------//
-admin = (req, res, next) => {
-  User.findByPk(req.user).then((user) => {
-    if (user.isAdmin === true) {
-      next();
-      return;
-    }
-    res.status(403).json({ error: 'Requires an admin role.' });
-    return;
-  });
-};
-//-----------------------------------------------//
-// Declararing constant containing the functions //
-//-----------------------------------------------//
+//----------------------------------------------//
+// Declararing constant containing the function //
+//----------------------------------------------//
 const JWT = {
   auth: auth,
-  admin: admin,
 };
 //-------------------------------------//
 // Exports the authentication function //

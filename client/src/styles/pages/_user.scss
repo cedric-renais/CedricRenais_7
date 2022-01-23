@@ -27,7 +27,6 @@
   }
 
   .user_image {
-    height: 415px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,6 +84,10 @@
   flex-direction: column;
   justify-content: space-between;
   width: 625px;
+  & h1 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
   @media screen and(max-width: 768px) {
     width: 300px;
   }
@@ -277,6 +280,38 @@
     transition: 300ms ease-out;
     &:hover {
       transform: scale(1.1);
+      transition: 300ms ease-in;
+    }
+  }
+}
+
+.user_admin_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid $color-1;
+  border-radius: 10px;
+  background-color: $color-3;
+  padding: 25px;
+  box-shadow: $shadow;
+  margin-top: 10px;
+  text-decoration: none;
+  & div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    background-color: $color-2;
+    padding: 10px 20px;
+    border-radius: 25px;
+    & span {
+      margin-left: 5px;
+      color: white;
+      text-transform: uppercase;
+    }
+    &:hover {
+      background: rgb(72, 204, 72);
       transition: 300ms ease-in;
     }
   }

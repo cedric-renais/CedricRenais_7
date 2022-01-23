@@ -12,8 +12,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function User() {
+  const [username, setUsername] = useState('');
   const [image, setImage] = useState('');
-  const [isAdmin, setIsAdmin] = useState('');
   let { id } = useParams();
 
   useEffect(() => {
@@ -27,9 +27,8 @@ function User() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        setUsername(res.data.username);
         setImage(res.data.image);
-        setIsAdmin(res.data.isAdmin);
       });
   }, []);
 
@@ -44,6 +43,7 @@ function User() {
           </div>
         </div>
         <div className="user_rightside">
+          <h1>Profil de {username}</h1>
           <UpdateBio />
           <div className="user_email_password">
             <UpdateEmail />
@@ -52,11 +52,6 @@ function User() {
           <div>
             <Delete />
           </div>
-          {isAdmin === true && (
-            <>
-              <div>Outil d'administration à venir</div>
-            </>
-          )}
         </div>
       </div>
     </div>

@@ -119,10 +119,11 @@ exports.signin = async (req, res) => {
                 email: user.email,
                 biography: user.biography,
                 image: user.image,
-                IsAdmin: user.IsAdmin,
+                isAdmin: user.isAdmin,
               },
               process.env.SECRET_KEY
             );
+            console.log(user.isAdmin);
             return res.status(200).json({
               token: JWToken,
               id: user.id,
@@ -130,7 +131,7 @@ exports.signin = async (req, res) => {
               email: user.email,
               biography: user.biography,
               image: user.image,
-              admin: user.IsAdmin,
+              isAdmin: user.isAdmin,
             });
           } else {
             return res.status(403).json({ error: 'Invalid password.' });

@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import CommentIcon from '@mui/icons-material/Comment';
 import Create from '../components/Post/Create';
 function Home() {
   //------------------------------------------//
@@ -130,6 +131,13 @@ function Home() {
                 <div className="home_post_footer">
                   <div className="home_post_username">
                     <p>{value.username}</p>
+                  </div>
+                  <div
+                    onClick={() => {
+                      navigate(`/home/${value.id}`);
+                    }}
+                  >
+                    <CommentIcon className="home_post_comment" />
                   </div>
                   <div className="home_post_buttons">
                     <ThumbUpIcon

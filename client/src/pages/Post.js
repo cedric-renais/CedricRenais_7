@@ -2,14 +2,13 @@
 // Imports the necessary dependencies //
 //------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from '../components/Navbar';
 import { Formik, Form, Field } from 'formik';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
-import ShieldIcon from '@mui/icons-material/Shield';
 import { AuthContext } from '../helpers/authContext';
 function Post() {
   //----------------------------------------------------------------//
@@ -132,7 +131,6 @@ function Post() {
           };
           setComments([...comments, CommentToAdd]);
           setNewcomment('');
-          console.log(CommentToAdd);
           window.location.replace(`/home/${id}`);
         }
       });
@@ -155,14 +153,22 @@ function Post() {
       <Navbar />
       <div className="post_container">
         <div className="post">
-          {authState.username === post.username && (
+          {(authState.username === post.username && (
             <>
               <EditIcon
                 onClick={() => setPostForm(!postForm)}
                 className="post_button_edit"
               />
             </>
-          )}
+          )) ||
+            (authState.isAdmin === true && (
+              <>
+                <EditIcon
+                  onClick={() => setPostForm(!postForm)}
+                  className="post_button_edit"
+                />
+              </>
+            ))}
           {postForm === false && (
             <>
               <div className="post_content">{post.content}</div>
@@ -216,10 +222,15 @@ function Post() {
             </>
           )}
           <div className="post_footer">
-            <div className="post_username">
+            <div
+              className="post_username"
+              onClick={() => {
+                navigate(`/user/${post.UserId}`);
+              }}
+            >
               <p>{post.username}</p>
             </div>
-            {authState.username === post.username && (
+            {(authState.username === post.username && (
               <>
                 <div className="post_button">
                   <DeleteIcon
@@ -230,8 +241,38 @@ function Post() {
                   />
                 </div>
               </>
-            )}
+            )) ||
+              (authState.isAdmin === true && (
+                <>
+                  <div className="post_button">
+                    <DeleteIcon
+                      className="post_button_delete"
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                    />
+                  </div>
+                </>
+              ))}
           </div>
+        </div>
+        <div className="commment_container">
+          <form className="comment_form">
+            <textarea
+              name="comment"
+              id="comment"
+              aria-label="votre commentaire"
+              placeholder="Votre commentaire"
+              autoComplete="off"
+              value={newComment}
+              onChange={(event) => {
+                setNewcomment(event.target.value);
+              }}
+            />
+            <button onClick={createComment}>
+              <DoneIcon aria-label="valider" />
+            </button>
+          </form>
         </div>
         <div className="comment_list">
           {comments.map((comment, key) => {
@@ -240,10 +281,11 @@ function Post() {
                 <div className="comment_content">{comment.comment}</div>
                 <div className="comment_username_button">
                   <p>{comment.username}</p>
-                  {authState.username === comment.username && (
+                  {(authState.username === comment.username && (
                     <>
                       <button
                         className="comment_delete_button"
+                        aria-label="supprimer le commentaire"
                         onClick={() => {
                           deleteComment(comment.id);
                         }}
@@ -251,7 +293,20 @@ function Post() {
                         <DeleteIcon />
                       </button>
                     </>
-                  )}
+                  )) ||
+                    (authState.isAdmin === true && (
+                      <>
+                        <button
+                          className="comment_delete_button"
+                          aria-label="supprimer le commentaire"
+                          onClick={() => {
+                            deleteComment(comment.id);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </>
+                    ))}
                 </div>
               </div>
             );

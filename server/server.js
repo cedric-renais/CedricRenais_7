@@ -46,27 +46,27 @@ const errorHandler = (error) => {
 //----------------------------------------------------------------------------//
 // Automatic creation of an administrator account in the database users table //
 //----------------------------------------------------------------------------//
-function createAdmin() {
+/* function createAdmin() {
   Users.create({
     username: process.env.ADMIN_USERNAME,
     email: process.env.ADMIN_EMAIL,
     password: bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10),
     isAdmin: 1,
   });
-}
+} */
 //---------------------------------------------------------------------------------------------//
 // Creation of the server with database synchronization                                        //
 // An event listener indicating the port or named pipe the server is running on in the console //
 //---------------------------------------------------------------------------------------------//
 const server = http.createServer(app);
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
   server.on('error', errorHandler);
   server.on('listening', () => {
     const address = server.address();
     const bind =
       typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
     console.log('Listening on ' + bind);
-    createAdmin();
+    //createAdmin();
   });
   server.listen(port);
 });

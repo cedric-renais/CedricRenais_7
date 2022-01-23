@@ -45,7 +45,7 @@ function Upload() {
 
   return (
     <>
-      {authState.email === email && (
+      {(authState.email === email && (
         <form onSubmit={handleUpload} className="upload">
           <br />
           <input
@@ -61,7 +61,24 @@ function Upload() {
             Modifier
           </button>
         </form>
-      )}
+      )) ||
+        (authState.isAdmin === true && (
+          <form onSubmit={handleUpload} className="upload">
+            <br />
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept=".jpeg, .jpg, .png, .gif, .webp"
+              onChange={(event) => setImage(event.target.files[0])}
+              aria-label="modifier votre image"
+            />
+            <br />
+            <button type="submit" aria-label="valider">
+              Modifier
+            </button>
+          </form>
+        ))}
     </>
   );
 }

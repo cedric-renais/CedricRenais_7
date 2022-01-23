@@ -35,7 +35,7 @@ function Delete() {
   };
   return (
     <>
-      {authState.email === email && (
+      {(authState.email === email && (
         <>
           <div className="user_delete">
             <button onClick={handleDelete} className="user_delete_button">
@@ -43,7 +43,16 @@ function Delete() {
             </button>
           </div>
         </>
-      )}
+      )) ||
+        (authState.isAdmin === true && (
+          <>
+            <div className="user_delete">
+              <button onClick={handleDelete} className="user_delete_button">
+                Supprimer le compte !
+              </button>
+            </div>
+          </>
+        ))}
     </>
   );
 }
