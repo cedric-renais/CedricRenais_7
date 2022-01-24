@@ -37,13 +37,8 @@ exports.createComment = async (req, res) => {
 //-------------------------------------------------------------//
 exports.readComment = async (req, res) => {
   const postId = req.params.postId;
-  const comments = await Comments.findAll({ where: { PostId: postId } })
-    .then(() => {
-      res.status(200).json(comments);
-    })
-    .catch(() => {
-      res.status(400).json({ error: 'An error has occurred. ' + error });
-    });
+  const comments = await Comments.findAll({ where: { PostId: postId } });
+  res.status(200).json(comments);
 };
 //--------------------------------------------------------------------------//
 // Get the id from the params of the request                                //
@@ -61,8 +56,8 @@ exports.updateComment = async (req, res) => {
         .status(200)
         .json({ message: 'Comment ID ' + id + ' has been updated.' });
     })
-    .catch((error) => {
-      res.status(400).json({ error: 'An error has occurred. ' + error });
+    .catch(() => {
+      res.status(400).json({ error: 'An error has occurred. ' });
     });
 };
 //--------------------------------------------------------------------------//

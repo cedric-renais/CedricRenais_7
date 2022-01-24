@@ -322,24 +322,6 @@ function Post() {
             );
           })}
         </div>
-        <div className="commment_container">
-          <form className="comment_form">
-            <textarea
-              name="comment"
-              id="comment"
-              aria-label="votre commentaire"
-              placeholder="Votre commentaire"
-              autoComplete="off"
-              value={newComment}
-              onChange={(event) => {
-                setNewcomment(event.target.value);
-              }}
-            />
-            <button onClick={createComment}>
-              <DoneIcon aria-label="valider" />
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   );

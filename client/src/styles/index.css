@@ -981,7 +981,7 @@ span {
   padding: 5px;
   margin-top: 25px;
   margin-bottom: 10px;
-  width: 800px;
+  width: 100%;
 }
 
 .post_content {
@@ -1090,6 +1090,8 @@ span {
   border-radius: 15px;
   padding: 5px;
   margin-bottom: 10px;
+  width: 100%;
+  min-width: 800px;
 }
 
 .comment_form textarea {
