@@ -10,16 +10,20 @@ import Delete from '../components/User/Delete';
 import UpdatePassword from '../components/User/UpdatePassword';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+//---------------------------------//
+// Starting point of the User page //
+//---------------------------------//
 function User() {
+  //-------------------------//
+  // Declaration of the hook //
+  //-------------------------//
   const [username, setUsername] = useState('');
   const [image, setImage] = useState('');
   let { id } = useParams();
-
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  //-----------------------------------------------------------//
   useEffect(() => {
-    //-----------------------------------//
-    // Makes GET request to get username //
-    //-----------------------------------//
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
         headers: {
@@ -31,7 +35,9 @@ function User() {
         setImage(res.data.image);
       });
   }, []);
-
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="user">
       <Navbar />
@@ -57,5 +63,7 @@ function User() {
     </div>
   );
 }
-
+//------------------------------//
+// Exportation of the User page //
+//------------------------------//
 export default User;

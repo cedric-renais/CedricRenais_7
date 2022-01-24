@@ -1,13 +1,19 @@
-//-------------------------------------------//
-// Importation of the necessary dependencies //
-//-------------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sign from '../../pages/Sign';
 import Home from '../../pages/Home';
 import User from '../../pages/User';
 import Post from '../../pages/Post';
+//---------------------------------------//
+// Starting point of the index component //
+//---------------------------------------//
 function index() {
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <Router>
       <Routes>
@@ -19,5 +25,7 @@ function index() {
     </Router>
   );
 }
-
+//------------------------//
+// Export index component //
+//------------------------//
 export default index;

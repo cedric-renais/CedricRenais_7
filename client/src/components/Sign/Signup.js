@@ -67,9 +67,9 @@ function Signup() {
         console.log(error);
       });
   };
-  //-----------------//
-  // HTML to display //
-  //-----------------//
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <>
       {formSubmit ? (

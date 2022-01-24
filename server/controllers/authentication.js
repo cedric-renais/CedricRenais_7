@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');

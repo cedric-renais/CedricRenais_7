@@ -1,6 +1,6 @@
-//----------------------------------//
-// Imports the necessary dependency //
-//----------------------------------//
+//---------------------------------//
+// Import the necessary dependency //
+//---------------------------------//
 const { Comments } = require('../models');
 //-----------------------------------------------------------//
 // Controllers (arranged in the order following the C.R.U.D) //
@@ -30,15 +30,20 @@ exports.createComment = async (req, res) => {
       });
   }
 };
-//-----------------------------------------------------------------------------------------------//
-// Gets the postId from the params                                                               //
-// Calls the sequelize function to find all comments of the comments table related to the postId //
-// Returns the response                                                                          //
-//-----------------------------------------------------------------------------------------------//
+//-------------------------------------------------------------//
+// Get the postId from the params of the request               //
+// Find all comments into comments table related to the postId //
+// Return the response                                         //
+//-------------------------------------------------------------//
 exports.readComment = async (req, res) => {
   const postId = req.params.postId;
-  const comments = await Comments.findAll({ where: { PostId: postId } });
-  res.json(comments);
+  const comments = await Comments.findAll({ where: { PostId: postId } })
+    .then(() => {
+      res.status(200).json(comments);
+    })
+    .catch(() => {
+      res.status(400).json({ error: 'An error has occurred. ' + error });
+    });
 };
 //--------------------------------------------------------------------------//
 // Get the id from the params of the request                                //

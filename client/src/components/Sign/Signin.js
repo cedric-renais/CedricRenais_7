@@ -1,15 +1,15 @@
-//-------------------------------------------//
-// Importation of the necessary dependencies //
-//-------------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 import React, { useState } from 'react';
 import axios from 'axios';
 //--------------------------------------------//
 // Starting point of the SigninForm component //
 //--------------------------------------------//
 function Signin() {
-  //-----------------------------------//
-  // Declaration of the useState hooks //
-  //-----------------------------------//
+  //---------------------------//
+  // Declare the useState hook //
+  //---------------------------//
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   //---------------------------------------------//
@@ -33,9 +33,9 @@ function Signin() {
         console.log(error);
       });
   };
-  //-----------------//
-  // HTML to display //
-  //-----------------//
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <form onSubmit={handleSignin} className="sign_form">
       <h1>Connexion</h1>
@@ -74,7 +74,7 @@ function Signin() {
     </form>
   );
 }
-//-----------------------------------------//
-// Exportation of the log Signin component //
-//-----------------------------------------//
+//---------------------------------//
+// Export the log Signin component //
+//---------------------------------//
 export default Signin;

@@ -23,7 +23,9 @@ function Post() {
   const [image, setImage] = useState();
   const [comments, setComments] = useState([]);
   const [newComment, setNewcomment] = useState('');
-
+  //-----------------------------------------------//
+  // Declaration of the initial values ​​of the form //
+  //-----------------------------------------------//
   const initialValues = {
     content: `${content}`,
   };
@@ -56,7 +58,9 @@ function Post() {
         setComments(res.data);
       });
   }, []);
-
+  //-------------//
+  // PUT request //
+  //-------------//
   const updateContent = (data) => {
     axios
       .put(`${process.env.REACT_APP_API_URL}api/posts/update/${id}`, data, {
@@ -69,7 +73,9 @@ function Post() {
         window.location.replace(`/home/${id}`);
       });
   };
-
+  //-------------//
+  // PUT request //
+  //-------------//
   const updateImage = (event) => {
     event.preventDefault();
     const data = new FormData();
@@ -135,7 +141,9 @@ function Post() {
         }
       });
   };
-
+  //----------------//
+  // DELETE request //
+  //----------------//
   const deleteComment = (id) => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}api/comments/delete/${id}`, {
@@ -147,7 +155,9 @@ function Post() {
         window.location.replace(`/home/${post.id}`);
       });
   };
-
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="page_container">
       <Navbar />
@@ -334,5 +344,7 @@ function Post() {
     </div>
   );
 }
-
+//------------------------------//
+// Exportation of the Post page //
+//------------------------------//
 export default Post;

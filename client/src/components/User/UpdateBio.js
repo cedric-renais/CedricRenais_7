@@ -1,3 +1,6 @@
+//-------------------------------------------//
+// Importation of the necessary dependencies //
+//-------------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../helpers/authContext';
 import axios from 'axios';
@@ -5,17 +8,27 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import { Formik, Form, Field } from 'formik';
 import { useParams } from 'react-router-dom';
-
+//-------------------------------------------//
+// Starting point of the UpdateBio component //
+//-------------------------------------------//
 function UpdateBio() {
+  //--------------------------//
+  // Declaration of the hooks //
+  //--------------------------//
   const [username, setUsername] = useState('');
   const [biography, setBiography] = useState('');
   const [biographyForm, setBiographyForm] = useState(false);
   const { authState } = useContext(AuthContext);
   let { id } = useParams();
+  //-----------------------------------------------//
+  // Declaration of the initial values ​​of the form //
+  //-----------------------------------------------//
   const initialValues = {
     biography: `${biography}`,
   };
-
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  //-----------------------------------------------------------//
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
@@ -28,7 +41,9 @@ function UpdateBio() {
         setUsername(res.data.username);
       });
   }, []);
-
+  //-------------//
+  // PUT request //
+  //-------------//
   const handleUpdateBio = (data) => {
     axios
       .put(
@@ -49,6 +64,9 @@ function UpdateBio() {
         }
       });
   };
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="user_biography">
       {biographyForm === false && (
@@ -97,5 +115,7 @@ function UpdateBio() {
     </div>
   );
 }
-
+//----------------------------------------//
+// Exportation of the UpdateBio component //
+//----------------------------------------//
 export default UpdateBio;

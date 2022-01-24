@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
@@ -77,8 +77,8 @@ exports.updateUser = async (req, res) => {
 // If an error occurs, catch it and return status 500 and the error message //
 //--------------------------------------------------------------------------//
 exports.deleteUser = (req, res) => {
-  id = req.params.id;
-  Users.findOne({ where: { id: id } })
-    .then(() => res.status(200).json({ message: 'Post deleted.' }))
+  const id = req.params.id;
+  Users.destroy({ where: { id: id } })
+    .then(() => res.status(200).json({ message: 'User deleted.' }))
     .catch((error) => res.status(400).json({ error }));
 };

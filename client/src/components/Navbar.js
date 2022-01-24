@@ -7,10 +7,17 @@ import PersonIcon from '@mui/icons-material/Person';
 import { NavLink } from 'react-router-dom';
 import Signout from './Sign/signout';
 import { AuthContext } from '../helpers/authContext';
-
+//----------------------------------------//
+// Starting point of the Navbar component //
+//----------------------------------------//
 function Navbar() {
+  //----------------------------------//
+  // Declaration of the useState hook //
+  //----------------------------------//
   const { authState } = useContext(AuthContext);
-
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <nav>
       <div className="navbar">
@@ -30,5 +37,7 @@ function Navbar() {
     </nav>
   );
 }
-
+//-----------------------------------------//
+// Exportation of the log Navbar component //
+//-----------------------------------------//
 export default Navbar;

@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const multer = require('multer');
 //---------------------------------//
 // Define the MIME TYPE dictionary //
@@ -22,12 +22,12 @@ const imageFilter = (req, file, callback) => {
     callback('Only images are accepted.', false);
   }
 };
-//---------------------------------------------------------------------------//
-// Indicates in which folder the files are stored                            //
-// Indicates to use the original name and to replace spaces with underscores //
-// Uses the MIME_TYPES constant to give the appropriate file extension       //
-// Adding a timestamp to the name of the image to avoid duplicates           //
-//---------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+// Indicate in which folder the files are stored                            //
+// Indicate to use the original name and to replace spaces with underscores //
+// Uses the MIME_TYPES constant to give the appropriate file extension      //
+// Adding a timestamp to the name of the image to avoid duplicates          //
+//--------------------------------------------------------------------------//
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'image');
@@ -38,8 +38,8 @@ const storage = multer.diskStorage({
     callback(null, name + Date.now() + '.' + extension);
   },
 });
-//-------------------------------------------------------------------------------//
-// Exports multer configuration by indicating to manage a single image type file //
-//-------------------------------------------------------------------------------//
+//------------------------------------------------------------------------------//
+// Export multer configuration by indicating to manage a single image type file //
+//------------------------------------------------------------------------------//
 const upload = multer({ imageFilter: imageFilter, storage: storage });
 module.exports = upload;

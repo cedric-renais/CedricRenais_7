@@ -1,16 +1,16 @@
-//-------------------------------------------//
-// Importation of the necessary dependencies //
-//-------------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 import React, { useState } from 'react';
 import Signin from './Signin';
 import Signup from './Signup';
-//---------------------------------//
-// Starting point of the index log //
-//---------------------------------//
+//--------------------------------------------//
+// Starting point of the Sign index component //
+//--------------------------------------------//
 function Index(props) {
-  //-----------------------------------//
-  // Declaration of the useState hooks //
-  //-----------------------------------//
+  //----------------------------//
+  // Declare the useState hooks //
+  //----------------------------//
   const [signUpModal, setSignUpModal] = useState(props.signup);
   const [signInModal, setSignInModal] = useState(props.signin);
   //----------------------//
@@ -25,9 +25,9 @@ function Index(props) {
       setSignInModal(true);
     }
   };
-  //-----------------//
-  // HTML to display //
-  //-----------------//
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="sign">
       <div className="sign_list">

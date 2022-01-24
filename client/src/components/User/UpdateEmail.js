@@ -1,3 +1,6 @@
+//-------------------------------------------//
+// Importation of the necessary dependencies //
+//-------------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../helpers/authContext';
 import axios from 'axios';
@@ -5,23 +8,31 @@ import DoneIcon from '@mui/icons-material/Done';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useParams } from 'react-router-dom';
-
+//---------------------------------------------//
+// Starting point of the UpdateEmail component //
+//---------------------------------------------//
 function UpdateEmail() {
   let { id } = useParams();
   const [email, setEmail] = useState('');
   const [emailForm, setEmailForm] = useState(false);
   const { authState } = useContext(AuthContext);
-
+  //-----------------------------------------------//
+  // Declaration of the initial values ​​of the form //
+  //-----------------------------------------------//
   const initialValues = {
     email: `${authState.email}`,
   };
-
+  //-------------------------------------------//
+  // Declaration of the form validation schema //
+  //-------------------------------------------//
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Email non valide (nom@email.com)')
       .required('Veuillez remplir ce champ'),
   });
-
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  //-----------------------------------------------------------//
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
@@ -33,7 +44,9 @@ function UpdateEmail() {
         setEmail(res.data.email);
       });
   }, []);
-
+  //-------------//
+  // PUT request //
+  //-------------//
   const handleUpdateEmail = (data) => {
     axios
       .put(
@@ -54,6 +67,9 @@ function UpdateEmail() {
         }
       });
   };
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <>
       {authState.email === email && (
@@ -99,5 +115,7 @@ function UpdateEmail() {
     </>
   );
 }
-
+//------------------------------------------//
+// Exportation of the UpdateEmail component //
+//------------------------------------------//
 export default UpdateEmail;

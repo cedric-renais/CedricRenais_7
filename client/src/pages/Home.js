@@ -96,9 +96,9 @@ function Home() {
         }
       });
   };
-  //---------------------------------------------------//
-  // Returns the data and display it by injecting HTML //
-  //---------------------------------------------------//
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="page_container">
       <Navbar />
@@ -161,5 +161,7 @@ function Home() {
     </div>
   );
 }
-
+//------------------------------//
+// Exportation of the Home page //
+//------------------------------//
 export default Home;

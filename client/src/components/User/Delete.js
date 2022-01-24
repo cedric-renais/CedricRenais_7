@@ -1,14 +1,24 @@
+//-------------------------------------------//
+// Importation of the necessary dependencies //
+//-------------------------------------------//
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../helpers/authContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+//----------------------------------------//
+// Starting point of the Delete component //
+//----------------------------------------//
 function Delete() {
+  //-------------------------------------------------------------//
+  // Declaration of the useState, useContext and useParams hooks //
+  //-------------------------------------------------------------//
   let navigate = useNavigate();
   const [email, setEmail] = useState('');
   const { authState } = useContext(AuthContext);
   let { id } = useParams();
-
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  //-----------------------------------------------------------//
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
@@ -20,7 +30,9 @@ function Delete() {
         setEmail(res.data.email);
       });
   }, []);
-
+  //----------------//
+  // DELETE request //
+  //----------------//
   const handleDelete = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}api/users/delete/${id}`, {
@@ -33,6 +45,9 @@ function Delete() {
         navigate('/');
       });
   };
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <>
       {(authState.email === email && (
@@ -56,5 +71,7 @@ function Delete() {
     </>
   );
 }
-
+//-------------------------------------//
+// Exportation of the Delete component //
+//-------------------------------------//
 export default Delete;

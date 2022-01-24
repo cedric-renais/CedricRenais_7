@@ -1,12 +1,24 @@
+//-------------------------------------------//
+// Importation of the necessary dependencies //
+//-------------------------------------------//
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/authContext';
 import { useParams } from 'react-router-dom';
+//----------------------------------------//
+// Starting point of the Upload component //
+//----------------------------------------//
 function Upload() {
+  //-------------------------------------------------------------//
+  // Declaration of the useState, useContext and useParams hooks //
+  //-------------------------------------------------------------//
   let { id } = useParams();
   const [image, setImage] = useState('');
   const { authState } = useContext(AuthContext);
   const [email, setEmail] = useState('');
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  //-----------------------------------------------------------//
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
@@ -18,7 +30,9 @@ function Upload() {
         setEmail(res.data.email);
       });
   }, []);
-
+  //-------------//
+  // PUT request //
+  //-------------//
   const handleUpload = (event) => {
     event.preventDefault();
     const data = new FormData();
@@ -42,7 +56,9 @@ function Upload() {
         }
       });
   };
-
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <>
       {(authState.email === email && (
@@ -82,5 +98,7 @@ function Upload() {
     </>
   );
 }
-
+//-------------------------------------//
+// Exportation of the Upload component //
+//-------------------------------------//
 export default Upload;

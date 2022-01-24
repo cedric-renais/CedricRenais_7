@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const { verify } = require('jsonwebtoken');
 require('dotenv').config({ path: './config/.env' });
 //--------------------------------------------------------------//
@@ -24,13 +24,13 @@ auth = (req, res, next) => {
     return res.status(500).json({ error: 'An error has occurred. ' + error });
   }
 };
-//----------------------------------------------//
-// Declararing constant containing the function //
-//----------------------------------------------//
+//------------------------------------------//
+// Declare constant containing the function //
+//------------------------------------------//
 const JWT = {
   auth: auth,
 };
-//-------------------------------------//
-// Exports the authentication function //
-//-------------------------------------//
+//------------------------------------//
+// Export the authentication function //
+//------------------------------------//
 module.exports = JWT;

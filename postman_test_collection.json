@@ -546,7 +546,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\":\"My Content\"\r\n}",
+							"raw": "{\r\n    \"content\": \"my content\",\r\n    \"username\": \"Cédric\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -636,9 +636,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "image",
-									"type": "file",
-									"src": "/D:/PROJETS/P7_Renais_Cedric/images/rage.png"
+									"key": "content",
+									"value": "Updated content",
+									"type": "text"
 								}
 							],
 							"options": {
@@ -710,7 +710,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\":\"My Content\"\r\n}",
+							"raw": "{\r\n    \"comment\":\"My Content\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -745,7 +745,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\":\"My updated content\"\r\n}",
+							"raw": "{\r\n    \"comment\":\"My updated content\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -909,39 +909,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "AdminBTW",
-									"type": "default"
-								},
-								{
-									"key": "email",
-									"value": "ad@groupomania.com",
-									"type": "default"
-								},
-								{
-									"key": "oldPassword",
-									"value": "123Password",
-									"type": "default"
-								},
-								{
-									"key": "newPassword",
-									"value": "Password123",
-									"type": "default"
-								},
-								{
-									"key": "biography",
-									"value": "Hammer of moderation",
-									"type": "default"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": "/D:/PROJETS/P7_Renais_Cedric/images/user-icon-g2d4f6043b_640.png"
-								}
-							],
+							"mode": "raw",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -949,7 +918,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/api/users/delete/1",
+							"raw": "http://localhost:3001/api/users/delete/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -959,7 +928,7 @@
 								"api",
 								"users",
 								"delete",
-								"1"
+								"2"
 							]
 						}
 					},

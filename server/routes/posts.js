@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const express = require('express');
 const router = express.Router();
 const Ctrl = require('../controllers/posts');
@@ -26,7 +26,7 @@ router.put('/update/:id', [JWT.auth], upload.single('image'), Ctrl.updatePost);
 // DELETE request to the posts route //
 //-----------------------------------//
 router.delete('/delete/:id', [JWT.auth], Ctrl.deletePost);
-//--------------------//
-// Exports the router //
-//--------------------//
+//-------------------//
+// Export the router //
+//-------------------//
 module.exports = router;

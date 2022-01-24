@@ -11,9 +11,9 @@ import Routes from './components/Routes';
 // Application entry point //
 //-------------------------//
 function App() {
-  //---------------------------------------------//
-  // Declares useState hook containing an object //
-  //---------------------------------------------//
+  //-----------------------//
+  // Declare useState hook //
+  //-----------------------//
   const [authState, setAuthState] = useState({
     id: 0,
     username: '',
@@ -23,11 +23,11 @@ function App() {
     isAdmin: false,
     status: false,
   });
-  //------------------------------------------------- ----------//
-  // Executes this function immediately when the page is opened //
-  // If there are an error changes the authState to false       //
-  // Else changes the authState to true                         //
-  //------------------------------------------------------------//
+  //-----------------------------------------------------------//
+  // Execute this function immediately when the page is opened //
+  // If there are an error changes the authState to false      //
+  // Else changes the authState to true                        //
+  //-----------------------------------------------------------//
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/sign/auth`, {
@@ -51,6 +51,9 @@ function App() {
         }
       });
   }, []);
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -60,7 +63,7 @@ function App() {
     </div>
   );
 }
-//--------------------------//
-// Exports the App function //
-//--------------------------//
+//-------------------------//
+// Export the App function //
+//-------------------------//
 export default App;

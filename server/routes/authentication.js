@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const express = require('express');
 const router = express.Router();
 const Ctrl = require('../controllers/authentication');
@@ -17,7 +17,7 @@ router.post('/signin', Ctrl.signin);
 // GET request to the authentication route //
 //-----------------------------------------//
 router.get('/auth', [JWT.auth], Ctrl.auth);
-//--------------------//
-// Exports the router //
-//--------------------//
+//-------------------//
+// Export the router //
+//-------------------//
 module.exports = router;

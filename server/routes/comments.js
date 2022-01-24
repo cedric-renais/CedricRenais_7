@@ -1,6 +1,6 @@
-//------------------------------------//
-// Imports the necessary dependencies //
-//------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const express = require('express');
 const router = express.Router();
 const Ctrl = require('../controllers/comments');
@@ -24,7 +24,7 @@ router.put('/update/:commentId', [JWT.auth], Ctrl.updateComment);
 // DELETE request to the comments route //
 //--------------------------------------//
 router.delete('/delete/:commentId', [JWT.auth], Ctrl.deleteComment);
-//--------------------//
-// Exports the router //
-//--------------------//
+//-------------------//
+// Export the router //
+//-------------------//
 module.exports = router;

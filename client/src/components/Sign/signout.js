@@ -14,9 +14,9 @@ function Signout() {
     sessionStorage.removeItem('JWToken');
     window.location.replace('/');
   };
-  //-----------------//
-  // HTML to display //
-  //-----------------//
+  //-------------//
+  // Virtual DOM //
+  //-------------//
   return (
     <div onClick={Signout}>
       <LogoutIcon alt="bouton déconnexion" className="navbar_icon" />

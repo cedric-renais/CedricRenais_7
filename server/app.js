@@ -1,25 +1,25 @@
-//--------------------------------------//
-// Importing the necessary dependencies //
-//--------------------------------------//
+//-----------------------------------//
+// Import the necessary dependencies //
+//-----------------------------------//
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
-//-------------------//
-// Importing routers //
-//-------------------//
+//----------------//
+// Import routers //
+//----------------//
 const authRouter = require('./routes/authentication');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const likesRouter = require('./routes/likes');
 const commentsRouter = require('./routes/comments');
-//--------------------//
-// Importing database //
-//--------------------//
+//-----------------//
+// Import database //
+//-----------------//
 const { sequelize } = require('./models');
-//------------------------------------//
-// Calling the necessary dependencies //
-//------------------------------------//
+//---------------------------------//
+// Call the necessary dependencies //
+//---------------------------------//
 const app = express();
 app.use(cors());
 app.use(helmet());
@@ -28,9 +28,9 @@ app.use(helmet());
 //------------------------//
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-//----------------//
-// Calling routes //
-//----------------//
+//-------------//
+// Call routes //
+//-------------//
 app.use('/api/sign', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
@@ -49,7 +49,7 @@ const bdCheck = async function () {
   }
 };
 bdCheck();
-//---------//
-// Exports //
-//---------//
+//--------//
+// Export //
+//--------//
 module.exports = app;
