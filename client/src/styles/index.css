@@ -984,6 +984,12 @@ span {
   width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+  .post {
+    width: 100vw;
+  }
+}
+
 .post_content {
   min-height: 50px;
   width: 100%;
@@ -993,6 +999,12 @@ span {
   text-align: left;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .post_content {
+    width: 90vw;
+  }
 }
 
 .post_button_edit {
@@ -1047,6 +1059,13 @@ span {
   transition: 300ms ease-in;
 }
 
+@media screen and (max-width: 768px) {
+  .post_footer {
+    width: 100vw;
+    margin: 0 10px;
+  }
+}
+
 .post_button {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1085,13 +1104,22 @@ span {
 }
 
 .comment_form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border: 3px solid #fd2d01;
   background-color: #ffd7d7;
   border-radius: 15px;
   padding: 5px;
   margin-bottom: 10px;
   width: 100%;
-  min-width: 800px;
 }
 
 .comment_form textarea {
@@ -1102,6 +1130,12 @@ span {
   padding: 10px;
   font-size: 1rem;
   margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .comment_form textarea {
+    width: 95%;
+  }
 }
 
 .comment_form button {
@@ -1121,6 +1155,12 @@ span {
   background: #48cc48;
   -webkit-transition: 300ms ease-in;
   transition: 300ms ease-in;
+}
+
+@media screen and (max-width: 768px) {
+  .comment_form button {
+    width: 95%;
+  }
 }
 
 .comment_list {

@@ -9,6 +9,9 @@
   margin-top: 25px;
   margin-bottom: 10px;
   width: 100%;
+  @media screen and(max-width: 768px) {
+    width: 100vw;
+  }
 }
 
 .post_content {
@@ -20,6 +23,9 @@
   text-align: left;
   padding: 10px;
   margin-bottom: 10px;
+  @media screen and(max-width: 768px) {
+    width: 90vw;
+  }
 }
 
 .post_button_edit {
@@ -60,6 +66,10 @@
       transition: 300ms ease-in;
     }
   }
+  @media screen and(max-width: 768px) {
+    width: 100vw;
+    margin: 0 10px;
+  }
 }
 
 .post_button {
@@ -87,13 +97,15 @@
 }
 
 .comment_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 3px solid $color-1;
   background-color: $color-3;
   border-radius: 15px;
   padding: 5px;
   margin-bottom: 10px;
   width: 100%;
-  min-width: 800px;
   & textarea {
     width: 100%;
     min-height: 80px;
@@ -102,6 +114,9 @@
     padding: 10px;
     font-size: 1rem;
     margin-bottom: 5px;
+    @media screen and(max-width: 768px) {
+      width: 95%;
+    }
   }
   & button {
     cursor: pointer;
@@ -116,6 +131,9 @@
     &:hover {
       background: rgb(72, 204, 72);
       transition: 300ms ease-in;
+    }
+    @media screen and(max-width: 768px) {
+      width: 95%;
     }
   }
 }
