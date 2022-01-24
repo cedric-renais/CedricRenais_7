@@ -49,21 +49,17 @@ function UpdateEmail() {
   //-------------//
   const handleUpdateEmail = (data) => {
     axios
-      .put(
-        `${process.env.REACT_APP_API_URL}api/users/update/${authState.id}`,
-        data,
-        {
-          headers: {
-            JWToken: sessionStorage.getItem('JWToken'),
-          },
-        }
-      )
+      .put(`${process.env.REACT_APP_API_URL}api/users/update/${id}`, data, {
+        headers: {
+          JWToken: sessionStorage.getItem('JWToken'),
+        },
+      })
       .then((res) => {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
           setEmail({ ...email, email: email });
-          window.location.replace(`/user/${authState.id}`);
+          window.location.replace(`/user/${id}`);
         }
       });
   };

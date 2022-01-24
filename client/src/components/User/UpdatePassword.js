@@ -39,7 +39,7 @@ function UpdatePassword() {
   const handleUpdatePassword = () => {
     axios
       .put(
-        `${process.env.REACT_APP_API_URL}api/users/update/${authState.id}`,
+        `${process.env.REACT_APP_API_URL}api/users/update/${id}`,
         {
           oldPassword: oldPassword,
           newPassword: newPassword,
@@ -54,7 +54,7 @@ function UpdatePassword() {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          window.location.replace(`/user/${authState.id}`);
+          window.location.replace(`/user/${id}`);
         }
       });
   };
