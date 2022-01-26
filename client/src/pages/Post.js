@@ -279,7 +279,7 @@ function Post() {
                 setNewcomment(event.target.value);
               }}
             />
-            <button onClick={createComment}>
+            <button aria-label="valider" onClick={createComment}>
               <DoneIcon aria-label="valider" />
             </button>
           </form>

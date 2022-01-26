@@ -4,7 +4,7 @@
 import React, { useContext } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Signout from './Sign/signout';
 import { AuthContext } from '../helpers/authContext';
 //----------------------------------------//
@@ -29,7 +29,7 @@ function Navbar() {
             Bienvenue {authState.username} !
           </span>
         </div>
-        <NavLink to={'/home'}>
+        <NavLink to={'/home'} aria-label="retour accueil">
           <HomeIcon aria-label="bouton accueil" className="navbar_icon" />
         </NavLink>
         <PersonIcon
