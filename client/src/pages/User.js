@@ -24,16 +24,20 @@ function User() {
   // Execute this function immediately when the page is opened //
   //-----------------------------------------------------------//
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((res) => {
-        setUsername(res.data.username);
-        setImage(res.data.image);
-      });
+    if (!sessionStorage.getItem('JWToken')) {
+      window.location.replace(`/`);
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((res) => {
+          setUsername(res.data.username);
+          setImage(res.data.image);
+        });
+    }
   }, []);
   //-------------//
   // Virtual DOM //

@@ -37,26 +37,30 @@ function Post() {
     //--------------------------------------------//
     // Makes GET request to get the post by is id //
     //--------------------------------------------//
-    axios
-      .get(`${process.env.REACT_APP_API_URL}api/posts/${id}`, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((res) => {
-        setPost(res.data);
-        setContent(res.data.content);
-        setImage(res.data.image);
-      });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}api/comments/${id}`, {
-        headers: {
-          JWToken: sessionStorage.getItem('JWToken'),
-        },
-      })
-      .then((res) => {
-        setComments(res.data);
-      });
+    if (!sessionStorage.getItem('JWToken')) {
+      window.location.replace(`/`);
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}api/posts/${id}`, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((res) => {
+          setPost(res.data);
+          setContent(res.data.content);
+          setImage(res.data.image);
+        });
+      axios
+        .get(`${process.env.REACT_APP_API_URL}api/comments/${id}`, {
+          headers: {
+            JWToken: sessionStorage.getItem('JWToken'),
+          },
+        })
+        .then((res) => {
+          setComments(res.data);
+        });
+    }
   }, []);
   //-------------//
   // PUT request //
