@@ -1,6 +1,6 @@
 # GROUPOMANIA
 
-Project 7 of the Openclassrooms web developer course
+Create an enterprise social network with REACT and SQL
 
 ## DATABASE
 
